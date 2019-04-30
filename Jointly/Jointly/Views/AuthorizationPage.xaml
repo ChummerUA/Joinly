@@ -1,12 +1,161 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Jointly.Views.AuthorizationPage">
+             xmlns:customui="clr-namespace:Jointly.CustomUI"
+             x:Class="Jointly.Views.AuthorizationPage"
+             x:Name="Page">
+    <ContentPage.Resources>
+        <Style x:Key="Video" TargetType="customui:Video">
+            <Setter Property="VerticalOptions" Value="Fill"/>
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+            <Setter Property="Loop" Value="True"/>
+            <Setter Property="Source" Value="Videos/background.mp4"/>
+        </Style>
+
+        <Style x:Key="FrameStyle" TargetType="customui:CustomFrame">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="BorderColor" Value="Yellow"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="Opacity" Value="0.7"/>
+        </Style>
+        
+        <Style x:Key="AuthorizationStack" TargetType="StackLayout">
+            <Setter Property="VerticalOptions" Value="Fill"/>
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+        </Style>
+
+        <Style x:Key="Entry" TargetType="Entry">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Text" Value=""/>
+        </Style>
+
+        <Style x:Key="Username" TargetType="Entry" BasedOn="{StaticResource Entry}">
+            <Setter Property="Placeholder" Value="Ім'я користувача"/>
+            <Setter Property="ReturnCommandParameter" Value="{Binding Source={x:Reference UsernameEntry}, Path=Text}"/>
+        </Style>
+        <Style x:Key="Email" TargetType="Entry" BasedOn="{StaticResource Entry}">
+            <Setter Property="Placeholder" Value="Пошта"/>
+            <Setter Property="Keyboard" Value="Email"/>
+            <Setter Property="ReturnCommandParameter" Value="{Binding Source={x:Reference EmailEntry}, Path=Text}"/>
+        </Style>
+        <Style x:Key="Phone" TargetType="Entry" BasedOn="{StaticResource Entry}">
+            <Setter Property="Placeholder" Value="Телефон"/>
+            <Setter Property="Keyboard" Value="Telephone"/>
+            <Setter Property="ReturnCommandParameter" Value="{Binding Source={x:Reference PhoneEntry}, Path=Text}"/>
+        </Style>
+
+        <Style x:Key="EntryInfoLabel" TargetType="Label">
+            <Setter Property="IsVisible" Value="False"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="TextColor" Value="Red"/>
+            <Setter Property="Text" Value=""/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Margin" Value="5, 0, 0, 0"/>
+        </Style>
+
+        <Style x:Key="MainInfoLabel" TargetType="Label" BasedOn="{StaticResource EntryInfoLabel}">
+            <Setter Property="Text" Value="{Binding Message}"/>
+            <Setter Property="TextColor" Value="{Binding MessageColor}"/>
+            <Setter Property="IsVisible" Value="{Binding IsMessageVisible}"/>
+        </Style>
+
+        <Style x:Key="ConfirmButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="DarkBlue"/>
+            <Setter Property="TextColor" Value="Yellow"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="180"/>
+            <Setter Property="Margin" Value="0, 10, 0, 0"/>
+            <Setter Property="VerticalOptions" Value="End"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="CornerRadius" Value="20"/>
+        </Style>
+        <Style x:Key="ChangeAuthTypeButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="WidthRequest" Value="170"/>
+            <Setter Property="VerticalOptions" Value="End"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="FontSize" Value="Small"/>
+        </Style>
+    </ContentPage.Resources>
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <customui:Video Style="{StaticResource Video}"/>
+
+            <customui:CustomFrame Style="{StaticResource FrameStyle}">
+                <StackLayout>
+                    <StackLayout x:Name="SignInStack"
+                                 Style="{StaticResource AuthorizationStack}"
+                                 IsVisible="True">
+                        <StackLayout>
+                            <Entry x:Name="LoginEntry"
+                                   Style="{StaticResource Entry}"
+                                   Placeholder="Ім'я користувача"/>
+                        </StackLayout>
+                        
+                        <StackLayout>
+                            <Entry x:Name="PasswordEntry"
+                                   Style="{StaticResource Entry}"
+                                   Placeholder="Пароль"
+                                   IsPassword="True"/>
+                        </StackLayout>
+
+                        <Label x:Name="SignInInfoLabel"
+                               Style="{StaticResource MainInfoLabel}"/>
+
+                        <Button x:Name="ConfirmSignInButton" 
+                                Style="{StaticResource ConfirmButton}"
+                                Text="Увійти"/>
+                        <Button x:Name="SignUpButton"
+                                Style="{StaticResource ChangeAuthTypeButton}"
+                                Text="Зареєструватись"
+                                BindingContext="{x:Reference Page}"/>
+                    </StackLayout>
+                    
+                    <StackLayout x:Name="SignUpStack"
+                                 Style="{StaticResource AuthorizationStack}"
+                                 IsVisible="False">
+                        <StackLayout>
+                            <Entry x:Name="UsernameEntry"
+                                   Style="{StaticResource Username}"
+                                   TextChanged="Entry_TextChanged"
+                                   Unfocused="Entry_Unfocused"/>
+                            <Label x:Name="UsernameInfoLabel"
+                                   Style="{StaticResource EntryInfoLabel}"/>
+                        </StackLayout>
+                        
+                        <StackLayout>
+                            <Entry x:Name="EmailEntry"
+                                   Style="{StaticResource Email}"
+                                   TextChanged="Entry_TextChanged"
+                                   Unfocused="Entry_Unfocused"/>
+                            <Label x:Name="EmailInfoLabel"
+                                   Style="{StaticResource EntryInfoLabel}"/>
+                        </StackLayout>
+
+                        <StackLayout>
+                            <Entry x:Name="PhoneEntry"
+                                   Style="{StaticResource Phone}"
+                                   TextChanged="Entry_TextChanged"
+                                   Unfocused="Entry_Unfocused"/>
+                            <Label x:Name="PhoneInfoLabel"
+                                   Style="{StaticResource EntryInfoLabel}"/>
+                        </StackLayout>
+
+                        <Label x:Name="SignUpInfoLabel"
+                               Style="{StaticResource MainInfoLabel}"/>
+
+                        <Button x:Name="ConfirmSignUpButton"
+                                Style="{StaticResource ConfirmButton}"
+                                Text="Зареєструватись"/>
+                        <Button x:Name="SignInButton"
+                                Style="{StaticResource ChangeAuthTypeButton}"
+                                Text="Увійти"/>
+                    </StackLayout>
+                </StackLayout>
+            </customui:CustomFrame>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
