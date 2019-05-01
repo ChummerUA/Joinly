@@ -5,18 +5,17 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Media;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Android.Graphics;
-using Android.Graphics.Drawables;
-using Android.Media;
-
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 using Jointly.CustomUI;
 using Jointly.Droid.Renderers;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.Android;
 
 [assembly: ExportRenderer(typeof(Video), typeof(VideoRenderer))]
 namespace Jointly.Droid.Renderers
