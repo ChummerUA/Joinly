@@ -30,6 +30,8 @@
         <Style x:Key="Entry" TargetType="Entry">
             <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
             <Setter Property="Text" Value=""/>
+            <Setter Property="Visual" Value="Material"/>
+            <Setter Property="FontSize" Value="15"/>
         </Style>
 
         <Style x:Key="Username" TargetType="Entry" BasedOn="{StaticResource Entry}">
@@ -54,8 +56,8 @@
             <Setter Property="Text" Value=""/>
             <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
             <Setter Property="Margin" Value="5, 0, 0, 0"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
-
         <Style x:Key="MainInfoLabel" TargetType="Label" BasedOn="{StaticResource EntryInfoLabel}">
             <Setter Property="Text" Value="{Binding Message}"/>
             <Setter Property="TextColor" Value="{Binding MessageColor}"/>
@@ -71,13 +73,14 @@
             <Setter Property="VerticalOptions" Value="End"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
             <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
         <Style x:Key="ChangeAuthTypeButton" TargetType="Button">
             <Setter Property="BackgroundColor" Value="Transparent"/>
             <Setter Property="WidthRequest" Value="170"/>
             <Setter Property="VerticalOptions" Value="End"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="FontSize" Value="16"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
@@ -92,9 +95,10 @@
                         <StackLayout>
                             <Entry x:Name="LoginEntry"
                                    Style="{StaticResource Entry}"
-                                   Placeholder="Ім'я користувача"/>
+                                   Placeholder="Ім'я користувача"
+                                   Completed="Entry_Completed"/>
                         </StackLayout>
-                        
+
                         <StackLayout>
                             <Entry x:Name="PasswordEntry"
                                    Style="{StaticResource Entry}"
@@ -113,7 +117,7 @@
                                 Text="Зареєструватись"
                                 BindingContext="{x:Reference Page}"/>
                     </StackLayout>
-                    
+
                     <StackLayout x:Name="SignUpStack"
                                  Style="{StaticResource AuthorizationStack}"
                                  IsVisible="False">
@@ -121,16 +125,18 @@
                             <Entry x:Name="UsernameEntry"
                                    Style="{StaticResource Username}"
                                    TextChanged="Entry_TextChanged"
-                                   Unfocused="Entry_Unfocused"/>
+                                   Unfocused="Entry_Unfocused"
+                                   Completed="Entry_Completed"/>
                             <Label x:Name="UsernameInfoLabel"
                                    Style="{StaticResource EntryInfoLabel}"/>
                         </StackLayout>
-                        
+
                         <StackLayout>
                             <Entry x:Name="EmailEntry"
                                    Style="{StaticResource Email}"
                                    TextChanged="Entry_TextChanged"
-                                   Unfocused="Entry_Unfocused"/>
+                                   Unfocused="Entry_Unfocused"
+                                   Completed="Entry_Completed"/>
                             <Label x:Name="EmailInfoLabel"
                                    Style="{StaticResource EntryInfoLabel}"/>
                         </StackLayout>

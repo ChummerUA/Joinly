@@ -124,6 +124,30 @@ namespace Jointly.Views
 
             entry.ReturnCommand.Execute(entry.Text);
         }
+
+        private void Entry_Completed(object sender, EventArgs e)
+        {
+            var entry = sender as Entry;
+
+            if(AuthorizationViewModel.AuthType == "SignIn")
+            {
+                if(entry.Placeholder == "Ім'я користувача")
+                {
+                    PasswordEntry.Focus();
+                }
+            }
+            else if(AuthorizationViewModel.AuthType == "SignUp")
+            {
+                if (entry.Placeholder == "Ім'я користувача")
+                {
+                    EmailEntry.Focus();
+                }
+                else if(entry.Placeholder == "Пошта")
+                {
+                    PhoneEntry.Focus();
+                }
+            }
+        }
         #endregion
     }
 }
