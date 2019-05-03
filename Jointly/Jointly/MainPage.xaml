@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:local="clr-namespace:Jointly"
+             x:Class="Jointly.MainPage"
+             Title="Разом">
+    <Grid x:Name="MainContainer">
+        <StackLayout x:Name="EntriesInfo"
+                     IsVisible="True"
+                     Opacity="0"
+                     HorizontalOptions="FillAndExpand"
+                     VerticalOptions="Start">
+            
+            <Entry x:Name="EventName"
+                   Text="Назва події"
+                   Opacity="0.5"
+                   VerticalOptions="StartAndExpand"
+                   HorizontalOptions="Fill"/>
+            <Entry x:Name="AdditionalInfo"
+                   Text="Додатковий опис"
+                   Opacity="0.5"
+                   VerticalOptions="StartAndExpand"
+                   HorizontalOptions="Fill"/>
+            
+            <StackLayout x:Name="TimeEntries"
+                         VerticalOptions="StartAndExpand"
+                         HorizontalOptions="Fill"
+                         Orientation="Horizontal">
+                <StackLayout HorizontalOptions="StartAndExpand">
+                    <Label Text="Час початку"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="Medium"
+                           Margin="5,0,0,0"/>
+                    <TimePicker x:Name="StartPicker"
+                                VerticalOptions="Center"/>
+                </StackLayout>
+                <StackLayout HorizontalOptions="End">
+                    <Label Text="Час закінчення"
+                           VerticalOptions="CenterAndExpand"
+                           FontSize="Medium"
+                           Margin="0,0,5,0"/>
+                    <TimePicker x:Name="EndPicker"
+                                VerticalOptions="Center"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <StackLayout x:Name="Buttons"
+                    HorizontalOptions="Fill"
+                    Orientation="Horizontal">
+                <StackLayout x:Name="Confirm"
+                             Orientation="Horizontal"
+                             HorizontalOptions="StartAndExpand"
+                             Margin="5, 0, 0, 0">
+                    <Image Source="round_done_black_36dp"
+                           HorizontalOptions="Start"
+                           BackgroundColor="Transparent"
+                           Margin="5, 0, 0, 0"/>
+                    <Button x:Name="ConfirmButton"
+                            Text="Створити"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="Start"/>
+                </StackLayout>
+
+                <StackLayout x:Name="Cancel"
+                             Orientation="Horizontal"
+                             HorizontalOptions="End"
+                             Margin="0, 0, 5, 0">
+                    <Image Source="round_clear_black_36dp"
+                           HorizontalOptions="Start"
+                           BackgroundColor="Transparent"/>
+                    <Button x:Name="CancelButton"
+                            Text="Відміна"
+                            BackgroundColor="Transparent"
+                            HorizontalOptions="Start"
+                            Margin="0, 0, 5, 0"/>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+        <maps:Map x:Name="Map"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand"
+                  IsShowingUser="True"/>
+    </Grid>
+
+</ContentPage>

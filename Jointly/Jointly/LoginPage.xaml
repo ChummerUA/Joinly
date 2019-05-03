@@ -1,0 +1,163 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:renderers="clr-namespace:Jointly.Renderers"
+             x:Class="Jointly.LoginPage">
+    <ContentPage.Resources>
+        <Style x:Key="StaticEntryHeader" TargetType="Label">
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="Margin" Value="10, 5, 0, 0"/>
+        </Style>
+        <Style x:Key="StaticCustomEntry" TargetType="Entry">
+            <Setter Property="VerticalOptions" Value="End"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="PlaceholderColor" Value="Red"/>
+        </Style>
+        <Style x:Key="StaticParentFrame" TargetType="Frame">
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="Padding" Value="20, 15, 20, 5"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="WidthRequest" Value="300"/>
+            <Setter Property="BorderColor" Value="Yellow"/>
+            <Setter Property="Opacity" Value="0.7"/>
+        </Style>
+        <Style x:Key="StaticCustomFrame" TargetType="renderers:CustomFrame">
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="Padding" Value="5, 0, 5, 0"/>
+        </Style>
+        <Style x:Key="StaticVisibilityButton" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="End"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="WidthRequest" Value="36"/>
+            <Setter Property="HeightRequest" Value="36"/>
+            <Setter Property="Scale" Value="0.8"/>
+        </Style>
+        <Style x:Key="StaticSubmitButton" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="End"/>
+            <Setter Property="Padding" Value="5, 0, 5, 0"/>
+            <Setter Property="BackgroundColor" Value="DarkBlue"/>
+            <Setter Property="TextColor" Value="Yellow"/>
+            <Setter Property="HeightRequest" Value="35"/>
+        </Style>
+        <Style x:Key="StaticChangeAuthButton" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+        <Style x:Key="StaticEntries" TargetType="StackLayout">
+            <Setter Property="VerticalOptions" Value="StartAndExpand"/>
+            <Setter Property="Margin" Value="0, 0, 0, 5"/>
+        </Style>
+        <Style x:Key="StaticGrid" TargetType="Grid">
+            <Setter Property="WidthRequest" Value="250"/>
+            <Setter Property="HeightRequest" Value="45"/>
+        </Style>
+        <Style x:Key="StaticInfoLabel" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Margin" Value="5, 0, 0, 0"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid BackgroundColor="Black">
+            <renderers:Video x:Name="BackgroundVideo"
+                             Source="Videos/background_video.mp4"
+                             Loop="True"
+                             HorizontalOptions="Fill"
+                             VerticalOptions="Fill"/>
+            <Frame x:Name="LoginFrame"
+                   Style="{StaticResource StaticParentFrame}">
+                <StackLayout>
+                    <StackLayout Style="{StaticResource StaticEntries}">
+                        <renderers:CustomFrame x:Name="UsernameFrame"
+                                           Style="{StaticResource StaticCustomFrame}">
+                            <Grid Style="{StaticResource StaticGrid}">
+                                <Entry x:Name="UsernameEntry"
+                                   Text=""
+                                   Style="{StaticResource StaticCustomEntry}"
+                                   Keyboard="Text"/>
+                                <Label x:Name="UsernameLabel" 
+                                   Text="Логін"
+                                   Style="{StaticResource StaticEntryHeader}"/>
+                            </Grid>
+                        </renderers:CustomFrame>
+                        <renderers:CustomFrame x:Name="PasswordFrame"
+                                           Style="{StaticResource StaticCustomFrame}">
+                            <Grid Style="{StaticResource StaticGrid}">
+                                <Label x:Name="PasswordLabel"
+                                   Text="Пароль"
+                                   Style="{StaticResource StaticEntryHeader}"/>
+                                <StackLayout Orientation="Horizontal"
+                                         VerticalOptions="Fill"
+                                         HorizontalOptions="Fill">
+                                    <Entry x:Name="PasswordEntry"
+                                       IsPassword="True"
+                                       Text=""
+                                       Style="{StaticResource StaticCustomEntry}"/>
+                                    <Button x:Name="PasswordVisibilityButton"
+                                        Image="round_visibility_off_black_36dp"
+                                        Style="{StaticResource StaticVisibilityButton}"/>
+                                </StackLayout>
+                            </Grid>
+                        </renderers:CustomFrame>
+                        <renderers:CustomFrame x:Name="RegNameFrame"
+                                           Style="{StaticResource StaticCustomFrame}"
+                                           IsVisible="False">
+                            <Grid Style="{StaticResource StaticGrid}">
+                                <Entry x:Name="RegNameEntry"
+                                   Text=""
+                                   Style="{StaticResource StaticCustomEntry}"/>
+                                <Label x:Name="RegNameLabel"
+                                   Text="Ім'я Прізвище"
+                                   Style="{StaticResource StaticEntryHeader}"/>
+                            </Grid>
+                        </renderers:CustomFrame>
+                        <renderers:CustomFrame x:Name="RegEmailFrame"
+                                           Style="{StaticResource StaticCustomFrame}"
+                                           IsVisible="False">
+                            <Grid Style="{StaticResource StaticGrid}">
+                                <Entry x:Name="RegEmailEntry"
+                                   Text=""
+                                   Style="{StaticResource StaticCustomEntry}"
+                                   Keyboard="Email"/>
+                                <Label x:Name="RegEmailLabel"
+                                   Text="Email"
+                                   Style="{StaticResource StaticEntryHeader}"/>
+                            </Grid>
+                        </renderers:CustomFrame>
+                        <renderers:CustomFrame x:Name="RegPhoneFrame"
+                                           Style="{StaticResource StaticCustomFrame}"
+                                           IsVisible="False">
+                            <Grid Style="{StaticResource StaticGrid}">
+                                <Entry x:Name="RegPhoneEntry"
+                                   Text=""
+                                   Style="{StaticResource StaticCustomEntry}"
+                                   Keyboard="Telephone"/>
+                                <Label x:Name="RegPhoneLabel"
+                                   Text="Номер телефону"
+                                   Style="{StaticResource StaticEntryHeader}"/>
+                            </Grid>
+                        </renderers:CustomFrame>
+                    </StackLayout>
+                    <Label x:Name="InfoLabel"
+                           IsVisible="False"
+                           Style="{StaticResource StaticInfoLabel}"
+                           Text=""/>
+                    <Button x:Name="SubmitButton"
+                            Text="Увійти"
+                            Style="{StaticResource StaticSubmitButton}"/>
+                    <Button x:Name="ChangeAuthButton"
+                            Style="{StaticResource StaticChangeAuthButton}"
+                           Text="Зареєструватись"/>
+                </StackLayout>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
