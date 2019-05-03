@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             x:Class="Jointly.Views.SetEventPage"
+             Title="Нова подія"
+             Visual="Material"
+             x:Name="Page">
+    <ContentPage.Resources>
+        <Style x:Key="PickerHeader" TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+        </Style>
+
+        <Style x:Key="TimePicker" TargetType="TimePicker">
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="Visual" Value="Default"/>
+        </Style>
+
+        <Style x:Key="PickerStack" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Horizontal"/>
+            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        </Style>
+
+        <Style x:Key="Editor" TargetType="Editor">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="Visual" Value="Default"/>
+            <Setter Property="AutoSize" Value="TextChanges"/>
+        </Style>
+
+        <Style x:Key="Entry" TargetType="Entry">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="ConfirmEventButton"
+                     Icon="baseline_done_black_36dp"
+                     Text="Створити"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <StackLayout Padding="10, 5, 10, 5">
+                <Entry Placeholder="Назва події"
+                       Style="{StaticResource Entry}"/>
+                <Editor Placeholder="Додатково"
+                        Style="{StaticResource Editor}"/>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackLayout Grid.Column="0"
+                                 Style="{StaticResource PickerStack}">
+                        <Label Text="Початок"
+                               Style="{StaticResource PickerHeader}"/>
+                        <TimePicker Style="{StaticResource TimePicker}"/>
+                    </StackLayout>
+                    <StackLayout Grid.Column="1"
+                                 Style="{StaticResource PickerStack}">
+                        <Label Text="Кінець"
+                               Style="{StaticResource PickerHeader}"/>
+                        <TimePicker Style="{StaticResource TimePicker}"/>
+                    </StackLayout>
+                </Grid>
+            </StackLayout>
+            <maps:Map/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -148,6 +148,11 @@ namespace Jointly.Views
                 }
             }
         }
+
+        private async void SignIn_Async(object sender, EventArgs e)
+        {
+            App.Current.MainPage = new NavigationPage(new MainPage());
+        }
         #endregion
     }
 }

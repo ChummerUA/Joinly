@@ -111,7 +111,8 @@
 
                         <Button x:Name="ConfirmSignInButton" 
                                 Style="{StaticResource ConfirmButton}"
-                                Text="Увійти"/>
+                                Text="Увійти"
+                                Clicked="SignIn_Async"/>
                         <Button x:Name="SignUpButton"
                                 Style="{StaticResource ChangeAuthTypeButton}"
                                 Text="Зареєструватись"
