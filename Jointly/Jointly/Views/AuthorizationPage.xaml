@@ -32,6 +32,7 @@
             <Setter Property="Text" Value=""/>
             <Setter Property="Visual" Value="Material"/>
             <Setter Property="FontSize" Value="15"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
         </Style>
 
         <Style x:Key="Username" TargetType="Entry" BasedOn="{StaticResource Entry}">

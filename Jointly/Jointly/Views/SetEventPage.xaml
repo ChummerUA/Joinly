@@ -2,9 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:effects="clr-namespace:Jointly.Effects"
              x:Class="Jointly.Views.SetEventPage"
              Title="Нова подія"
-             Visual="Material"
              x:Name="Page">
     <ContentPage.Resources>
         <Style x:Key="PickerHeader" TargetType="Label">
@@ -13,59 +13,132 @@
         </Style>
 
         <Style x:Key="TimePicker" TargetType="TimePicker">
-            <Setter Property="VerticalOptions" Value="Center"/>
-            <Setter Property="Visual" Value="Default"/>
+            <Setter Property="VerticalOptions" Value="StartAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="End"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
         </Style>
-
-        <Style x:Key="PickerStack" TargetType="StackLayout">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="HorizontalOptions" Value="CenterAndExpand"/>
+        <Style x:Key="DatePicker" TargetType="DatePicker">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
         </Style>
 
         <Style x:Key="Editor" TargetType="Editor">
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="BackgroundColor" Value="Transparent"/>
-            <Setter Property="Visual" Value="Default"/>
             <Setter Property="AutoSize" Value="TextChanges"/>
         </Style>
 
         <Style x:Key="Entry" TargetType="Entry">
-            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+        </Style>
+
+        <Style TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="1"/>
+            <Setter Property="HorizontalOptions" Value="Fill"/>
+            <Setter Property="BackgroundColor" Value="LightGray"/>
+        </Style>
+
+        <Style TargetType="Image">
+            <Setter Property="HeightRequest" Value="30"/>
+            <Setter Property="WidthRequest" Value="30"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="Opacity" Value="0.5"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="Margin" Value="0, 10, 0, 0"/>
+        </Style>
+
+        <Style TargetType="Grid">
+            <Setter Property="Padding" Value="5, 5, 10, 5"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
         <ToolbarItem x:Name="ConfirmEventButton"
-                     Icon="baseline_done_black_36dp"
+                     Icon="baseline_done_white_36dp"
                      Text="Створити"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout Padding="10, 5, 10, 5">
-                <Entry Placeholder="Назва події"
-                       Style="{StaticResource Entry}"/>
-                <Editor Placeholder="Додатково"
-                        Style="{StaticResource Editor}"/>
+        <StackLayout Spacing="0">
+            <StackLayout Spacing="0"
+                         BindingContext="{Binding Event}">
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <StackLayout Grid.Column="0"
-                                 Style="{StaticResource PickerStack}">
-                        <Label Text="Початок"
-                               Style="{StaticResource PickerHeader}"/>
-                        <TimePicker Style="{StaticResource TimePicker}"/>
-                    </StackLayout>
-                    <StackLayout Grid.Column="1"
-                                 Style="{StaticResource PickerStack}">
-                        <Label Text="Кінець"
-                               Style="{StaticResource PickerHeader}"/>
-                        <TimePicker Style="{StaticResource TimePicker}"/>
+                    <Image Grid.Column="0"
+                           Grid.Row="0"
+                           Source="baseline_event_black_36dp"/>
+                    <Entry Placeholder="Назва події"
+                           Style="{StaticResource Entry}"
+                           Grid.Row="0"
+                           Grid.Column="1"
+                           Text="{Binding EventName}">
+                        <Entry.Effects>
+                            <effects:NoUnderlineEffect/>
+                        </Entry.Effects>
+                    </Entry>
+                    <Editor Placeholder="Додатково"
+                            Style="{StaticResource Editor}"
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{Binding EventInfo}">
+                        <Editor.Effects>
+                            <effects:NoUnderlineEffect/>
+                        </Editor.Effects>
+                    </Editor>
+                </Grid>
+                
+                <BoxView/>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="40"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="60"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Image Grid.Column="0"
+                           Source="baseline_schedule_black_36dp"/>
+                    <DatePicker Style="{StaticResource DatePicker}"
+                                Grid.Column="1"
+                                Date="{Binding Date}">
+                        <DatePicker.Effects>
+                            <effects:NoUnderlineEffect/>
+                        </DatePicker.Effects>
+                    </DatePicker>
+                    <StackLayout Grid.Column="2">
+                        <TimePicker x:Name="BeginningTimePicker"
+                                    Style="{StaticResource TimePicker}"
+                                    Time="{Binding BeginningTime}">
+                            <TimePicker.Effects>
+                                <effects:NoUnderlineEffect/>
+                            </TimePicker.Effects>
+                        </TimePicker>
+                        <TimePicker x:Name="EndingTimePicker"
+                                    Style="{StaticResource TimePicker}"
+                                    Time="{Binding EndingTime}">
+                            <TimePicker.Effects>
+                                <effects:NoUnderlineEffect/>
+                            </TimePicker.Effects>
+                        </TimePicker>
                     </StackLayout>
                 </Grid>
+                <BoxView/>
             </StackLayout>
-            <maps:Map/>
+            <maps:Map x:Name="Map">
+                <!--<maps:Map.Pins>
+                    <maps:Pin x:Name="EventPin"
+                              Label=""/>
+                </maps:Map.Pins>-->
+            </maps:Map>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

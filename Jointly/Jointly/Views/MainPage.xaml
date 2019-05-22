@@ -7,22 +7,32 @@
              Visual="Material"
              x:Name="Page">
     <ContentPage.Resources>
-        <Style x:Key="SetEvent" TargetType="ImageButton">
-            <Setter Property="Source" Value="baseline_add_circle_black_36dp"/>
-            <Setter Property="BackgroundColor" Value="Default"/>
-            <Setter Property="WidthRequest" Value="50"/>
-            <Setter Property="HeightRequest" Value="50"/>
+        <Style TargetType="ImageButton">
+            <Setter Property="Source" Value="baseline_add_white_36dp"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="HeightRequest" Value="40"/>
+        </Style>
+        <Style TargetType="Frame">
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="CornerRadius" Value="20"/>
             <Setter Property="VerticalOptions" Value="End"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="Margin" Value="0, 0, 0, 5"/>
+            <Setter Property="Margin" Value="0, 0, 0, 15"/>
+            <Setter Property="Padding" Value="0"/>
+            <Setter Property="BackgroundColor">
+                #C70039
+            </Setter>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
             <maps:Map VerticalOptions="FillAndExpand"
                       HorizontalOptions="FillAndExpand"/>
-            <ImageButton x:Name="SetEventButton"
-                         Style="{StaticResource SetEvent}"/>
+            <Frame>
+                <ImageButton x:Name="SetEventButton"/>
+            </Frame>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
