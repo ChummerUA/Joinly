@@ -51,8 +51,35 @@
             <Setter Property="Margin" Value="0, 10, 0, 0"/>
         </Style>
 
+        <Style x:Key="PinImage" TargetType="Image">
+            <Setter Property="Source" Value="pin_blue"/>
+            <Setter Property="VerticalOptions" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="HeightRequest" Value="30"/>
+            <Setter Property="WidthRequest" Value="30"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+
+        <Style x:Key="MainContainer" TargetType="StackLayout">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="WidthRequest" Value="{Binding Source={x:Reference Page}, Path=ContainerWidth}"/>
+        </Style>
+
         <Style TargetType="Grid">
             <Setter Property="Padding" Value="5, 5, 10, 5"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+        </Style>
+
+        <Style x:Key="MapGrid" TargetType="Grid">
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="WidthRequest" Value="{Binding Source={x:Reference Page}, Path=ContainerWidth}"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style TargetType="maps:Map">
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.ToolbarItems>
@@ -61,9 +88,11 @@
                      Text="Створити"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
-        <StackLayout Spacing="0">
+        <StackLayout Spacing="0"
+                     Orientation="{Binding Source={x:Reference Page}, Path=ContentOrientation}">
             <StackLayout Spacing="0"
-                         BindingContext="{Binding Event}">
+                         BindingContext="{Binding Event}"
+                         Style="{StaticResource MainContainer}">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50"/>
@@ -95,7 +124,7 @@
                         </Editor.Effects>
                     </Editor>
                 </Grid>
-                
+
                 <BoxView/>
 
                 <Grid>
@@ -131,14 +160,11 @@
                         </TimePicker>
                     </StackLayout>
                 </Grid>
-                <BoxView/>
             </StackLayout>
-            <maps:Map x:Name="Map">
-                <!--<maps:Map.Pins>
-                    <maps:Pin x:Name="EventPin"
-                              Label=""/>
-                </maps:Map.Pins>-->
-            </maps:Map>
+            <Grid Style="{StaticResource MapGrid}">
+                <maps:Map x:Name="Map"/>
+                <Image Style="{StaticResource PinImage}"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
