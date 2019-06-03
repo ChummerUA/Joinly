@@ -1,4 +1,5 @@
-﻿using Jointly.Models;
+﻿using GalaSoft.MvvmLight.Command;
+using Jointly.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -120,6 +121,8 @@ namespace Jointly.ViewModels
                 }
             }
         }
+
+        private bool IsButtonClicked { get; set; }
         #endregion
 
         #region PropertyChanged
@@ -136,12 +139,21 @@ namespace Jointly.ViewModels
         }
         #endregion
 
-        #region ICommand
-        public ICommand SetUsernameCommand { get; }
-        public ICommand SetEmailCommand { get; }
-        public ICommand SetPhoneCommand { get; }
+        #region Commands
+        public RelayCommand ChangeAuthTypeCommand { get; }
 
-        public ICommand SignUpCommand { get; }
+        //SignUp commands
+        public RelayCommand<string> SetUsernameCommand { get; }
+        public RelayCommand<string> SetEmailCommand { get; }
+        public RelayCommand<string> SetPhoneCommand { get; }
+
+        public RelayCommand SignUpCommand { get; }
+
+        //SignIn commands
+        public RelayCommand<string> SetLoginCommand { get; }
+        public RelayCommand<string> SetPasswordCommand { get; }
+
+        public RelayCommand SignInCommand { get; }
         #endregion
 
         public AuthorizationViewModel()
@@ -149,52 +161,93 @@ namespace Jointly.ViewModels
             SignInUserModel = new SignInUserModel
             {
                 Login = "",
-                Password = ""
+                Password = "",
+                IsSuccess = false
             };
+
+            SetUsernameCommand = new RelayCommand<string>((parameter) => SetLogin(parameter));
+            SetPasswordCommand = new RelayCommand<string>((parameter) => SetPassword(parameter));
+            SignInCommand = new RelayCommand(execute: SignIn,
+                canExecute: CanSignIn);
+
             SignUpUserModel = new SignUpUserModel
             {
                 Username = "",
                 Email = "",
-                Phone = ""
+                Phone = "",
+                IsUsernameValid = false,
+                IsEmailValid = false,
+                IsPhoneValid = false
             };
 
+            SetUsernameCommand = new RelayCommand<string>(execute: (parameter) => SetUsername(parameter));
+            SetEmailCommand = new RelayCommand<string>(execute: (parameter) => SetEmail(parameter));
+            SetPhoneCommand = new RelayCommand<string>(execute: (parameter) => SetPhone(parameter));
+            SignUpCommand = new RelayCommand(execute: async () => await SignUpAsync(),
+                canExecute: CanSignUp);
+
+            ChangeAuthTypeCommand = new RelayCommand(ChangeAuthType, CanChangeAuthType);
             AuthType = "SignIn";
             Message = "";
             MessageColor = Color.Red;
             IsMessageVisible = false;
-
-            SetUsernameCommand = new Command<string>(execute: (parameter) => SetUsername(parameter), 
-                canExecute: (parameter) => CheckUsername(parameter));
-            SetEmailCommand = new Command<string>(execute: (parameter) => SetEmail(parameter),
-                canExecute: (parameter) => CheckEmail(parameter));
-            SetPhoneCommand = new Command<string>(execute: (parameter) => SetPhone(parameter),
-                canExecute: (parameter) => CheckPhone(parameter));
-
-            SignUpCommand = new Command(execute: async () => await SignUpAsync());
+            IsButtonClicked = false;
+            RaiseCanExecuteChanged();
         }
 
-        #region Execute
+        #region SignUp
         private void SetUsername(string username)
         {
             SignUpUserModel.Username = username;
+            if (username != "")
+            {
+                SignUpUserModel.IsUsernameValid = true;
+            }
+            else
+            {
+                SignUpUserModel.IsUsernameValid = false;
+            }
         }
 
         private void SetEmail(string email)
         {
             SignUpUserModel.Email = email;
+            string pattern = @"^([A-Za-z0-9_\.\-]+\@[A-Za-z]+\.[A-Za-z\.]+)$";
+            if(Regex.IsMatch(email, pattern))
+            {
+                SignUpUserModel.IsEmailValid = true;
+            }
+            else
+            {
+                SignUpUserModel.IsEmailValid = false;
+            }
         }
 
         private void SetPhone(string phone)
         {
             SignUpUserModel.Phone = phone;
+            string pattern = @"(^\+\d{12}$)|(^\d{10}$)";
+            if(Regex.IsMatch(phone, pattern))
+            {
+                SignUpUserModel.IsPhoneValid = true;
+            }
+            else
+            {
+                SignUpUserModel.IsPhoneValid = false;
+            }
         }
 
         private async Task SignUpAsync()
         {
-            if (!CanSignUp())
+            IsButtonClicked = true;
+            RaiseCanExecuteChanged();
+
+            var connectivity = Connectivity.NetworkAccess;
+
+            if(connectivity != NetworkAccess.Internet)
             {
-                MessageColor = Color.Red;
-                IsMessageVisible = true;
+                Message = "Відсутній доступ до інтернету";
+                IsButtonClicked = false;
                 return;
             }
 
@@ -220,77 +273,95 @@ namespace Jointly.ViewModels
                 MessageColor = Color.Red;
             }
             IsMessageVisible = true;
-        }
-        #endregion
 
-        #region CanExecute
-        private bool CheckUsername(string username)
-        {
-            if(username == null)
-            {
-                return false;
-            }
-            return true;
-        }
-
-        private bool CheckEmail(string email)
-        {
-            if(email == null)
-            {
-                return false;
-            }
-
-            string pattern = @"^([A-Za-z0-9_\.\-]+\@[A-Za-z]+\.[A-Za-z\.]+)$";
-            if (!Regex.IsMatch(email, pattern))
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        private bool CheckPhone(string phone)
-        {
-            if (phone == null)
-            {
-                return false;
-            }
-
-            string pattern = @"(^\+\d{12}$)|(^\d{10}$)";
-            if (!Regex.IsMatch(phone, pattern))
-            {
-                return false;
-            }
-            return true;
+            IsButtonClicked = false;
+            RaiseCanExecuteChanged();
         }
 
         private bool CanSignUp()
         {
-            var current = Connectivity.NetworkAccess;
-
-            if(current != NetworkAccess.Internet)
+            if (IsButtonClicked)
             {
-                Message = "Відсутній доступ до інтернету";
                 return false;
             }
 
-            if (SignUpUserModel.Username == "" || 
-                SignUpUserModel.Email == "" || 
+            if (SignUpUserModel.Username == "" ||
+                SignUpUserModel.Email == "" ||
                 SignUpUserModel.Phone == "")
             {
-                Message = "Потрібно заповнити усі поля";
+                Message = "Заповніть усі поля!";
                 return false;
             }
-            if (!SetUsernameCommand.CanExecute(SignUpUserModel.Username) ||
-                !SetEmailCommand.CanExecute(SignUpUserModel.Email) ||
-                !SetPhoneCommand.CanExecute(SignUpUserModel.Phone))
+            if (!SignUpUserModel.IsUsernameValid ||
+                !SignUpUserModel.IsEmailValid ||
+                !SignUpUserModel.IsPhoneValid)
             {
-                Message = "Неправильно заповнені поля";
                 return false;
             }
 
             return true;
         }
         #endregion
+
+        #region SignIn
+        private void SetLogin(string login)
+        {
+            SignInUserModel.Login = login;
+            SignInCommand.RaiseCanExecuteChanged();
+        }
+
+        private void SetPassword(string password)
+        {
+            SignInUserModel.Password = password;
+            SignInCommand.RaiseCanExecuteChanged();
+        }
+
+        private void SignIn()
+        {
+            IsButtonClicked = true;
+            RaiseCanExecuteChanged();
+        }
+
+        private bool CanSignIn()
+        {
+            if (IsButtonClicked)
+            {
+                return false;
+            }
+
+            if(SignInUserModel.Login == "" ||
+                SignInUserModel.Password == "")
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        private void ChangeAuthType()
+        {
+            RaiseCanExecuteChanged();
+            if (AuthType == "SignIn")
+            {
+                AuthType = "SignUp";
+            }
+            else if (AuthType == "SignUp")
+            {
+                AuthType = "SignIn";
+            }
+            RaiseCanExecuteChanged();
+        }
+        
+        private bool CanChangeAuthType()
+        {
+            return !IsButtonClicked;
+        }
+
+        private void RaiseCanExecuteChanged()
+        {
+            SignInCommand.RaiseCanExecuteChanged();
+            SignUpCommand.RaiseCanExecuteChanged();
+            ChangeAuthTypeCommand.RaiseCanExecuteChanged();
+        }
     }
 }
