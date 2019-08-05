@@ -7,6 +7,9 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Xamarin.Forms;
+using Prism;
+using Prism.Ioc;
+using Jointly.Services;
 
 namespace Jointly.Droid
 {
@@ -31,6 +34,14 @@ namespace Jointly.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
+    public class AndroidPlatformInitializer : IPlatformInitializer
+    {
+        public void RegisterTypes(IContainerRegistry containerRegistry)
+        {
+
         }
     }
 }

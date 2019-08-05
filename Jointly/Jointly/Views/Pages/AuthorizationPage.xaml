@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customui="clr-namespace:Jointly.Views.CustomUI"
+             xmlns:viewmodels="clr-namespace:Jointly.ViewModels"
+             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Name="Page"
+             x:Class="Jointly.Views.Pages.AuthorizationPage">
+    <ContentPage.Resources>
+        <Style TargetType="Entry">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Text" Value=""/>
+            <Setter Property="Visual" Value="Material"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <customui:Video 
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"
+                Source="Videos/background.mp4"
+                Loop="True"/>
+            <pancakeview:PancakeView
+                CornerRadius="20"
+                BorderThickness="1"
+                BorderColor="Yellow"
+                BackgroundColor="White"
+                Opacity="0.7"
+                Padding="20"
+                Margin="20"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill">
+                
+                <Grid
+                    RowSpacing="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid
+                        Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        
+                        <Entry 
+                            Grid.Row="0"
+                            Text="{Binding SignInModel.Login, FallbackValue=''}"
+                            Placeholder=""
+                            ReturnType="Next"
+                            ReturnCommandParameter="{Binding Source={x:Reference PasswordEntry}}"
+                            Completed="Entry_Completed"/>
+
+                        <Entry 
+                            x:Name="PasswordEntry"
+                            Grid.Row="1"
+                            Text="{Binding SignInModel.Password, FallbackValue=''}"
+                            Placeholder=""
+                            IsPassword="True"
+                            ReturnType="Done"/>
+                    </Grid>
+
+                    <Grid
+                        Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.Triggers>
+                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
+                                <Setter Property="IsVisible" Value="False"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
+                                <Setter Property="IsVisible" Value="True"/>
+                            </DataTrigger>
+                        </Grid.Triggers>
+                        
+                        <Entry 
+                            Grid.Row="0"
+                            Text="{Binding SignUpModel.Username, FallbackValue=''}"
+                            Placeholder=""
+                            ReturnType="Next"
+                            ReturnCommandParameter="{Binding Source={x:Reference EmailEntry}}"
+                            Completed="Entry_Completed">
+                            
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsUsernameValid}" Value="True">
+                                    <Setter Property="TextColor" Value="DarkGreen"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsUsernameValid}" Value="False">
+                                    <Setter Property="TextColor" Value="Default"/>
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Entry 
+                            x:Name="EmailEntry"
+                            Grid.Row="1"
+                            Text="{Binding SignUpModel.Email, FallbackValue=''}"
+                            Placeholder=""
+                            Keyboard="Email"
+                            ReturnType="Next"
+                            ReturnCommandParameter="{Binding Source={x:Reference PhoneEntry}}"
+                            Completed="Entry_Completed">
+
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsEmailValid}" Value="True">
+                                    <Setter Property="TextColor" Value="DarkGreen"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsEmailValid}" Value="False">
+                                    <Setter Property="TextColor" Value="Default"/>
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                        <Entry 
+                            x:Name="PhoneEntry"
+                            Grid.Row="2"
+                            Text="{Binding SignUpModel.Phone, FallbackValue=''}"
+                            Placeholder=""
+                            Keyboard="Telephone"
+                            ReturnType="Done"
+                            ReturnCommand="{Binding AuthCommand}"
+                            Completed="Entry_Completed">
+
+                            <Entry.Triggers>
+                                <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsPhoneValid}" Value="True">
+                                    <Setter Property="TextColor" Value="DarkGreen"/>
+                                </DataTrigger>
+                                <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsPhoneValid}" Value="False">
+                                    <Setter Property="TextColor" Value="Default"/>
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </Entry>
+                    </Grid>
+
+                    <Label Text="{Binding Message}"
+                           Grid.Row="1">
+                        <Label.Triggers>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsSuccess}" Value="False">
+                                <Setter Property="TextColor" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger TargetType="Label" Binding="{Binding IsSuccess}" Value="True">
+                                <Setter Property="TextColor" Value="Green"/>
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+
+                    <Button
+                        Grid.Row="2"
+                        BackgroundColor="DarkBlue"
+                        CornerRadius="5"
+                        Command="{Binding AuthCommand}">
+                        
+                    </Button>
+                    <Button 
+                        Grid.Row="3"
+                        BackgroundColor="Transparent"
+                        Command="{Binding ChangeAuthTypeCommand}"
+                        Text="Test"
+                        TextColor="DarkSlateGray">
+                    </Button>
+                </Grid>
+            </pancakeview:PancakeView>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

@@ -4,18 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
-using Xamarin.Essentials;
 
-namespace Jointly.Views
+namespace Jointly.Views.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SetEventPage : ContentPage
     {
-        public SetEventViewModel ViewModel { get; set; }
+        public readonly SetEventViewModel ViewModel;
 
         public StackOrientation ContentOrientation { get; set; }
 
@@ -25,8 +24,7 @@ namespace Jointly.Views
         {
             InitializeComponent();
 
-            ViewModel = new SetEventViewModel();
-            BindingContext = ViewModel;
+            ViewModel = BindingContext as SetEventViewModel;
 
             SetOrientation();
 

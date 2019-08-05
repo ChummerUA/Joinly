@@ -10,19 +10,25 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Xamarin.Forms;
-using Jointly.CustomUI;
 using Jointly.Droid.Renderers;
 using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Maps;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using Jointly.Views;
+using Jointly.Views.CustomUI;
+using Jointly.Views.Pages;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Jointly.Droid.Renderers
 {
-    class CustomMapRenderer : MapRenderer
+    public class CustomMapRenderer : MapRenderer
     {
+        public CustomMapRenderer(Context context) : base(context)
+        {
+
+        }
+
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);

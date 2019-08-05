@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Jointly.CustomUI
+namespace Jointly.Views.CustomUI
 {
     public class Video : View
     {

@@ -12,8 +12,8 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Jointly.CustomUI;
 using Jointly.Droid.Renderers;
+using Jointly.Views.CustomUI;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -24,6 +24,8 @@ namespace Jointly.Droid.Renderers
         TextureView.ISurfaceTextureListener,
         ISurfaceHolderCallback
     {
+        public VideoRenderer(Context context) : base(context) { }
+
         private bool _isCompletionSubscribed = false;
 
         private FrameLayout _mainFrameLayout = null;
@@ -53,10 +55,8 @@ namespace Jointly.Droid.Renderers
 
                     _videoPlayer.Info += (sender, args) =>
                     {
-                        Console.WriteLine("onInfo what={0}, extra={1}", args.What, args.Extra);
                         if (args.What == MediaInfo.VideoRenderingStart)
                         {
-                            Console.WriteLine("[MEDIA_INFO_VIDEO_RENDERING_START] placeholder GONE");
                             _placeholder.Visibility = ViewStates.Gone;
                         }
                     };
@@ -89,18 +89,15 @@ namespace Jointly.Droid.Renderers
             }
             catch (Java.IO.IOException ex)
             {
-                Console.WriteLine("Play video: " + Element.Source + " not found because " + ex);
                 _mainVideoView.Visibility = ViewStates.Gone;
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Error openfd: " + ex);
                 _mainVideoView.Visibility = ViewStates.Gone;
             }
 
             if (afd != null)
             {
-                Console.WriteLine("Lenght " + afd.Length);
                 VideoPlayer.Reset();
                 VideoPlayer.SetDataSource(afd.FileDescriptor, afd.StartOffset, afd.Length);
                 VideoPlayer.PrepareAsync();
@@ -141,11 +138,6 @@ namespace Jointly.Droid.Renderers
             int xoff = (controlWidth - newWidth) / 2;
             int yoff = (controlHeight - newHeight) / 2;
 
-            Console.WriteLine("video=" + videoWidth + "x" + videoHeight +
-                " view=" + controlWidth + "x" + controlHeight +
-                " newView=" + newWidth + "x" + newHeight +
-                " off=" + xoff + "," + yoff);
-
             var txform = new Matrix();
             textureView.GetTransform(txform);
             txform.SetScale((float)newWidth / controlWidth, (float)newHeight / controlHeight);
@@ -171,7 +163,6 @@ namespace Jointly.Droid.Renderers
 
                 if (Build.VERSION.SdkInt < BuildVersionCodes.IceCreamSandwich)
                 {
-                    Console.WriteLine("Using VideoView");
 
                     var videoView = new VideoView(Context)
                     {
@@ -193,7 +184,6 @@ namespace Jointly.Droid.Renderers
                 }
                 else
                 {
-                    Console.WriteLine("Using TextureView");
 
                     var textureView = new TextureView(Context)
                     {
@@ -263,20 +253,17 @@ namespace Jointly.Droid.Renderers
 
         public void OnSurfaceTextureAvailable(SurfaceTexture surface, int width, int height)
         {
-            Console.WriteLine("Surface.TextureAvailable");
             VideoPlayer.SetSurface(new Surface(surface));
         }
 
         public bool OnSurfaceTextureDestroyed(SurfaceTexture surface)
         {
-            Console.WriteLine("Surface.TextureDestroyed");
             RemoveVideo();
             return false;
         }
 
         public void OnSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height)
         {
-            Console.WriteLine("Surface.TextureSizeChanged");
             if (width > height)
             {
                 AdjustTextureViewAspect(width, height);
@@ -289,7 +276,6 @@ namespace Jointly.Droid.Renderers
 
         public void OnSurfaceTextureUpdated(SurfaceTexture surface)
         {
-            Console.WriteLine("Surface.TextureUpdated");
         }
 
         #endregion
@@ -298,18 +284,15 @@ namespace Jointly.Droid.Renderers
 
         public void SurfaceChanged(ISurfaceHolder holder, [GeneratedEnum] Format format, int width, int height)
         {
-            Console.WriteLine("Surface.Changed");
         }
 
         public void SurfaceCreated(ISurfaceHolder holder)
         {
-            Console.WriteLine("Surface.Created");
             VideoPlayer.SetDisplay(holder);
         }
 
         public void SurfaceDestroyed(ISurfaceHolder holder)
         {
-            Console.WriteLine("Surface.Destroyed");
             RemoveVideo();
         }
 

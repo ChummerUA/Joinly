@@ -1,11 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:effects="clr-namespace:Jointly.Views.Effects"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             xmlns:effects="clr-namespace:Jointly.Effects"
-             x:Class="Jointly.Views.SetEventPage"
-             Title="Нова подія"
-             x:Name="Page">
+             mc:Ignorable="d"
+             x:Class="Jointly.Views.Pages.SetEventPage"
+             Title="{Binding Title}">
     <ContentPage.Resources>
         <Style x:Key="PickerHeader" TargetType="Label">
             <Setter Property="FontSize" Value="16"/>

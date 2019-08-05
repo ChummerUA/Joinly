@@ -1,367 +1,189 @@
-﻿using GalaSoft.MvvmLight.Command;
-using Jointly.Models;
+﻿using Jointly.Models;
+using Jointly.Services;
 using Newtonsoft.Json;
+using Prism.Commands;
+using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Net.Http;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Jointly.ViewModels
 {
-    public class AuthorizationViewModel : INotifyPropertyChanged
+    public enum AuthorizationTypes
     {
-        #region variables
-        SignInUserModel signInUserModel;
-        SignUpUserModel signUpUserModel;
-        string authType;
-        string message;
-        Color messageColor;
-        bool isMessageVisible;
-        #endregion
+        SignIn,
+        SignUp
+    };
 
+    public class AuthorizationViewModel : BaseViewModel
+    {
         #region Properties
-        public SignInUserModel SignInUserModel
+        protected IAuthorizationService AuthorizationService { get; }
+
+        SignInModel signInModel;
+        public SignInModel SignInModel
         {
-            get
-            {
-                return signInUserModel;
-            }
-            set
-            {
-                if(value != signInUserModel)
-                {
-                    signInUserModel = value;
-                    OnPropertyChanged("SignInUserModel");
-                }
-            }
+            get => signInModel;
+            set => SetProperty(ref signInModel, value);
         }
 
-        public SignUpUserModel SignUpUserModel
+        SignUpModel signUpModel;
+        public SignUpModel SignUpModel
         {
-            get
-            {
-                return signUpUserModel;
-            }
-            set
-            {
-                if(value != signUpUserModel)
-                {
-                    signUpUserModel = value;
-                    OnPropertyChanged("SignUpUserModel");
-                }
-            }
+            get => signUpModel;
+            set => SetProperty(ref signUpModel, value);
         }
 
-        public string AuthType
+        AuthorizationTypes authType;
+        public AuthorizationTypes AuthType
         {
-            get
-            {
-                return authType;
-            }
-            set
-            {
-                if(value != authType)
-                {
-                    authType = value;
-                    OnPropertyChanged("AuthType");
-                }
-            }
+            get => authType;
+            set => SetProperty(ref authType, value);
         }
 
+        string message;
         public string Message
         {
-            get
-            {
-                return message;
-            }
-            set
-            {
-                if(value != message)
-                {
-                    message = value;
-                    OnPropertyChanged("Message");
-                }
-            }
+            get => message;
+            set => SetProperty(ref message, value);
         }
 
-        public Color MessageColor
+        bool isSuccess;
+        public bool IsSuccess
         {
-            get
-            {
-                return messageColor;
-            }
-            set
-            {
-                if(value != messageColor)
-                {
-                    messageColor = value;
-                    OnPropertyChanged("MessageColor");
-                }
-            }
+            get => isSuccess;
+            set => SetProperty(ref isSuccess, value);
         }
 
-        public bool IsMessageVisible
+        bool isBusy;
+        private bool IsBusy
         {
-            get
-            {
-                return isMessageVisible;
-            }
-            set
-            {
-                if (value != isMessageVisible)
-                {
-                    isMessageVisible = value;
-                    OnPropertyChanged("IsMessageVisible");
-                }
-            }
-        }
-
-        private bool IsButtonClicked { get; set; }
-        #endregion
-
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string name)
-        {
-            var changed = PropertyChanged;
-
-            if(changed != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
+            get => isBusy;
+            set => SetProperty(ref isBusy, value);
+        }        
         #endregion
 
         #region Commands
-        public RelayCommand ChangeAuthTypeCommand { get; }
+        Command _changeAuthTypeCommand;
+        public Command ChangeAuthTypeCommand
+        {
+            get => _changeAuthTypeCommand;
+            set => SetProperty(ref _changeAuthTypeCommand, value);
+        }
 
-        //SignUp commands
-        public RelayCommand<string> SetUsernameCommand { get; }
-        public RelayCommand<string> SetEmailCommand { get; }
-        public RelayCommand<string> SetPhoneCommand { get; }
-
-        public RelayCommand SignUpCommand { get; }
-
-        //SignIn commands
-        public RelayCommand<string> SetLoginCommand { get; }
-        public RelayCommand<string> SetPasswordCommand { get; }
-
-        public RelayCommand SignInCommand { get; }
+        Command _authCommand;
+        public Command AuthCommand
+        {
+            get => _authCommand;
+            set => SetProperty(ref _authCommand, value);
+        }
         #endregion
 
-        public AuthorizationViewModel()
+        public AuthorizationViewModel(IAuthorizationService authorizationService, INavigationService navigationService) : base(navigationService)
         {
-            SignInUserModel = new SignInUserModel
-            {
-                Login = "",
-                Password = "",
-                IsSuccess = false
-            };
+            AuthorizationService = authorizationService;
 
-            SetUsernameCommand = new RelayCommand<string>((parameter) => SetLogin(parameter));
-            SetPasswordCommand = new RelayCommand<string>((parameter) => SetPassword(parameter));
-            SignInCommand = new RelayCommand(execute: SignIn,
-                canExecute: CanSignIn);
+            AuthCommand = new Command(async () => await AuthAsync());
+            ChangeAuthTypeCommand = new Command(ChangeAuthType);
 
-            SignUpUserModel = new SignUpUserModel
-            {
-                Username = "",
-                Email = "",
-                Phone = "",
-                IsUsernameValid = false,
-                IsEmailValid = false,
-                IsPhoneValid = false
-            };
+            SignInModel = new SignInModel();
+            SignUpModel = new SignUpModel();
 
-            SetUsernameCommand = new RelayCommand<string>(execute: (parameter) => SetUsername(parameter));
-            SetEmailCommand = new RelayCommand<string>(execute: (parameter) => SetEmail(parameter));
-            SetPhoneCommand = new RelayCommand<string>(execute: (parameter) => SetPhone(parameter));
-            SignUpCommand = new RelayCommand(execute: async () => await SignUpAsync(),
-                canExecute: CanSignUp);
-
-            ChangeAuthTypeCommand = new RelayCommand(ChangeAuthType, CanChangeAuthType);
-            AuthType = "SignIn";
+            AuthType = AuthorizationTypes.SignIn;
             Message = "";
-            MessageColor = Color.Red;
-            IsMessageVisible = false;
-            IsButtonClicked = false;
-            RaiseCanExecuteChanged();
+            IsSuccess = false;
+            IsBusy = false;
         }
-
-        #region SignUp
-        private void SetUsername(string username)
+        
+        #region Metohds
+        private async Task AuthAsync()
         {
-            SignUpUserModel.Username = username;
-            if (username != "")
+            switch (AuthType)
             {
-                SignUpUserModel.IsUsernameValid = true;
-            }
-            else
-            {
-                SignUpUserModel.IsUsernameValid = false;
-            }
-        }
-
-        private void SetEmail(string email)
-        {
-            SignUpUserModel.Email = email;
-            string pattern = @"^([A-Za-z0-9_\.\-]+\@[A-Za-z]+\.[A-Za-z\.]+)$";
-            if(Regex.IsMatch(email, pattern))
-            {
-                SignUpUserModel.IsEmailValid = true;
-            }
-            else
-            {
-                SignUpUserModel.IsEmailValid = false;
-            }
-        }
-
-        private void SetPhone(string phone)
-        {
-            SignUpUserModel.Phone = phone;
-            string pattern = @"(^\+\d{12}$)|(^\d{10}$)";
-            if(Regex.IsMatch(phone, pattern))
-            {
-                SignUpUserModel.IsPhoneValid = true;
-            }
-            else
-            {
-                SignUpUserModel.IsPhoneValid = false;
+                case AuthorizationTypes.SignIn:
+                    {
+                        await SignInAsync();
+                        break;
+                    }
+                case AuthorizationTypes.SignUp:
+                    {
+                        await SignUpAsync();
+                        break;
+                    }
             }
         }
 
         private async Task SignUpAsync()
         {
-            IsButtonClicked = true;
-            RaiseCanExecuteChanged();
-
-            var connectivity = Connectivity.NetworkAccess;
-
-            if(connectivity != NetworkAccess.Internet)
-            {
-                Message = "Відсутній доступ до інтернету";
-                IsButtonClicked = false;
+            if (IsBusy)
                 return;
-            }
 
-            var client = new HttpClient();
+            IsBusy = true;
 
-            var content = new StringContent(JsonConvert.SerializeObject(SignUpUserModel));
-
-            var response = await client.PostAsync(@"https://dev.jointly.space/users", content);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                Message = "На вказаний E-mail надіслано посилання для активації вашого облікового запису!";
-                MessageColor = Color.Green;
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                Message = "Помилка! Щось пішло не так!";
-                MessageColor = Color.Red;
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
-            {
-                Message = "Такий користувач вже існує! Спробуйте іншу адресу та телефон";
-                MessageColor = Color.Red;
-            }
-            IsMessageVisible = true;
+                var response = await AuthorizationService.SignUpAsync(SignUpModel);
+                if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                {
+                    IsSuccess = true;
+                    Message = "На вказаний E-mail надіслано посилання для активації вашого облікового запису!";
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                {
+                    IsSuccess = false;
+                    Message = "Помилка! Щось пішло не так!";
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    IsSuccess = false;
+                    Message = "Такий користувач вже існує! Спробуйте іншу адресу та телефон";
+                }
 
-            IsButtonClicked = false;
-            RaiseCanExecuteChanged();
+                IsBusy = false;
+            });
         }
 
-        private bool CanSignUp()
+        private async Task SignInAsync()
         {
-            if (IsButtonClicked)
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+            Device.BeginInvokeOnMainThread(async () =>
             {
-                return false;
-            }
+                var response = await AuthorizationService.SignInAsync(SignInModel);
 
-            if (SignUpUserModel.Username == "" ||
-                SignUpUserModel.Email == "" ||
-                SignUpUserModel.Phone == "")
-            {
-                Message = "Заповніть усі поля!";
-                return false;
-            }
-            if (!SignUpUserModel.IsUsernameValid ||
-                !SignUpUserModel.IsEmailValid ||
-                !SignUpUserModel.IsPhoneValid)
-            {
-                return false;
-            }
+                if (response.IsSuccessStatusCode)
+                {
+                    await NavigationService.NavigateAsync("MainPage");
+                }
 
-            return true;
+                IsBusy = false;
+            });
         }
-        #endregion
-
-        #region SignIn
-        private void SetLogin(string login)
-        {
-            SignInUserModel.Login = login;
-            SignInCommand.RaiseCanExecuteChanged();
-        }
-
-        private void SetPassword(string password)
-        {
-            SignInUserModel.Password = password;
-            SignInCommand.RaiseCanExecuteChanged();
-        }
-
-        private void SignIn()
-        {
-            IsButtonClicked = true;
-            RaiseCanExecuteChanged();
-        }
-
-        private bool CanSignIn()
-        {
-            if (IsButtonClicked)
-            {
-                return false;
-            }
-
-            if(SignInUserModel.Login == "" ||
-                SignInUserModel.Password == "")
-            {
-                return false;
-            }
-            return true;
-        }
-        #endregion
 
         private void ChangeAuthType()
         {
-            RaiseCanExecuteChanged();
-            if (AuthType == "SignIn")
+            if (IsBusy)
             {
-                AuthType = "SignUp";
+                return;
             }
-            else if (AuthType == "SignUp")
+            switch (AuthType)
             {
-                AuthType = "SignIn";
+                case AuthorizationTypes.SignIn:
+                    AuthType = AuthorizationTypes.SignUp;
+                    break;
+                case AuthorizationTypes.SignUp:
+                    AuthType = AuthorizationTypes.SignIn;
+                    break;
+                default:
+                    break;
             }
-            RaiseCanExecuteChanged();
         }
-        
-        private bool CanChangeAuthType()
-        {
-            return !IsButtonClicked;
-        }
+        #endregion
 
-        private void RaiseCanExecuteChanged()
-        {
-            SignInCommand.RaiseCanExecuteChanged();
-            SignUpCommand.RaiseCanExecuteChanged();
-            ChangeAuthTypeCommand.RaiseCanExecuteChanged();
-        }
     }
 }

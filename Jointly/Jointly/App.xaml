@@ -1,8 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Application xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Jointly.App">
+<dryioc:PrismApplication
+    xmlns:dryioc="clr-namespace:Prism.DryIoc;assembly=Prism.DryIoc.Forms"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="Jointly.App">
     <Application.Resources>
+        <Style x:Key="EntryStyle" TargetType="Entry">
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="Text" Value=""/>
+            <Setter Property="Visual" Value="Material"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+        </Style>
 
+        <Style x:Key="LabelStyle" TargetType="Label">
+            
+        </Style>
     </Application.Resources>
-</Application>
+</dryioc:PrismApplication>

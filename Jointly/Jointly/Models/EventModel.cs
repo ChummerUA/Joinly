@@ -1,26 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using Prism.Mvvm;
+using System;
 using Xamarin.Forms.Maps;
 
 namespace Jointly.Models
 {
-    public class EventModel : INotifyPropertyChanged
+    public class EventModel : BindableBase
     {
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string name)
-        {
-            var changed = PropertyChanged;
-            if(changed != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        #endregion
-
         #region variables
         string eventName;
         string eventInfo;
@@ -30,82 +15,42 @@ namespace Jointly.Models
         Position position;
         #endregion
 
+        #region Properties
         public string EventName
         {
-            get { return eventName; }
-            set
-            {
-                if (eventName != value)
-                {
-                    eventName = value;
-                    OnPropertyChanged("EventName");
-                }
-            }
+            get => eventName;
+            set => SetProperty(ref eventName, value);
         }
 
         public string EventInfo
         {
-            get { return eventInfo; }
-            set
-            {
-                if(eventInfo != value)
-                {
-                    eventInfo = value;
-                    OnPropertyChanged("EventInfo");
-                }
-            }
+            get => eventInfo;
+            set => SetProperty(ref eventInfo, value);
         }
 
         public DateTime Date
         {
-            get { return date; }
-            set
-            {
-                if(date != value)
-                {
-                    date = value;
-                    OnPropertyChanged("Date");
-                }
-            }
+            get => date;
+            set => SetProperty(ref date, value);
         }
 
         public TimeSpan BeginningTime
         {
-            get { return beginningTime; }
-            set
-            {
-                if(beginningTime != value)
-                {
-                    beginningTime = value;
-                    OnPropertyChanged("BeginningTime");
-                }
-            }
+            get => beginningTime;
+            set => SetProperty(ref beginningTime, value);
         }
 
         public TimeSpan EndingTime
         {
-            get { return endingTime; }
-            set
-            {
-                if(endingTime != value)
-                {
-                    endingTime = value;
-                    OnPropertyChanged("EndingTime");
-                }
-            }
+            get => endingTime;
+            set => SetProperty(ref endingTime, value);
         }
 
         public Position Position
         {
-            get { return position; }
-            set
-            {
-                if(position != value)
-                {
-                    position = value;
-                    OnPropertyChanged("Position");
-                }
-            }
+            get => position;
+            set => SetProperty(ref position, value);
         }
+        #endregion
     }
 }

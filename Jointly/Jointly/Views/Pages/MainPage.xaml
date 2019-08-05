@@ -1,11 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:customui="clr-namespace:Jointly.CustomUI"
-             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
-             x:Class="Jointly.Views.MainPage"
-             Visual="Material"
-             x:Name="Page">
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:customui="clr-namespace:Jointly.Views.CustomUI"
+             mc:Ignorable="d"
+             x:Class="Jointly.Views.Pages.MainPage"
+             Title="{Binding Title}">
     <ContentPage.Resources>
         <Style TargetType="ImageButton">
             <Setter Property="Source" Value="baseline_add_white_36dp"/>
@@ -28,8 +29,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <maps:Map VerticalOptions="FillAndExpand"
-                      HorizontalOptions="FillAndExpand"/>
+            <customui:CustomMap VerticalOptions="FillAndExpand"
+                                HorizontalOptions="FillAndExpand"/>
             <Frame>
                 <ImageButton x:Name="SetEventButton"/>
             </Frame>

@@ -5,7 +5,7 @@ using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace Jointly.CustomUI
+namespace Jointly.Views.CustomUI
 {
     public class CustomMap : Map
     {

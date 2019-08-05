@@ -1,4 +1,5 @@
 ﻿using Jointly.Models;
+using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -6,37 +7,17 @@ using System.Text;
 
 namespace Jointly.ViewModels
 {
-    public class SetEventViewModel : INotifyPropertyChanged
+    public class SetEventViewModel : BaseViewModel
     {
-        #region PropertyChanged
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        private void OnPropertyChanged(string name)
-        {
-            var changed = PropertyChanged;
-            if(changed != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(name));
-            }
-        }
-        #endregion
-
         EventModel @event;
 
         public EventModel Event
         {
-            get { return @event; }
-            set
-            {
-                if(@event != value)
-                {
-                    @event = value;
-                    OnPropertyChanged("Event");
-                }
-            }
+            get => @event;
+            set => SetProperty(ref @event, value);
         }
 
-        public SetEventViewModel()
+        public SetEventViewModel(INavigationService navigationService) : base(navigationService)
         {
             var begin = DateTime.Now.TimeOfDay;
             var end = begin + new TimeSpan(1, 0, 0);
