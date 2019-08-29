@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Jointly.Services
+namespace Jointly.Interfaces
 {
     public interface ISessionService
     {

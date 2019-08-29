@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Jointly.Views.Effects
+namespace Jointly.Effects
 {
     class NoUnderlineEffect : RoutingEffect
     {

@@ -5,19 +5,10 @@ using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace Jointly.Views.CustomUI
+namespace Jointly.Controls
 {
     public class CustomMap : Map
     {
-        public Page Parent
-        {
-            get { return (Page)GetValue(ParentProperty); }
-            set
-            {
-                SetValue(ParentProperty, value);
-            }
-        }
-
         public CustomPin SelectedEventPin
         {
             get { return (CustomPin)GetValue(SelectedEventPinProperty); }

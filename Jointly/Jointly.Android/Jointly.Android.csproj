@@ -85,12 +85,11 @@
   <ItemGroup>
     <Compile Include="Effects\NoUnderlineEffect.cs" />
     <Compile Include="MainActivity.cs" />
-    <Compile Include="Renderers\CustomFrameRenderer.cs" />
     <Compile Include="Renderers\CustomMapRenderer.cs" />
     <Compile Include="Renderers\VideoRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\SessionService_Droid.cs" />
+    <Compile Include="Services\Localize_Droid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

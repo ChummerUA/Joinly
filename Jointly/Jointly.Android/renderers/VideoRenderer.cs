@@ -13,7 +13,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Jointly.Droid.Renderers;
-using Jointly.Views.CustomUI;
+using Jointly.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
@@ -161,43 +161,18 @@ namespace Jointly.Droid.Renderers
                     ViewGroup.LayoutParams.MatchParent),
                 };
 
-                if (Build.VERSION.SdkInt < BuildVersionCodes.IceCreamSandwich)
+                var textureView = new TextureView(Context)
                 {
+                    //Background = new ColorDrawable(Xamarin.Forms.Color.Transparent.ToAndroid()),
+                    Visibility = ViewStates.Gone,
+                    LayoutParameters = new LayoutParams(
+                    ViewGroup.LayoutParams.MatchParent,
+                    ViewGroup.LayoutParams.MatchParent),
+                };
 
-                    var videoView = new VideoView(Context)
-                    {
-                        Background = new ColorDrawable(Xamarin.Forms.Color.Transparent.ToAndroid()),
-                        Visibility = ViewStates.Gone,
-                        LayoutParameters = new LayoutParams(
-                        ViewGroup.LayoutParams.MatchParent,
-                        ViewGroup.LayoutParams.MatchParent),
-                    };
+                textureView.SurfaceTextureListener = this;
 
-                    ISurfaceHolder holder = videoView.Holder;
-                    if (Build.VERSION.SdkInt < BuildVersionCodes.Honeycomb)
-                    {
-                        holder.SetType(SurfaceType.PushBuffers);
-                    }
-                    holder.AddCallback(this);
-
-                    _mainVideoView = videoView;
-                }
-                else
-                {
-
-                    var textureView = new TextureView(Context)
-                    {
-                        //Background = new ColorDrawable(Xamarin.Forms.Color.Transparent.ToAndroid()),
-                        Visibility = ViewStates.Gone,
-                        LayoutParameters = new LayoutParams(
-                        ViewGroup.LayoutParams.MatchParent,
-                        ViewGroup.LayoutParams.MatchParent),
-                    };
-
-                    textureView.SurfaceTextureListener = this;
-
-                    _mainVideoView = textureView;
-                }
+                _mainVideoView = textureView;
 
                 _mainFrameLayout.AddView(_mainVideoView);
                 _mainFrameLayout.AddView(_placeholder);

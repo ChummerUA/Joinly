@@ -1,4 +1,5 @@
-﻿using Jointly.Models;
+﻿using Jointly.Interfaces;
+using Jointly.Models;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using System;
@@ -86,7 +87,7 @@ namespace Jointly.Services
             }
             if(result.StatusCode != System.Net.HttpStatusCode.RequestTimeout)
             {
-                LogoutAsync();
+                await LogoutAsync();
             }
             return result;
         }

@@ -1,5 +1,5 @@
 ﻿using Jointly.Models;
-using Jointly.Views.CustomUI;
+using Jointly.Controls;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;

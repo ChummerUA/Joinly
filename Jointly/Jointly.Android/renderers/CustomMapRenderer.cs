@@ -15,9 +15,8 @@ using Xamarin.Forms.Maps.Android;
 using Xamarin.Forms.Maps;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
-using Jointly.Views;
-using Jointly.Views.CustomUI;
-using Jointly.Views.Pages;
+using Jointly.Controls;
+using Jointly.Pages;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
 namespace Jointly.Droid.Renderers
@@ -58,7 +57,7 @@ namespace Jointly.Droid.Renderers
             var position = new Position(marker.Position.Latitude, marker.Position.Longitude);
 
             var map = Element as Xamarin.Forms.Maps.Map;
-            var page = map.Parent.Parent as MainPage;
+            //var page = map.Parent.Parent as MainPage;
 
             //page.ShowEventInfo(position);
         }

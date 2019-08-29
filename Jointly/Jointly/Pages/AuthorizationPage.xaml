@@ -3,12 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:customui="clr-namespace:Jointly.Views.CustomUI"
+             xmlns:controls="clr-namespace:Jointly.Controls"
              xmlns:viewmodels="clr-namespace:Jointly.ViewModels"
              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              mc:Ignorable="d"
              x:Name="Page"
-             x:Class="Jointly.Views.Pages.AuthorizationPage">
+             x:Class="Jointly.Pages.AuthorizationPage">
     <ContentPage.Resources>
         <Style TargetType="Entry">
             <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
@@ -20,7 +20,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <customui:Video 
+            <controls:Video 
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 Source="Videos/background.mp4"
@@ -149,8 +149,10 @@
                         </Entry>
                     </Grid>
 
-                    <Label Text="{Binding Message}"
-                           Grid.Row="1">
+                    <Label 
+                        Grid.Row="1"
+                        Text="1 "
+                        IsVisible="{Binding Message, Converter={StaticResource StringNotEmptyConverter}}">
                         <Label.Triggers>
                             <DataTrigger TargetType="Label" Binding="{Binding IsSuccess}" Value="False">
                                 <Setter Property="TextColor" Value="Red"/>

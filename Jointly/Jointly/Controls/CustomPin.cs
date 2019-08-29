@@ -5,7 +5,7 @@ using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 
-namespace Jointly.Views.CustomUI
+namespace Jointly.Controls
 {
     public class CustomPin : Pin
     {

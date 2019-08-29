@@ -1,27 +1,16 @@
-﻿using Jointly.Models;
-using Jointly.Services;
-using Newtonsoft.Json;
+﻿using Jointly.Interfaces;
+using Jointly.Models;
 using Prism.Commands;
 using Prism.Navigation;
-using System;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Jointly.ViewModels
 {
-    public enum AuthorizationTypes
-    {
-        SignIn,
-        SignUp
-    };
-
     public class AuthorizationViewModel : BaseViewModel
     {
         #region Properties
-        protected IAuthorizationService AuthorizationService { get; }
 
         SignInModel signInModel;
         public SignInModel SignInModel
@@ -57,13 +46,11 @@ namespace Jointly.ViewModels
             get => isSuccess;
             set => SetProperty(ref isSuccess, value);
         }
+        #endregion
 
-        bool isBusy;
-        private bool IsBusy
-        {
-            get => isBusy;
-            set => SetProperty(ref isBusy, value);
-        }        
+        #region services
+        protected IAuthorizationService AuthorizationService { get; }
+
         #endregion
 
         #region Commands
@@ -95,7 +82,6 @@ namespace Jointly.ViewModels
             AuthType = AuthorizationTypes.SignIn;
             Message = "";
             IsSuccess = false;
-            IsBusy = false;
         }
         
         #region Metohds
@@ -129,17 +115,14 @@ namespace Jointly.ViewModels
                 if (response.StatusCode == System.Net.HttpStatusCode.Created)
                 {
                     IsSuccess = true;
-                    Message = "На вказаний E-mail надіслано посилання для активації вашого облікового запису!";
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
                     IsSuccess = false;
-                    Message = "Помилка! Щось пішло не так!";
                 }
                 else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
                 {
                     IsSuccess = false;
-                    Message = "Такий користувач вже існує! Спробуйте іншу адресу та телефон";
                 }
 
                 IsBusy = false;
@@ -186,4 +169,11 @@ namespace Jointly.ViewModels
         #endregion
 
     }
+
+    public enum AuthorizationTypes
+    {
+        SignIn,
+        SignUp
+    };
+
 }

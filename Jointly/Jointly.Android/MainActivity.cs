@@ -10,6 +10,8 @@ using Xamarin.Forms;
 using Prism;
 using Prism.Ioc;
 using Jointly.Services;
+using Jointly.Interfaces;
+using Jointly.Droid.Services;
 
 namespace Jointly.Droid
 {
@@ -41,7 +43,7 @@ namespace Jointly.Droid
     {
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<ILocalize, Localize_Droid>();
         }
     }
 }

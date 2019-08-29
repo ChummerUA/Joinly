@@ -9,7 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
-namespace Jointly.Views.Pages
+namespace Jointly.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SetEventPage : ContentPage
@@ -56,7 +56,7 @@ namespace Jointly.Views.Pages
         protected override void OnAppearing()
         {
             var position = new Position(50.619900, 26.251617);
-            Map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMeters(500)));
+            //Map.MoveToRegion(MapSpan.FromCenterAndRadius(position, Distance.FromMeters(500)));
             base.OnAppearing();
         }
     }

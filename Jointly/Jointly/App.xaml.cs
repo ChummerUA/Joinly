@@ -1,7 +1,7 @@
-﻿using Jointly.Services;
+﻿using Jointly.Interfaces;
+using Jointly.Services;
 using Jointly.ViewModels;
-using Jointly.Views;
-using Jointly.Views.Pages;
+using Jointly.Pages;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;

@@ -24,10 +24,7 @@ namespace Jointly.Droid.Effects
         {
             try
             {
-                var drawable = new GradientDrawable();
-                drawable.SetColor(global::Android.Graphics.Color.Transparent);
-
-                Control.SetBackgroundDrawable(drawable);
+                Control.Background = null;
             }
             catch
             {

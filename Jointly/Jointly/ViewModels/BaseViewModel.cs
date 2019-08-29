@@ -10,9 +10,28 @@ namespace Jointly.ViewModels
     {
         protected INavigationService NavigationService { get; }
 
+        private bool _isBusy;
+        public bool IsBusy
+        {
+            get => _isBusy;
+            set => SetProperty(ref _isBusy, value);
+        }
+
+        private bool _isInitialized;
+        public bool IsInitialized
+        {
+            get => _isInitialized;
+            set => SetProperty(ref _isInitialized, value);
+        }
+
         public BaseViewModel(INavigationService navigationService)
         {
             NavigationService = navigationService;
+        }
+
+        public void Init(INavigationParameters parameters)
+        {
+
         }
 
         public void OnNavigatedFrom(INavigationParameters parameters)
