@@ -17,7 +17,7 @@ namespace Jointly.Extensions
     public class TranslateExtension : IMarkupExtension
     {
         readonly CultureInfo ci = null;
-        const string ResourceId = "UsingResxLocalization.Resx.AppResources";
+        const string ResourceId = "Jointly.Localization.Localization";
 
         static readonly Lazy<ResourceManager> ResMgr = new Lazy<ResourceManager>(
             () => new ResourceManager(ResourceId, IntrospectionExtensions.GetTypeInfo(typeof(TranslateExtension)).Assembly));

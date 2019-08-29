@@ -119,12 +119,12 @@
     <value>Phone</value>
   </data>
   <data name="Authorization_Success" xml:space="preserve">
-    <value></value>
+    <value>Check your email for confirmation message!</value>
   </data>
   <data name="Authorization_Exist" xml:space="preserve">
-    <value></value>
+    <value>User already exist! Try another address and phone!</value>
   </data>
   <data name="Authorization_Error" xml:space="preserve">
-    <value></value>
+    <value>Error! Something went wrong!</value>
   </data>
 </root>

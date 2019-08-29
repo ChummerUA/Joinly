@@ -5,13 +5,13 @@ using Xamarin.Forms;
 
 namespace Jointly.Controls
 {
-    public class Video : View
+    public class VideoView : View
     {
         public static readonly BindableProperty SourceProperty =
             BindableProperty.Create(
             nameof(Source),
             typeof(string),
-            typeof(Video),
+            typeof(VideoView),
             string.Empty,
             BindingMode.TwoWay);
 
@@ -25,7 +25,7 @@ namespace Jointly.Controls
             BindableProperty.Create(
             nameof(Loop),
             typeof(bool),
-            typeof(Video),
+            typeof(VideoView),
             true,
             BindingMode.TwoWay);
 

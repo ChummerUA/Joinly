@@ -3,6 +3,7 @@ using Jointly.Models;
 using Prism.Commands;
 using Prism.Navigation;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -12,69 +13,58 @@ namespace Jointly.ViewModels
     {
         #region Properties
 
-        SignInModel signInModel;
+        private SignInModel _signInModel;
         public SignInModel SignInModel
         {
-            get => signInModel;
-            set => SetProperty(ref signInModel, value);
+            get => _signInModel;
+            set => SetProperty(ref _signInModel, value);
         }
 
-        SignUpModel signUpModel;
+        private SignUpModel _signUpModel;
         public SignUpModel SignUpModel
         {
-            get => signUpModel;
-            set => SetProperty(ref signUpModel, value);
+            get => _signUpModel;
+            set => SetProperty(ref _signUpModel, value);
         }
 
-        AuthorizationTypes authType;
+        private AuthorizationTypes _authType;
         public AuthorizationTypes AuthType
         {
-            get => authType;
-            set => SetProperty(ref authType, value);
+            get => _authType;
+            set => SetProperty(ref _authType, value);
         }
 
-        string message;
+        private string _message;
         public string Message
         {
-            get => message;
-            set => SetProperty(ref message, value);
+            get => _message;
+            set => SetProperty(ref _message, value);
         }
 
-        bool isSuccess;
+        private bool _isSuccess;
         public bool IsSuccess
         {
-            get => isSuccess;
-            set => SetProperty(ref isSuccess, value);
+            get => _isSuccess;
+            set => SetProperty(ref _isSuccess, value);
         }
         #endregion
 
         #region services
-        protected IAuthorizationService AuthorizationService { get; }
+        private IAuthorizationService AuthorizationService { get; }
 
         #endregion
 
         #region Commands
-        Command _changeAuthTypeCommand;
-        public Command ChangeAuthTypeCommand
-        {
-            get => _changeAuthTypeCommand;
-            set => SetProperty(ref _changeAuthTypeCommand, value);
-        }
+        private ICommand _changeAuthTypeCommand;
+        public ICommand ChangeAuthTypeCommand => _changeAuthTypeCommand = _changeAuthTypeCommand ?? new Command(ChangeAuthType);
 
-        Command _authCommand;
-        public Command AuthCommand
-        {
-            get => _authCommand;
-            set => SetProperty(ref _authCommand, value);
-        }
+        private ICommand _authCommand;
+        public ICommand AuthCommand => _authCommand = _authCommand ?? new Command(async () => await AuthAsync());
         #endregion
 
         public AuthorizationViewModel(IAuthorizationService authorizationService, INavigationService navigationService) : base(navigationService)
         {
             AuthorizationService = authorizationService;
-
-            AuthCommand = new Command(async () => await AuthAsync());
-            ChangeAuthTypeCommand = new Command(ChangeAuthType);
 
             SignInModel = new SignInModel();
             SignUpModel = new SignUpModel();
@@ -83,7 +73,17 @@ namespace Jointly.ViewModels
             Message = "";
             IsSuccess = false;
         }
-        
+
+        #region override
+
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            IsBusy = false;
+        }
+
+        #endregion
+
         #region Metohds
         private async Task AuthAsync()
         {

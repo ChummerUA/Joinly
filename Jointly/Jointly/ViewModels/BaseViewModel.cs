@@ -3,6 +3,7 @@ using Prism.Navigation;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Jointly.ViewModels
 {
@@ -29,21 +30,19 @@ namespace Jointly.ViewModels
             NavigationService = navigationService;
         }
 
-        public void Init(INavigationParameters parameters)
-        {
-
-        }
-
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public virtual async Task Init(INavigationParameters parameters)
         {
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
-        {
-        }
+        public virtual void OnNavigatedFrom(INavigationParameters parameters) { }
 
-        public void OnNavigatingTo(INavigationParameters parameters)
+        public virtual async void OnNavigatedTo(INavigationParameters parameters)
         {
+            IsBusy = true;
+            if (!IsInitialized)
+            {
+                await Init(parameters);
+            }
         }
     }
 }

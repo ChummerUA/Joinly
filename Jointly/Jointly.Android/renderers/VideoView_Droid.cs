@@ -16,15 +16,16 @@ using Jointly.Droid.Renderers;
 using Jointly.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using VideoView = Jointly.Controls.VideoView;
 
-[assembly: ExportRenderer(typeof(Video), typeof(VideoRenderer))]
+[assembly: ExportRenderer(typeof(VideoView), typeof(VideoView_Droid))]
 namespace Jointly.Droid.Renderers
 {
-    class VideoRenderer : ViewRenderer<Video, FrameLayout>,
+    class VideoView_Droid : ViewRenderer<VideoView, FrameLayout>,
         TextureView.ISurfaceTextureListener,
         ISurfaceHolderCallback
     {
-        public VideoRenderer(Context context) : base(context) { }
+        public VideoView_Droid(Context context) : base(context) { }
 
         private bool _isCompletionSubscribed = false;
 
@@ -145,7 +146,7 @@ namespace Jointly.Droid.Renderers
             textureView.SetTransform(txform);
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Video> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<VideoView> e)
         {
             base.OnElementChanged(e);
 
@@ -207,12 +208,12 @@ namespace Jointly.Droid.Renderers
             if (Element == null || Control == null)
                 return;
 
-            if (e.PropertyName == Video.SourceProperty.PropertyName)
+            if (e.PropertyName == VideoView.SourceProperty.PropertyName)
             {
                 Console.WriteLine("Play video: " + Element.Source);
                 PlayVideo(Element.Source);
             }
-            else if (e.PropertyName == Video.LoopProperty.PropertyName)
+            else if (e.PropertyName == VideoView.LoopProperty.PropertyName)
             {
                 Console.WriteLine("Is Looping? " + Element.Loop);
                 VideoPlayer.Looping = Element.Loop;

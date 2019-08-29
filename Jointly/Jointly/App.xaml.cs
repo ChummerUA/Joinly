@@ -9,6 +9,7 @@ using System;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Jointly.Helpers;
 
 namespace Jointly
 {
@@ -18,7 +19,12 @@ namespace Jointly
 
         public App() : this(null){ }
 
-        public App(IPlatformInitializer platformInitializer) : base(platformInitializer) { }
+        public App(IPlatformInitializer platformInitializer) : base(platformInitializer)
+        {
+            //var localize = ServiceResolver.Get<ILocalize>();
+            //var ci = localize.GetCurrentCultureInfo();
+            //localize.SetLocale(ci);
+        }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {

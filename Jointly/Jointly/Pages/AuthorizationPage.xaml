@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:Jointly.Controls"
              xmlns:viewmodels="clr-namespace:Jointly.ViewModels"
              xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:ext="clr-namespace:Jointly.Extensions"
              mc:Ignorable="d"
              x:Name="Page"
              x:Class="Jointly.Pages.AuthorizationPage">
@@ -20,7 +21,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <controls:Video 
+            <controls:VideoView 
                 VerticalOptions="FillAndExpand"
                 HorizontalOptions="FillAndExpand"
                 Source="Videos/background.mp4"
@@ -45,16 +46,23 @@
                         <RowDefinition Height="auto"/>
                     </Grid.RowDefinitions>
                     <Grid
-                        Grid.Row="0">
+                        Grid.Row="0"
+                        IsVisible="False">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <Grid.Triggers>
-                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
+                            <DataTrigger 
+                                TargetType="Grid"
+                                Binding="{Binding AuthType}"
+                                Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
                                 <Setter Property="IsVisible" Value="True"/>
                             </DataTrigger>
-                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
+                            <DataTrigger 
+                                TargetType="Grid"
+                                Binding="{Binding AuthType}"
+                                Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
                                 <Setter Property="IsVisible" Value="False"/>
                             </DataTrigger>
                         </Grid.Triggers>
@@ -62,7 +70,7 @@
                         <Entry 
                             Grid.Row="0"
                             Text="{Binding SignInModel.Login, FallbackValue=''}"
-                            Placeholder=""
+                            Placeholder="{ext:Translate Authorization_Login}"
                             ReturnType="Next"
                             ReturnCommandParameter="{Binding Source={x:Reference PasswordEntry}}"
                             Completed="Entry_Completed"/>
@@ -71,13 +79,14 @@
                             x:Name="PasswordEntry"
                             Grid.Row="1"
                             Text="{Binding SignInModel.Password, FallbackValue=''}"
-                            Placeholder=""
+                            Placeholder="{ext:Translate Authorization_Password}"
                             IsPassword="True"
                             ReturnType="Done"/>
                     </Grid>
 
                     <Grid
-                        Grid.Row="0">
+                        Grid.Row="0"
+                        IsVisible="False">
                         <Grid.RowDefinitions>
                             <RowDefinition/>
                             <RowDefinition/>
@@ -95,7 +104,7 @@
                         <Entry 
                             Grid.Row="0"
                             Text="{Binding SignUpModel.Username, FallbackValue=''}"
-                            Placeholder=""
+                            Placeholder="{ext:Translate Authorization_Username}"
                             ReturnType="Next"
                             ReturnCommandParameter="{Binding Source={x:Reference EmailEntry}}"
                             Completed="Entry_Completed">
@@ -113,7 +122,7 @@
                             x:Name="EmailEntry"
                             Grid.Row="1"
                             Text="{Binding SignUpModel.Email, FallbackValue=''}"
-                            Placeholder=""
+                            Placeholder="{ext:Translate Authorization_Email}"
                             Keyboard="Email"
                             ReturnType="Next"
                             ReturnCommandParameter="{Binding Source={x:Reference PhoneEntry}}"
@@ -132,7 +141,7 @@
                             x:Name="PhoneEntry"
                             Grid.Row="2"
                             Text="{Binding SignUpModel.Phone, FallbackValue=''}"
-                            Placeholder=""
+                            Placeholder="{ext:Translate Authorization_Phone}"
                             Keyboard="Telephone"
                             ReturnType="Done"
                             ReturnCommand="{Binding AuthCommand}"
@@ -149,7 +158,7 @@
                         </Entry>
                     </Grid>
 
-                    <Label 
+                    <!--<Label 
                         Grid.Row="1"
                         Text="1 "
                         IsVisible="{Binding Message, Converter={StaticResource StringNotEmptyConverter}}">
@@ -161,21 +170,49 @@
                                 <Setter Property="TextColor" Value="Green"/>
                             </DataTrigger>
                         </Label.Triggers>
-                    </Label>
+                    </Label>-->
 
                     <Button
                         Grid.Row="2"
                         BackgroundColor="DarkBlue"
+                        TextColor="Yellow"
                         CornerRadius="5"
-                        Command="{Binding AuthCommand}">
-                        
+                        Command="{Binding AuthCommand}"
+                        Margin="0, 10, 0, 0">
+                        <Button.Triggers>
+                            <DataTrigger
+                                TargetType="Button"
+                                Binding="{Binding AuthType}"
+                                Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
+                                <Setter Property="Text" Value="{ext:Translate Authorization_SignIn}"/>
+                            </DataTrigger>
+                            <DataTrigger
+                                TargetType="Button"
+                                Binding="{Binding AuthType}"
+                                Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
+                                <Setter Property="Text" Value="{ext:Translate Authorization_SignUp}"/>
+                            </DataTrigger>
+                        </Button.Triggers>
                     </Button>
                     <Button 
                         Grid.Row="3"
                         BackgroundColor="Transparent"
                         Command="{Binding ChangeAuthTypeCommand}"
-                        Text="Test"
                         TextColor="DarkSlateGray">
+                        <Button.Triggers>
+                            <DataTrigger
+                                TargetType="Button"
+                                Binding="{Binding AuthType}"
+                                Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
+                                <Setter Property="Text" Value="{ext:Translate Authorization_SignUp}"/>
+                            </DataTrigger>
+                            <DataTrigger
+                                TargetType="Button"
+                                Binding="{Binding AuthType}"
+                                Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
+                                <Setter Property="Text" Value="{ext:Translate Authorization_SignIn}"/>
+                            </DataTrigger>
+                        </Button.Triggers>
                     </Button>
                 </Grid>
             </pancakeview:PancakeView>

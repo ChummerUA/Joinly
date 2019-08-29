@@ -70,7 +70,7 @@ namespace Jointly.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Error! Something went wrong!.
         /// </summary>
         internal static string Authorization_Error {
             get {
@@ -79,7 +79,7 @@ namespace Jointly.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to User already exist! Try another address and phone!.
         /// </summary>
         internal static string Authorization_Exist {
             get {
@@ -133,7 +133,7 @@ namespace Jointly.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Check your email for confirmation message!.
         /// </summary>
         internal static string Authorization_Success {
             get {

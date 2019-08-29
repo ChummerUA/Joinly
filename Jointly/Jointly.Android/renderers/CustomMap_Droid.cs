@@ -18,12 +18,12 @@ using Android.Gms.Maps.Model;
 using Jointly.Controls;
 using Jointly.Pages;
 
-[assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
+[assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMap_Droid))]
 namespace Jointly.Droid.Renderers
 {
-    public class CustomMapRenderer : MapRenderer
+    public class CustomMap_Droid : MapRenderer
     {
-        public CustomMapRenderer(Context context) : base(context)
+        public CustomMap_Droid(Context context) : base(context)
         {
 
         }

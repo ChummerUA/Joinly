@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:effects="clr-namespace:Jointly.Effects"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              mc:Ignorable="d"
              x:Class="Jointly.Pages.SetEventPage"
@@ -112,18 +111,12 @@
                            Grid.Row="0"
                            Grid.Column="1"
                            Text="{Binding EventName}">
-                        <Entry.Effects>
-                            <effects:NoUnderlineEffect/>
-                        </Entry.Effects>
                     </Entry>
                     <Editor Placeholder="Додатково"
                             Style="{StaticResource Editor}"
                             Grid.Row="1"
                             Grid.Column="1"
                             Text="{Binding EventInfo}">
-                        <Editor.Effects>
-                            <effects:NoUnderlineEffect/>
-                        </Editor.Effects>
                     </Editor>
                 </Grid>
 
@@ -140,26 +133,17 @@
                            Source="baseline_schedule_black_36dp"/>
                     <DatePicker Style="{StaticResource DatePicker}"
                                 Grid.Column="1"
-                                Date="{Binding Date}">
-                        <DatePicker.Effects>
-                            <effects:NoUnderlineEffect/>
-                        </DatePicker.Effects>
-                    </DatePicker>
+                                Date="{Binding Date}"/>
+
                     <StackLayout Grid.Column="2">
                         <TimePicker x:Name="BeginningTimePicker"
                                     Style="{StaticResource TimePicker}"
-                                    Time="{Binding BeginningTime}">
-                            <TimePicker.Effects>
-                                <effects:NoUnderlineEffect/>
-                            </TimePicker.Effects>
-                        </TimePicker>
+                                    Time="{Binding BeginningTime}"/>
+
                         <TimePicker x:Name="EndingTimePicker"
                                     Style="{StaticResource TimePicker}"
-                                    Time="{Binding EndingTime}">
-                            <TimePicker.Effects>
-                                <effects:NoUnderlineEffect/>
-                            </TimePicker.Effects>
-                        </TimePicker>
+                                    Time="{Binding EndingTime}"/>
+
                     </StackLayout>
                 </Grid>
             </StackLayout>
