@@ -6,34 +6,26 @@
              xmlns:controls="clr-namespace:Jointly.Controls"
              mc:Ignorable="d"
              x:Class="Jointly.Pages.MainPage"
-             Title="{Binding Title}">
+             Title="{Binding Title}"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Resources>
         <Style TargetType="ImageButton">
             <Setter Property="Source" Value="baseline_add_white_36dp"/>
-            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="BackgroundColor" Value="Gray"/>
             <Setter Property="WidthRequest" Value="40"/>
             <Setter Property="HeightRequest" Value="40"/>
-        </Style>
-        <Style TargetType="Frame">
-            <Setter Property="HeightRequest" Value="40"/>
-            <Setter Property="WidthRequest" Value="40"/>
-            <Setter Property="CornerRadius" Value="20"/>
-            <Setter Property="VerticalOptions" Value="End"/>
+            <Setter Property="VerticalOptions" Value="EndAndExpand"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
-            <Setter Property="Margin" Value="0, 0, 0, 15"/>
-            <Setter Property="Padding" Value="0"/>
-            <Setter Property="BackgroundColor">
-                #C70039
-            </Setter>
+            <Setter Property="Margin" Value="0, 0, 0, 20"/>
         </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <controls:CustomMap VerticalOptions="FillAndExpand"
-                                HorizontalOptions="FillAndExpand"/>
-            <Frame>
-                <ImageButton x:Name="SetEventButton"/>
-            </Frame>
+            <controls:CustomMap 
+                VerticalOptions="FillAndExpand"
+                HorizontalOptions="FillAndExpand"/>
+            <ImageButton
+                Command="{Binding NewEventCommand}"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

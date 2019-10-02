@@ -143,30 +143,35 @@ namespace Jointly.ViewModels
 
         private async Task SignInAsync()
         {
-            if (IsBusy)
-                return;
-            if(await SignInModel.Login.Validate("") &&
-                await SignInModel.Password.Validate(""))
-            {
-                return;
-            }
+            await NavigationService.NavigateAsync("NavigationPage/MainPage");
 
-            IsBusy = true;
-            Device.BeginInvokeOnMainThread(async () =>
-            {
-                var response = await AuthorizationService.SignInAsync(SignInModel);
+            //Uncomment when auth api will be ready
 
-                if (response.IsSuccessStatusCode)
-                {
-                    await NavigationService.NavigateAsync("MainPage");
-                }
-                else
-                {
-                    await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
-                }
+            //if (IsBusy)
+            //    return;
+            //if(await SignInModel.Login.Validate("") &&
+            //    await SignInModel.Password.Validate(""))
+            //{
+            //    return;
+            //}
 
-                IsBusy = false;
-            });
+            //IsBusy = true;
+
+            //Device.BeginInvokeOnMainThread(async () =>
+            //{
+            //    var response = await AuthorizationService.SignInAsync(SignInModel);
+
+            //    if (response.IsSuccessStatusCode)
+            //    {
+            //        await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            //    }
+            //    else
+            //    {
+            //        await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
+            //    }
+
+            //    IsBusy = false;
+            //});
         }
 
         private void ChangeAuthType()

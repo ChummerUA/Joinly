@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:controls="clr-namespace:Jointly.Controls"
+             mc:Ignorable="d"
+             x:Class="Jointly.Pages.NewEventPage"
+             Title="{Binding Title}"
+             Visual="Default">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="PropertyGrid" TargetType="Grid">
+                <Setter Property="RowDefinitions" >
+                    <Setter.Value>
+                        <RowDefinitionCollection>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </RowDefinitionCollection>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="RowSpacing" Value="0"/>
+                <Setter Property="Padding" Value="15, 5"/>
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="VerticalOptions" Value="Start"/>
+            </Style>
+
+            <Style TargetType="TimePicker">
+                <Setter Property="VerticalOptions" Value="Start"/>
+                <Setter Property="Visual" Value="Default"/>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                Padding="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid
+                    Grid.ColumnSpan="3"
+                    Grid.Row="0"
+                    Style="{StaticResource PropertyGrid}">
+                    <Label
+                        Grid.Row="0"
+                        Text="Name"/>
+                    <Entry
+                        Grid.Row="1"/>
+                </Grid>
+                
+                <Grid
+                    Grid.Column="0"
+                    Grid.Row="1"
+                    Style="{StaticResource PropertyGrid}">
+                    <Label
+                        Grid.Row="0"
+                        Text="Start"
+                        HorizontalOptions="Center"/>
+                    <TimePicker
+                        Grid.Row="1"/>
+                </Grid>
+
+                <Grid
+                    Grid.Column="2"
+                    Grid.Row="1"
+                    Style="{StaticResource PropertyGrid}">
+                    <Label
+                        Grid.Row="0"
+                        Text="End"
+                        HorizontalOptions="Center"/>
+                    <TimePicker
+                        Grid.Row="1"/>
+                </Grid>
+
+                <Grid
+                    Grid.ColumnSpan="3"
+                    Grid.Row="2"
+                    Style="{StaticResource PropertyGrid}">
+                    <Label
+                        Grid.Row="0"
+                        Text="About"/>
+                    <Editor
+                        Grid.Row="1"/>
+                </Grid>
+            </Grid>
+            
+            <Grid
+                Grid.Row="1">
+                <controls:CustomMap/>
+            </Grid>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

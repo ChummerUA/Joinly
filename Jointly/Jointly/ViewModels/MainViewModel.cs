@@ -8,13 +8,39 @@ using System.ComponentModel;
 using System.Text;
 using Xamarin.Forms.Maps;
 using Jointly.Interfaces;
+using System.Windows.Input;
+using Xamarin.Forms;
+using System.Threading.Tasks;
 
 namespace Jointly.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        public MainViewModel(INavigationService navigationService, IPopupService popupService) : base(navigationService, popupService)
+        #region Variables
+
+        #endregion
+
+        #region Commands
+        private ICommand _newEventCommand;
+        public ICommand NewEventCommand
+        {
+            get { return _newEventCommand = _newEventCommand ?? new Command(async () => await NewEventAsync()); }
+        }
+        #endregion
+
+        public MainViewModel(
+            INavigationService navigationService, 
+            IPopupService popupService) : base(navigationService, popupService)
         {
         }
+
+        #region methods
+
+        private async Task NewEventAsync()
+        {
+            await NavigationService.NavigateAsync("NewEventPage");
+        }
+
+        #endregion
     }
 }

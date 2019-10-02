@@ -35,7 +35,7 @@ namespace Jointly
 
             containerRegistry.RegisterForNavigation<AuthorizationPage, AuthorizationViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
-            containerRegistry.RegisterForNavigation<SetEventPage, SetEventViewModel>();
+            containerRegistry.RegisterForNavigation<NewEventPage, NewEventViewModel>();
         }
 
         protected override async void OnInitialized()

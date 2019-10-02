@@ -8,32 +8,19 @@ using System.Text;
 
 namespace Jointly.ViewModels
 {
-    public class SetEventViewModel : BaseViewModel
+    public class NewEventViewModel : BaseViewModel
     {
-        EventModel @event;
-
+        private EventModel _event;
         public EventModel Event
         {
-            get => @event;
-            set => SetProperty(ref @event, value);
+            get { return _event; }
+            set { SetProperty(ref _event, value); }
         }
 
-        public SetEventViewModel(
+        public NewEventViewModel(
             INavigationService navigationService, 
             IPopupService popupService) : base(navigationService, popupService)
         {
-            var begin = DateTime.Now.TimeOfDay;
-            var end = begin + new TimeSpan(1, 0, 0);
-            
-            Event = new EventModel
-            {
-                EventName = "",
-                EventInfo = "",
-                Date = DateTime.Today,
-                BeginningTime = new TimeSpan(begin.Hours, begin.Minutes, begin.Seconds),
-                EndingTime = new TimeSpan(end.Hours, end.Minutes, end.Seconds),
-                Position = new Xamarin.Forms.Maps.Position()
-            };
         }
     }
 }
