@@ -46,7 +46,7 @@ namespace Jointly.Services
             }
             catch(Exception e)
             {
-
+                return new HttpResponseMessage(System.Net.HttpStatusCode.BadRequest);
             }
 
             return result;

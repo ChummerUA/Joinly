@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Jointly.Interfaces;
+using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Jointly.ViewModels
 {
     public class BaseViewModel : BindableBase, INavigationAware
     {
+        protected IPopupService PopupService { get; }
         protected INavigationService NavigationService { get; }
 
         private bool _isBusy;
@@ -25,9 +27,10 @@ namespace Jointly.ViewModels
             set => SetProperty(ref _isInitialized, value);
         }
 
-        public BaseViewModel(INavigationService navigationService)
+        public BaseViewModel(INavigationService navigationService, IPopupService popupService)
         {
             NavigationService = navigationService;
+            PopupService = popupService;
         }
 
         public virtual async Task Init(INavigationParameters parameters)

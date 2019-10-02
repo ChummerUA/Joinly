@@ -1,4 +1,5 @@
-﻿using Jointly.Models;
+﻿using Jointly.Interfaces;
+using Jointly.Models;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,9 @@ namespace Jointly.ViewModels
             set => SetProperty(ref @event, value);
         }
 
-        public SetEventViewModel(INavigationService navigationService) : base(navigationService)
+        public SetEventViewModel(
+            INavigationService navigationService, 
+            IPopupService popupService) : base(navigationService, popupService)
         {
             var begin = DateTime.Now.TimeOfDay;
             var end = begin + new TimeSpan(1, 0, 0);

@@ -1,4 +1,5 @@
-﻿using Jointly.Interfaces;
+﻿using Jointly.Extensions;
+using Jointly.Interfaces;
 using Jointly.Models;
 using Prism.Commands;
 using Prism.Navigation;
@@ -62,7 +63,10 @@ namespace Jointly.ViewModels
         public ICommand AuthCommand => _authCommand = _authCommand ?? new Command(async () => await AuthAsync());
         #endregion
 
-        public AuthorizationViewModel(IAuthorizationService authorizationService, INavigationService navigationService) : base(navigationService)
+        public AuthorizationViewModel(
+            IAuthorizationService authorizationService,
+            IPopupService popupService,
+            INavigationService navigationService) : base(navigationService, popupService)
         {
             AuthorizationService = authorizationService;
 
@@ -70,7 +74,6 @@ namespace Jointly.ViewModels
             SignUpModel = new SignUpModel();
 
             AuthType = AuthorizationTypes.SignIn;
-            Message = "";
             IsSuccess = false;
         }
 
@@ -106,6 +109,13 @@ namespace Jointly.ViewModels
         {
             if (IsBusy)
                 return;
+            if(
+                !(await SignUpModel.Username.Validate(Localization.Localization.Error_Username)) ||
+                !(await SignUpModel.Email.Validate(Localization.Localization.Error_Email)) ||
+                !(await SignUpModel.Phone.Validate(Localization.Localization.Error_Phone)))
+            {
+                return;
+            }
 
             IsBusy = true;
 
@@ -116,12 +126,14 @@ namespace Jointly.ViewModels
                 {
                     IsSuccess = true;
                 }
-                else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                else if(response.StatusCode == System.Net.HttpStatusCode.Conflict)
                 {
+                    await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Exist);
                     IsSuccess = false;
                 }
-                else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 {
+                    await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
                     IsSuccess = false;
                 }
 
@@ -133,6 +145,11 @@ namespace Jointly.ViewModels
         {
             if (IsBusy)
                 return;
+            if(await SignInModel.Login.Validate("") &&
+                await SignInModel.Password.Validate(""))
+            {
+                return;
+            }
 
             IsBusy = true;
             Device.BeginInvokeOnMainThread(async () =>
@@ -142,6 +159,10 @@ namespace Jointly.ViewModels
                 if (response.IsSuccessStatusCode)
                 {
                     await NavigationService.NavigateAsync("MainPage");
+                }
+                else
+                {
+                    await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
                 }
 
                 IsBusy = false;
@@ -166,7 +187,7 @@ namespace Jointly.ViewModels
                     break;
             }
         }
-        #endregion
+#endregion
 
     }
 

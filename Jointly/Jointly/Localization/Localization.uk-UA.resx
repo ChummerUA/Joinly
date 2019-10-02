@@ -142,9 +142,30 @@
     <value>На вказаний E-mail надіслано посилання для активації вашого облікового запису!</value>
   </data>
   <data name="Authorization_Error" xml:space="preserve">
-    <value>Помилка! Щось пішло не так!</value>
+    <value>Щось пішло не так!</value>
   </data>
   <data name="Authorization_Exist" xml:space="preserve">
     <value>Такий користувач вже існує! Спробуйте іншу адресу та телефон</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Помилка</value>
+  </data>
+  <data name="Success" xml:space="preserve">
+    <value> </value>
+  </data>
+  <data name="Error_Username" xml:space="preserve">
+    <value>Введіть коректне ім'я</value>
+  </data>
+  <data name="Error_Phone" xml:space="preserve">
+    <value>Введіть коректну E-mail адресу</value>
+  </data>
+  <data name="Error_Email" xml:space="preserve">
+    <value>Введіть коректний номер телефону</value>
+  </data>
+  <data name="Error_Login" xml:space="preserve">
+    <value>Введіть ім'я користувача</value>
+  </data>
+  <data name="Error_Password" xml:space="preserve">
+    <value>Введіть пароль</value>
   </data>
 </root>

@@ -29,6 +29,7 @@ namespace Jointly
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
+            containerRegistry.RegisterSingleton<IPopupService, PopupService>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
 

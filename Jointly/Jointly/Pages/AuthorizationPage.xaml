@@ -5,8 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Jointly.Controls"
              xmlns:viewmodels="clr-namespace:Jointly.ViewModels"
-             xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
              xmlns:ext="clr-namespace:Jointly.Extensions"
+             xmlns:pages="clr-namespace:Jointly.Pages"
+             xmlns:effects="clr-namespace:Jointly.Effects"
              mc:Ignorable="d"
              x:Name="Page"
              x:Class="Jointly.Pages.AuthorizationPage">
@@ -18,6 +19,54 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="BackgroundColor" Value="Transparent"/>
         </Style>
+
+        <Style x:Key="PrimaryContainer" TargetType="Grid">
+            <Setter Property="InputTransparent" Value="True"/>
+            <Setter Property="Opacity" Value="0"/>
+            <Setter Property="BackgroundColor" Value="Yellow"/>
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="WidthRequest" Value="400"/>
+            <Setter Property="RowDefinitions">
+                <Setter.Value>
+                    <RowDefinitionCollection>
+                        <RowDefinition Height="auto"/>
+                    </RowDefinitionCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="SecondaryContainer" TargetType="Grid">
+            <Setter Property="Padding" Value="20"/>
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="RowSpacing" Value="10"/>
+            <Setter Property="RowDefinitions">
+                <Setter.Value>
+                    <RowDefinitionCollection>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </RowDefinitionCollection>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="PrimaryButton" TargetType="Button">
+            <Setter Property="Command" Value="{Binding AuthCommand}"/>
+            <Setter Property="BackgroundColor" Value="DarkBlue"/>
+            <Setter Property="TextColor" Value="Yellow"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+        </Style>
+        <Style x:Key="SecondaryButton" TargetType="Button">
+            <Setter Property="Command" Value="{Binding ChangeAuthTypeCommand}"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="DarkSlateGray"/>
+            <Setter Property="VerticalOptions" Value="StartAndExpand"/>
+        </Style>
+
+        <x:Double x:Key="ContainerCornerRadius">5.0</x:Double>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
@@ -26,47 +75,49 @@
                 HorizontalOptions="FillAndExpand"
                 Source="Videos/background.mp4"
                 Loop="True"/>
-            <pancakeview:PancakeView
-                CornerRadius="20"
-                BorderThickness="1"
-                BorderColor="Yellow"
-                BackgroundColor="White"
-                Opacity="0.7"
-                Padding="20"
-                Margin="20"
-                VerticalOptions="Center"
-                HorizontalOptions="Fill">
-                
+
+            <!--#region SignIn-->
+            <Grid
+                Style="{StaticResource PrimaryContainer}">
+                <Grid.Triggers>
+                    <Trigger 
+                        TargetType="Grid"
+                        Property="Opacity"
+                        Value="0.8">
+                        <Setter Property="InputTransparent" Value="False"/>
+                    </Trigger>
+                    <DataTrigger 
+                        TargetType="Grid"
+                        Binding="{Binding AuthType}"
+                        Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
+                        <DataTrigger.EnterActions>
+                            <pages:StageEnterAction/>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <pages:ExitStageAction/>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Grid.Triggers>
+
+                <Grid.Effects>
+                    <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
+                </Grid.Effects>
+
                 <Grid
-                    RowSpacing="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="auto"/>
-                    </Grid.RowDefinitions>
+                    Grid.Row="0"
+                    Style="{StaticResource SecondaryContainer}">
+                    
+                    <Grid.Effects>
+                        <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
+                    </Grid.Effects>
+
                     <Grid
-                        Grid.Row="0"
-                        IsVisible="False">
+                        Grid.Row="0">
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <Grid.Triggers>
-                            <DataTrigger 
-                                TargetType="Grid"
-                                Binding="{Binding AuthType}"
-                                Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
-                                <Setter Property="IsVisible" Value="True"/>
-                            </DataTrigger>
-                            <DataTrigger 
-                                TargetType="Grid"
-                                Binding="{Binding AuthType}"
-                                Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
-                                <Setter Property="IsVisible" Value="False"/>
-                            </DataTrigger>
-                        </Grid.Triggers>
-                        
+
                         <Entry 
                             Grid.Row="0"
                             Text="{Binding SignInModel.Login, FallbackValue=''}"
@@ -84,23 +135,60 @@
                             ReturnType="Done"/>
                     </Grid>
 
-                    <Grid
-                        Grid.Row="0"
-                        IsVisible="False">
+                    <Button
+                        Grid.Row="1"
+                        Text="{ext:Translate Authorization_SignIn}"
+                        Style="{StaticResource PrimaryButton}"/>
+
+                    <Button 
+                        Grid.Row="2"
+                        Text="{ext:Translate Authorization_SignUp}"
+                        Style="{StaticResource SecondaryButton}"/>
+                </Grid>
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region SignUp-->
+            <Grid
+                Style="{StaticResource PrimaryContainer}">
+                <Grid.Triggers>
+                    <Trigger 
+                        TargetType="Grid"
+                        Property="Opacity"
+                        Value="0.8">
+                        <Setter Property="InputTransparent" Value="False"/>
+                    </Trigger>
+                    <DataTrigger 
+                        TargetType="Grid"
+                        Binding="{Binding AuthType}"
+                        Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
+                        <DataTrigger.EnterActions>
+                            <pages:StageEnterAction/>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <pages:ExitStageAction/>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Grid.Triggers>
+
+                <Grid.Effects>
+                    <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
+                </Grid.Effects>
+
+                <Grid
+                    Style="{StaticResource SecondaryContainer}">
+
+                    <Grid.Effects>
+                        <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
+                    </Grid.Effects>
+
+                    <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                            <RowDefinition/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
-                        <Grid.Triggers>
-                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
-                                <Setter Property="IsVisible" Value="False"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Grid" Binding="{Binding AuthType}" Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
-                                <Setter Property="IsVisible" Value="True"/>
-                            </DataTrigger>
-                        </Grid.Triggers>
-                        
+
                         <Entry 
                             Grid.Row="0"
                             Text="{Binding SignUpModel.Username, FallbackValue=''}"
@@ -108,7 +196,7 @@
                             ReturnType="Next"
                             ReturnCommandParameter="{Binding Source={x:Reference EmailEntry}}"
                             Completed="Entry_Completed">
-                            
+
                             <Entry.Triggers>
                                 <DataTrigger TargetType="Entry" Binding="{Binding SignUpModel.IsUsernameValid}" Value="True">
                                     <Setter Property="TextColor" Value="DarkGreen"/>
@@ -158,64 +246,18 @@
                         </Entry>
                     </Grid>
 
-                    <!--<Label 
-                        Grid.Row="1"
-                        Text="1 "
-                        IsVisible="{Binding Message, Converter={StaticResource StringNotEmptyConverter}}">
-                        <Label.Triggers>
-                            <DataTrigger TargetType="Label" Binding="{Binding IsSuccess}" Value="False">
-                                <Setter Property="TextColor" Value="Red"/>
-                            </DataTrigger>
-                            <DataTrigger TargetType="Label" Binding="{Binding IsSuccess}" Value="True">
-                                <Setter Property="TextColor" Value="Green"/>
-                            </DataTrigger>
-                        </Label.Triggers>
-                    </Label>-->
-
                     <Button
-                        Grid.Row="2"
-                        BackgroundColor="DarkBlue"
-                        TextColor="Yellow"
-                        CornerRadius="5"
-                        Command="{Binding AuthCommand}"
-                        Margin="0, 10, 0, 0">
-                        <Button.Triggers>
-                            <DataTrigger
-                                TargetType="Button"
-                                Binding="{Binding AuthType}"
-                                Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
-                                <Setter Property="Text" Value="{ext:Translate Authorization_SignIn}"/>
-                            </DataTrigger>
-                            <DataTrigger
-                                TargetType="Button"
-                                Binding="{Binding AuthType}"
-                                Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
-                                <Setter Property="Text" Value="{ext:Translate Authorization_SignUp}"/>
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
+                        Grid.Row="1"
+                        Text="{ext:Translate Authorization_SignUp}"
+                        Style="{StaticResource PrimaryButton}"/>
+
                     <Button 
-                        Grid.Row="3"
-                        BackgroundColor="Transparent"
-                        Command="{Binding ChangeAuthTypeCommand}"
-                        TextColor="DarkSlateGray">
-                        <Button.Triggers>
-                            <DataTrigger
-                                TargetType="Button"
-                                Binding="{Binding AuthType}"
-                                Value="{x:Static viewmodels:AuthorizationTypes.SignIn}">
-                                <Setter Property="Text" Value="{ext:Translate Authorization_SignUp}"/>
-                            </DataTrigger>
-                            <DataTrigger
-                                TargetType="Button"
-                                Binding="{Binding AuthType}"
-                                Value="{x:Static viewmodels:AuthorizationTypes.SignUp}">
-                                <Setter Property="Text" Value="{ext:Translate Authorization_SignIn}"/>
-                            </DataTrigger>
-                        </Button.Triggers>
-                    </Button>
+                        Grid.Row="2"
+                        Text="{ext:Translate Authorization_SignIn}"
+                        Style="{StaticResource SecondaryButton}"/>
                 </Grid>
-            </pancakeview:PancakeView>
+            </Grid>
+            <!--#endregion-->
         </Grid>
     </ContentPage.Content>
 </ContentPage>

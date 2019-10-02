@@ -34,4 +34,28 @@ namespace Jointly.Pages
             }
         }
     }
+
+    public class StageEnterAction : TriggerAction<VisualElement>
+    {
+        protected override void Invoke(VisualElement sender)
+        {
+            var anim = new Animation
+            {
+                { 0.5, 1, new Animation(a => sender.Opacity = a, sender.Opacity, 0.8) },
+            };
+            anim.Commit(sender, nameof(StageEnterAction), length:400);
+        }
+    }
+
+    public class ExitStageAction : TriggerAction<VisualElement>
+    {
+        protected override void Invoke(VisualElement sender)
+        {
+            var anim = new Animation
+            {
+                { 0, 0.5, new Animation(a => sender.Opacity = a, sender.Opacity, 0) },
+            };
+            anim.Commit(sender, nameof(ExitStageAction), length:400);
+        }
+    }
 }

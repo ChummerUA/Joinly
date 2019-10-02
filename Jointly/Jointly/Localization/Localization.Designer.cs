@@ -70,7 +70,7 @@ namespace Jointly.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error! Something went wrong!.
+        ///   Looks up a localized string similar to Something went wrong!.
         /// </summary>
         internal static string Authorization_Error {
             get {
@@ -147,6 +147,69 @@ namespace Jointly.Localization {
         internal static string Authorization_Username {
             get {
                 return ResourceManager.GetString("Authorization_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter correct email.
+        /// </summary>
+        internal static string Error_Email {
+            get {
+                return ResourceManager.GetString("Error_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter login.
+        /// </summary>
+        internal static string Error_Login {
+            get {
+                return ResourceManager.GetString("Error_Login", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter password.
+        /// </summary>
+        internal static string Error_Password {
+            get {
+                return ResourceManager.GetString("Error_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter correct phone.
+        /// </summary>
+        internal static string Error_Phone {
+            get {
+                return ResourceManager.GetString("Error_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter correct username.
+        /// </summary>
+        internal static string Error_Username {
+            get {
+                return ResourceManager.GetString("Error_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Success.
+        /// </summary>
+        internal static string Success {
+            get {
+                return ResourceManager.GetString("Success", resourceCulture);
             }
         }
     }
