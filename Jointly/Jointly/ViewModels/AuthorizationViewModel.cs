@@ -143,7 +143,8 @@ namespace Jointly.ViewModels
 
         private async Task SignInAsync()
         {
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            //await NavigationService.NavigateAsync("AppShell");
+            App.Current.MainPage = new AppShell();
 
             //Uncomment when auth api will be ready
 

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Jointly.Helpers;
+using Jointly.Extensions;
 
 namespace Jointly
 {
@@ -31,11 +32,10 @@ namespace Jointly
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<IPopupService, PopupService>();
 
-            containerRegistry.RegisterForNavigation<NavigationPage>();
-
+            containerRegistry.RegisterForNavigation<AppShell>();
             containerRegistry.RegisterForNavigation<AuthorizationPage, AuthorizationViewModel>();
-            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             containerRegistry.RegisterForNavigation<NewEventPage, NewEventViewModel>();
+            //containerRegistry.RegisterShellRoute<MainPage, MainViewModel>();
         }
 
         protected override async void OnInitialized()

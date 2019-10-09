@@ -48,7 +48,7 @@ namespace Jointly.Droid.Effects
 
         protected override void OnDetached()
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Jointly.ViewModels
 
         private async Task NewEventAsync()
         {
-            await NavigationService.NavigateAsync("NewEventPage");
+            //await NavigationService.NavigateAsync("NewEventPage");
         }
 
         #endregion
