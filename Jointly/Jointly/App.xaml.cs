@@ -32,9 +32,8 @@ namespace Jointly
             containerRegistry.RegisterSingleton<IAuthorizationService, AuthorizationService>();
             containerRegistry.RegisterSingleton<IPopupService, PopupService>();
 
-            containerRegistry.RegisterForNavigation<AppShell>();
             containerRegistry.RegisterForNavigation<AuthorizationPage, AuthorizationViewModel>();
-            containerRegistry.RegisterForNavigation<NewEventPage, NewEventViewModel>();
+            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             //containerRegistry.RegisterShellRoute<MainPage, MainViewModel>();
         }
 

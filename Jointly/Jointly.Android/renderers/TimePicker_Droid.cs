@@ -14,14 +14,14 @@ using Jointly.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(Editor), typeof(EditorRenderer_Droid))]
+[assembly:ExportRenderer(typeof(Xamarin.Forms.TimePicker), typeof(TimePicker_Droid))]
 namespace Jointly.Droid.Renderers
 {
-    public class EditorRenderer_Droid : EditorRenderer
+    public class TimePicker_Droid : TimePickerRenderer
     {
-        public EditorRenderer_Droid(Context context) : base(context) { }
+        public TimePicker_Droid(Context context) : base(context) { }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.TimePicker> e)
         {
             base.OnElementChanged(e);
             if(Control != null)

@@ -24,11 +24,11 @@
         </ResourceDictionary>
     </Shell.Resources>
 
-    <FlyoutItem
-        Title="Головна">
+    <!--<FlyoutItem
+        Title="Головна">-->
         <ShellContent Route="MainPage">
             <pages:MainPage
                 Title="Jointly"/>
         </ShellContent>
-    </FlyoutItem>
+    <!--</FlyoutItem>-->
 </Shell>

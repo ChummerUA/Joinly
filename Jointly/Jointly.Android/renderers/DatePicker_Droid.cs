@@ -14,18 +14,20 @@ using Jointly.Droid.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(Editor), typeof(EditorRenderer_Droid))]
+[assembly: ExportRenderer(typeof(Xamarin.Forms.DatePicker), typeof(DatePicker_Droid))]
 namespace Jointly.Droid.Renderers
 {
-    public class EditorRenderer_Droid : EditorRenderer
+    public class DatePicker_Droid : DatePickerRenderer
     {
-        public EditorRenderer_Droid(Context context) : base(context) { }
+        public DatePicker_Droid(Context context) : base(context) { }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Editor> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<Xamarin.Forms.DatePicker> e)
         {
             base.OnElementChanged(e);
-            if(Control != null)
+            if (Control != null)
             {
+                Control.Background = null;
+
                 var layoutParams = new MarginLayoutParams(Control.LayoutParameters);
                 layoutParams.SetMargins(0, 0, 0, 0);
                 LayoutParameters = layoutParams;

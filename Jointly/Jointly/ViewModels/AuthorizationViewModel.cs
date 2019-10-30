@@ -119,26 +119,23 @@ namespace Jointly.ViewModels
 
             IsBusy = true;
 
-            Device.BeginInvokeOnMainThread(async () =>
+            var response = await AuthorizationService.SignUpAsync(SignUpModel);
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
             {
-                var response = await AuthorizationService.SignUpAsync(SignUpModel);
-                if (response.StatusCode == System.Net.HttpStatusCode.Created)
-                {
-                    IsSuccess = true;
-                }
-                else if(response.StatusCode == System.Net.HttpStatusCode.Conflict)
-                {
-                    await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Exist);
-                    IsSuccess = false;
-                }
-                else if(response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                {
-                    await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
-                    IsSuccess = false;
-                }
+                IsSuccess = true;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            {
+                await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Exist);
+                IsSuccess = false;
+            }
+            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+            {
+                await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
+                IsSuccess = false;
+            }
 
-                IsBusy = false;
-            });
+            IsBusy = false;
         }
 
         private async Task SignInAsync()

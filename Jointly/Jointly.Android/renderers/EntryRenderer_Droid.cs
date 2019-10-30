@@ -5,6 +5,7 @@ using System.Text;
 
 using Android.App;
 using Android.Content;
+using Android.Graphics.Drawables;
 using Android.OS;
 using Android.Runtime;
 using Android.Views;
@@ -25,8 +26,14 @@ namespace Jointly.Droid.Renderers
             base.OnElementChanged(e);
             if(Control != null)
             {
-                Control.Background = null;
+                var layoutParams = new MarginLayoutParams(Control.LayoutParameters);
+                layoutParams.SetMargins(0, 0, 0, 0);
+                LayoutParameters = layoutParams;
+                GradientDrawable gd = new GradientDrawable();
+                Control.Background = gd;
+                Control.LayoutParameters = layoutParams;
                 Control.SetPadding(0, 0, 0, 0);
+                SetPadding(0, 0, 0, 0);
             }
         }
     }

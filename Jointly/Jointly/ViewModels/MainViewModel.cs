@@ -18,13 +18,26 @@ namespace Jointly.ViewModels
     {
         #region Variables
 
+        private Stage _current;
+        public Stage Current
+        {
+            get { return _current; }
+            set { SetProperty(ref _current, value); }
+        }
+
         #endregion
 
         #region Commands
         private ICommand _newEventCommand;
         public ICommand NewEventCommand
         {
-            get { return _newEventCommand = _newEventCommand ?? new Command(async () => await NewEventAsync()); }
+            get { return _newEventCommand = _newEventCommand ?? new Command(NewEvent); }
+        }
+
+        private ICommand _confirmEventCommand;
+        public ICommand ConfirmEventCommand
+        {
+            get { return _confirmEventCommand = _confirmEventCommand ?? new Command(ConfirmEvent); }
         }
         #endregion
 
@@ -32,15 +45,28 @@ namespace Jointly.ViewModels
             INavigationService navigationService, 
             IPopupService popupService) : base(navigationService, popupService)
         {
+            Current = Stage.Map;
         }
 
         #region methods
 
-        private async Task NewEventAsync()
+        private void NewEvent()
         {
-            //await NavigationService.NavigateAsync("NewEventPage");
+            Current = Stage.NewEvent;
+        }
+
+        private void ConfirmEvent()
+        {
+            Current = Stage.Map;
         }
 
         #endregion
+    }
+
+    public enum Stage
+    {
+        Map,
+        NewEvent,
+        EventInfo
     }
 }
