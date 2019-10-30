@@ -24,6 +24,8 @@ namespace Jointly.Pages
             InitializeComponent();
         }
 
+        #region handlers
+
         private void container_SizeChanged(object sender, EventArgs e)
         {
             if(container.Height > 0)
@@ -32,12 +34,13 @@ namespace Jointly.Pages
                 NewEvent_ExitAction.Y = container.Height;
                 NewEvent_EnterAction.Y = container.Height - NewEventPanel.Height;
                 NewEventPanel.TranslationY = container.Height;
+                EventInfoPanel.TranslationY = -EventInfoPanel.Height;
             }
         }
 
         private void NewEvent_PanUpdated(object sender, PanUpdatedEventArgs e)
         {
-            if(BindingContext is MainViewModel vm && vm.Current == Stage.NewEvent)
+            if (BindingContext is MainViewModel vm && vm.Current == Stage.NewEvent)
             {
                 var grid = sender as Grid;
 
@@ -45,7 +48,7 @@ namespace Jointly.Pages
                 {
                     case GestureStatus.Canceled:
                     case GestureStatus.Completed:
-                        if(deltaPanY > 0)
+                        if (deltaPanY > 0)
                         {
                             vm.Current = Stage.Map;
                         }
@@ -60,7 +63,7 @@ namespace Jointly.Pages
                         panelY = grid.TranslationY;
                         break;
                     case GestureStatus.Running:
-                        if(prevPanY == -1)
+                        if (prevPanY == -1)
                         {
                             prevPanY = e.TotalY;
                         }
@@ -80,12 +83,71 @@ namespace Jointly.Pages
             }
         }
 
+        private void EventInfo_PanUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            if (BindingContext is MainViewModel vm && vm.Current == Stage.EventInfo)
+            {
+                var grid = sender as Grid;
+
+                switch (e.StatusType)
+                {
+                    case GestureStatus.Canceled:
+                    case GestureStatus.Completed:
+                        if (deltaPanY < 0)
+                        {
+                            vm.Current = Stage.Map;
+                        }
+                        else
+                        {
+                            var anim = new Animation(a => grid.TranslationY = a, grid.TranslationY, 0);
+                            anim.Commit(EventInfoPanel, "CancelPan", length: 50);
+                        }
+                        ResetPan();
+                        break;
+                    case GestureStatus.Started:
+                        panelY = grid.TranslationY;
+                        break;
+                    case GestureStatus.Running:
+                        if (prevPanY == -1)
+                        {
+                            prevPanY = e.TotalY;
+                        }
+                        else
+                        {
+                            prevPanY = currentPanY;
+                        }
+
+                        currentPanY = e.TotalY;
+                        deltaPanY += currentPanY - prevPanY;
+                        var y0 = grid.TranslationY;
+                        var y = y0 + deltaPanY;
+                        (sender as Grid).TranslationY = Math.Min(y, 0);
+
+                        break;
+                }
+            }
+        }
+
+        public void Info_Clicked(object sender, EventArgs e)
+        {
+            if (BindingContext is MainViewModel vm)
+            {
+                vm.Current = Stage.EventInfo;
+            }
+        }
+
+        #endregion
+
+        #region methods
+
         private void ResetPan()
         {
             prevPanY = -1;
             currentPanY = 0;
             deltaPanY = 0;
         }
+
+        #endregion
     }
 
     public class NewEvent_EnterAction : TriggerAction<Grid>
@@ -105,6 +167,24 @@ namespace Jointly.Pages
         {
             var anim = new Animation(a => sender.TranslationY = a, sender.TranslationY, Y);
             anim.Commit(sender, nameof(NewEvent_ExitAction));
+        }
+    }
+
+    public class EventInfo_EnterAction : TriggerAction<Grid>
+    {
+        protected override void Invoke(Grid sender)
+        {
+            var anim = new Animation(a => sender.TranslationY = a, sender.TranslationY, 0);
+            anim.Commit(sender, nameof(EventInfo_EnterAction));
+        }
+    }
+
+    public class EventInfo_ExitAction : TriggerAction<Grid>
+    {
+        protected override void Invoke(Grid sender)
+        {
+            var anim = new Animation(a => sender.TranslationY = a, sender.TranslationY, -sender.Height);
+            anim.Commit(sender, nameof(EventInfo_ExitAction));
         }
     }
 }

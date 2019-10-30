@@ -10,6 +10,13 @@
              x:Class="Jointly.Pages.MainPage"
              Title="{Binding Title}"
              NavigationPage.HasNavigationBar="False">
+    <Shell.TitleView>
+        <Button 
+            Text="Info"
+            HorizontalOptions="EndAndExpand"
+            Clicked="Info_Clicked"/>
+    </Shell.TitleView>
+
     <ContentPage.Resources>
         <Style TargetType="ImageButton">
             <Setter Property="Source" Value="baseline_add_white_36dp"/>
@@ -62,6 +69,15 @@
             <Setter Property="VerticalOptions" Value="Start"/>
             <Setter Property="HeightRequest" Value="40"/>
         </Style>
+
+        <Style x:Key="Tractor" TargetType="BoxView">
+            <Setter Property="HeightRequest" Value="5"/>
+            <Setter Property="WidthRequest" Value="50"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="CornerRadius" Value="2.5"/>
+            <Setter Property="BackgroundColor" Value="LightGray"/>
+        </Style>
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid
@@ -79,7 +95,7 @@
             <Grid
                 x:Name="NewEventPanel"
                 BackgroundColor="White"
-                Padding="10, 0, 10, 10"
+                Padding="10"
                 VerticalOptions="Start">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -112,13 +128,7 @@
 
                 <BoxView
                     Grid.Row="0"
-                    HeightRequest="5"
-                    WidthRequest="50"
-                    CornerRadius="2.5"
-                    BackgroundColor="LightGray"
-                    Margin="0, 5, 0, 0"
-                    VerticalOptions="Start"
-                    HorizontalOptions="Center"/>
+                    Style="{StaticResource Tractor}"/>
 
                 <Grid
                     Grid.Row="1"
@@ -195,6 +205,110 @@
                     HeightRequest="40"
                     Margin="15, 10"
                     CornerRadius="20"/>
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region event info-->
+            <Grid
+                x:Name="EventInfoPanel"
+                BackgroundColor="White"
+                Padding="10"
+                VerticalOptions="Start">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <Grid.GestureRecognizers>
+                    <PanGestureRecognizer
+                        PanUpdated="EventInfo_PanUpdated"/>
+                </Grid.GestureRecognizers>
+
+                <Grid.Triggers>
+                    <DataTrigger
+                        TargetType="Grid"
+                        Binding="{Binding Current}"
+                        Value="{Static vm:Stage.EventInfo}">
+                        <DataTrigger.EnterActions>
+                            <pages:EventInfo_EnterAction
+                                x:Name="EventInfo_EnterAction"/>
+                        </DataTrigger.EnterActions>
+                        <DataTrigger.ExitActions>
+                            <pages:EventInfo_ExitAction
+                                x:Name="EventInfo_ExitAction"/>
+                        </DataTrigger.ExitActions>
+                    </DataTrigger>
+                </Grid.Triggers>
+
+                <Grid
+                    Grid.Row="0"
+                    Style="{StaticResource PropertyGrid}">
+                    <Label
+                        Grid.Row="0"
+                        Text="Name"/>
+                    <Entry
+                        Grid.Row="1"
+                        BackgroundColor="LightGray"/>
+                </Grid>
+
+                <Grid
+                    Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid
+                        Grid.Column="0"
+                        Style="{StaticResource PropertyGrid}">
+                        <Label
+                            Grid.Row="0"
+                            Text="Date"/>
+                        <DatePicker
+                            Grid.Row="1"
+                            BackgroundColor="LightGray"/>
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="1"
+                        Style="{StaticResource PropertyGrid}">
+                        <Label
+                            Grid.Row="0"
+                            Text="Start"
+                            HorizontalTextAlignment="Center"/>
+                        <TimePicker
+                            Grid.Row="1"/>
+                    </Grid>
+
+                    <Grid
+                        Grid.Column="2"
+                        Style="{StaticResource PropertyGrid}">
+                        <Label
+                            Grid.Row="0"
+                            Text="End"
+                            HorizontalTextAlignment="Center"/>
+                        <TimePicker
+                            Grid.Row="1"/>
+                    </Grid>
+                </Grid>
+
+                <Grid
+                    Grid.Row="2"
+                    Style="{StaticResource PropertyGrid}">
+                    <Label
+                        Grid.Row="0"
+                        Text="About"/>
+                    <Editor
+                        Grid.Row="1"
+                        BackgroundColor="LightGray"/>
+                </Grid>
+
+                <BoxView
+                    Grid.Row="3"
+                    Style="{StaticResource Tractor}"/>
             </Grid>
             <!--#endregion-->
         </Grid>
