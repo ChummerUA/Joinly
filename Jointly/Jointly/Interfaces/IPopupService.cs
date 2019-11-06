@@ -22,6 +22,8 @@ namespace Jointly.Interfaces
 
         Task ShowAlert(string title, string message, string cancel = "Ok");
 
-        Task DisplayActionSheet();
+        Task ShowBusy();
+
+        Task HideBusy();
     }
 }

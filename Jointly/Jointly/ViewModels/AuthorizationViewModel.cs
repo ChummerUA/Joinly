@@ -51,12 +51,13 @@ namespace Jointly.ViewModels
         #endregion
 
         #region services
-        private IAuthorizationService AuthorizationService { get; }
+        private readonly IUserService UserService;
 
         #endregion
 
         #region Commands
         private ICommand _changeAuthTypeCommand;
+
         public ICommand ChangeAuthTypeCommand => _changeAuthTypeCommand = _changeAuthTypeCommand ?? new Command(ChangeAuthType);
 
         private ICommand _authCommand;
@@ -64,11 +65,11 @@ namespace Jointly.ViewModels
         #endregion
 
         public AuthorizationViewModel(
-            IAuthorizationService authorizationService,
+            IUserService userService,
             IPopupService popupService,
             INavigationService navigationService) : base(navigationService, popupService)
         {
-            AuthorizationService = authorizationService;
+            UserService = userService;
 
             SignInModel = new SignInModel();
             SignUpModel = new SignUpModel();
@@ -87,7 +88,7 @@ namespace Jointly.ViewModels
 
         #endregion
 
-        #region Metohds
+        #region methods
         private async Task AuthAsync()
         {
             switch (AuthType)
@@ -119,20 +120,14 @@ namespace Jointly.ViewModels
 
             IsBusy = true;
 
-            var response = await AuthorizationService.SignUpAsync(SignUpModel);
-            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+            var result = await UserService.SignUpAsync(SignUpModel);
+            if (result.IsSuccess)
             {
                 IsSuccess = true;
             }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            else
             {
-                await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Exist);
-                IsSuccess = false;
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-            {
-                await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
-                IsSuccess = false;
+                await PopupService.ShowAlert(Localization.Localization.Error, result.Message);
             }
 
             IsBusy = false;
@@ -142,34 +137,6 @@ namespace Jointly.ViewModels
         {
             //await NavigationService.NavigateAsync("AppShell");
             App.Current.MainPage = new AppShell();
-
-            //Uncomment when auth api will be ready
-
-            //if (IsBusy)
-            //    return;
-            //if(await SignInModel.Login.Validate("") &&
-            //    await SignInModel.Password.Validate(""))
-            //{
-            //    return;
-            //}
-
-            //IsBusy = true;
-
-            //Device.BeginInvokeOnMainThread(async () =>
-            //{
-            //    var response = await AuthorizationService.SignInAsync(SignInModel);
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        await NavigationService.NavigateAsync("NavigationPage/MainPage");
-            //    }
-            //    else
-            //    {
-            //        await PopupService.ShowAlert(Localization.Localization.Error, Localization.Localization.Authorization_Error);
-            //    }
-
-            //    IsBusy = false;
-            //});
         }
 
         private void ChangeAuthType()
@@ -190,8 +157,7 @@ namespace Jointly.ViewModels
                     break;
             }
         }
-#endregion
-
+        #endregion
     }
 
     public enum AuthorizationTypes
