@@ -9,8 +9,8 @@ namespace Jointly.Interfaces
 {
     public interface IApiService
     {
-        Task<ResponseModel> GetAsync(BindableBase model = null);
+        Task<ResponseModel> GetAsync(string action, BindableBase model = null);
 
-        Task<ResponseModel> PostAsync(BindableBase model = null);
+        Task<ResponseModel> PostAsync(string action, BindableBase model = null);
     }
 }
