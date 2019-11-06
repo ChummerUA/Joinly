@@ -6,6 +6,7 @@
              xmlns:controls="clr-namespace:Jointly.Controls"
              xmlns:pages="clr-namespace:Jointly.Pages"
              xmlns:vm="clr-namespace:Jointly.ViewModels"
+             xmlns:effects="clr-namespace:Jointly.Effects"
              mc:Ignorable="d"
              x:Class="Jointly.Pages.MainPage"
              Title="{Binding Title}"
@@ -95,7 +96,8 @@
             <Grid
                 x:Name="NewEventPanel"
                 BackgroundColor="White"
-                Padding="10"
+                Padding="10, 10, 10, 15"
+                Margin="0, 0, 0, -5"
                 VerticalOptions="Start">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -109,6 +111,9 @@
                     <PanGestureRecognizer
                         PanUpdated="NewEvent_PanUpdated"/>
                 </Grid.GestureRecognizers>
+                <Grid.Effects>
+                    <effects:RoundCorners CornerRadius="5"/>
+                </Grid.Effects>
 
                 <Grid.Triggers>
                     <DataTrigger
@@ -212,7 +217,8 @@
             <Grid
                 x:Name="EventInfoPanel"
                 BackgroundColor="White"
-                Padding="10"
+                Padding="10, 15, 10, 10"
+                Margin="0, -5, 0, 0"
                 VerticalOptions="Start">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="auto"/>
@@ -225,7 +231,9 @@
                     <PanGestureRecognizer
                         PanUpdated="EventInfo_PanUpdated"/>
                 </Grid.GestureRecognizers>
-
+                <Grid.Effects>
+                    <effects:RoundCorners CornerRadius="5"/>
+                </Grid.Effects>
                 <Grid.Triggers>
                     <DataTrigger
                         TargetType="Grid"
