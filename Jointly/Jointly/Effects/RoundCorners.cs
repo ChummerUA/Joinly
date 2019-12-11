@@ -7,8 +7,6 @@ namespace Jointly.Effects
 {
     public class RoundCorners : RoutingEffect
     {
-        public double CornerRadius { get; set; }
-
         public RoundCorners() : base($"Jointly.RoundCorners")
         {
         }

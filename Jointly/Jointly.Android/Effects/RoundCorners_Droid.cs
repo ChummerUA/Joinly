@@ -22,33 +22,48 @@ namespace Jointly.Droid.Effects
     public class RoundCorners_Droid : PlatformEffect
     {
         private double density => Xamarin.Essentials.DeviceDisplay.MainDisplayInfo.Density;
+        private Color _color;
+
+        private Xamarin.Forms.View View { get; set; }
 
         protected override void OnAttached()
         {
             try
             {
                 var effect = Element.Effects.FirstOrDefault(x => x.GetType() == typeof(RoundCorners)) as RoundCorners;
-                var radius = effect?.CornerRadius;
 
-                var draw = new GradientDrawable();
-                draw.SetCornerRadius((float)(radius * density));
-                draw.SetColor((Element as VisualElement).BackgroundColor.ToAndroid());
+                View = Element as Xamarin.Forms.View;
+                _color = View.BackgroundColor;
+                View.SizeChanged += View_SizeChanged;
 
-                if (Control != null)
-                {
-                    Control.Background = draw;
-                }
-                if (Container != null)
-                {
-                    Container.Background = draw;
-                }
+                SetCorners();
+
             }
             catch { }
         }
 
+        private void SetCorners()
+        {
+            var draw = new GradientDrawable();
+            draw.SetColor(_color.ToAndroid());
+
+            if (Control != null && View.Height > 0)
+            {
+                var radius = (View.Height / 2) * density;
+                draw.SetCornerRadius(Math.Min((float)radius, 60));
+                View.BackgroundColor = Color.Transparent;
+                Control.Background = draw;
+            }
+        }
+
+        private void View_SizeChanged(object sender, EventArgs e)
+        {
+            SetCorners();
+        }
+
         protected override void OnDetached()
         {
-            
+            View.SizeChanged -= View_SizeChanged;
         }
     }
 }

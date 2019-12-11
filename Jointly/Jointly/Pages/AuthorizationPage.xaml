@@ -99,18 +99,10 @@
                     </DataTrigger>
                 </Grid.Triggers>
 
-                <Grid.Effects>
-                    <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
-                </Grid.Effects>
-
                 <Grid
                     Grid.Row="0"
                     Style="{StaticResource SecondaryContainer}">
                     
-                    <Grid.Effects>
-                        <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
-                    </Grid.Effects>
-
                     <Grid
                         Grid.Row="0">
                         <Grid.RowDefinitions>
@@ -171,16 +163,8 @@
                     </DataTrigger>
                 </Grid.Triggers>
 
-                <Grid.Effects>
-                    <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
-                </Grid.Effects>
-
                 <Grid
                     Style="{StaticResource SecondaryContainer}">
-
-                    <Grid.Effects>
-                        <effects:RoundCorners CornerRadius="{StaticResource ContainerCornerRadius}"/>
-                    </Grid.Effects>
 
                     <Grid>
                         <Grid.RowDefinitions>

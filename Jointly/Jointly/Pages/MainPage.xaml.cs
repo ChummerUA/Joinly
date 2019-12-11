@@ -30,7 +30,6 @@ namespace Jointly.Pages
         {
             if(container.Height > 0)
             {
-                container.SizeChanged -= container_SizeChanged;
                 NewEvent_ExitAction.Y = container.Height;
                 NewEvent_EnterAction.Y = container.Height - NewEventPanel.Height;
                 NewEventPanel.TranslationY = container.Height;
