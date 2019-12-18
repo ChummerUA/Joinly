@@ -18,19 +18,17 @@ namespace Jointly.Services
         {
             try
             {
-                using(var client = new HttpClient())
+                using var client = new HttpClient();
+                var request = new HttpRequestMessage(new HttpMethod("GET"), $"{ApiURL}/{action}");
+
+                var result = await client.SendAsync(request);
+                var resultStr = await result.Content.ReadAsStringAsync();
+
+                return new ResponseModel
                 {
-                    var request = new HttpRequestMessage(new HttpMethod("GET"), $"{ApiURL}/{action}");
-
-                    var result = await client.SendAsync(request);
-                    var resultStr = await result.Content.ReadAsStringAsync();
-
-                    return new ResponseModel
-                    {
-                        IsSuccess = true,
-                        ResultObject = JsonConvert.DeserializeObject(resultStr)
-                    };
-                }
+                    IsSuccess = true,
+                    ResultObject = JsonConvert.DeserializeObject(resultStr)
+                };
             }
             catch (Exception ex)
             {
@@ -47,24 +45,22 @@ namespace Jointly.Services
         {
             try
             {
-                using(var client = new HttpClient())
+                using var client = new HttpClient();
+                var request = new HttpRequestMessage(new HttpMethod("POST"), $"{ApiURL}/{action}");
+                if(model != null)
                 {
-                    var request = new HttpRequestMessage(new HttpMethod("POST"), $"{ApiURL}/{action}");
-                    if(model != null)
-                    {
-                        var content = JsonConvert.SerializeObject(model);
-                        request.Content = new StringContent(content);
-                    }
-
-                    var result = await client.SendAsync(request);
-                    var resultStr = await result.Content.ReadAsStringAsync();
-
-                    return new ResponseModel
-                    {
-                        IsSuccess = true,
-                        ResultObject = JsonConvert.DeserializeObject(resultStr)
-                    };
+                    var content = JsonConvert.SerializeObject(model);
+                    request.Content = new StringContent(content, Encoding.UTF8, "application/json");
                 }
+
+                var result = await client.SendAsync(request);
+                var resultStr = await result.Content.ReadAsStringAsync();
+
+                return new ResponseModel
+                {
+                    IsSuccess = true,
+                    ResultObject = JsonConvert.DeserializeObject(resultStr)
+                };
             }
             catch (Exception ex)
             {

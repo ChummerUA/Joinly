@@ -58,10 +58,10 @@ namespace Jointly.ViewModels
         #region Commands
         private ICommand _changeAuthTypeCommand;
 
-        public ICommand ChangeAuthTypeCommand => _changeAuthTypeCommand = _changeAuthTypeCommand ?? new Command(ChangeAuthType);
+        public ICommand ChangeAuthTypeCommand => _changeAuthTypeCommand ??= new Command(ChangeAuthType);
 
         private ICommand _authCommand;
-        public ICommand AuthCommand => _authCommand = _authCommand ?? new Command(async () => await AuthAsync());
+        public ICommand AuthCommand => _authCommand ??= new Command(async () => await AuthAsync());
         #endregion
 
         public AuthorizationViewModel(

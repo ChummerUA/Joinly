@@ -17,27 +17,23 @@ namespace Jointly.ViewModels
     {
         #region Variables
 
+
         private Stage _current;
         public Stage Current
         {
-            get { return _current; }
-            set { SetProperty(ref _current, value); }
+            get => _current;
+            set => SetProperty(ref _current, value);
         }
+
 
         #endregion
 
         #region Commands
         private ICommand _newEventCommand;
-        public ICommand NewEventCommand
-        {
-            get { return _newEventCommand = _newEventCommand ?? new Command(NewEvent); }
-        }
 
+        public ICommand NewEventCommand => _newEventCommand ??= new Command(NewEvent);
         private ICommand _confirmEventCommand;
-        public ICommand ConfirmEventCommand
-        {
-            get { return _confirmEventCommand = _confirmEventCommand ?? new Command(ConfirmEvent); }
-        }
+        public ICommand ConfirmEventCommand => _confirmEventCommand ??= new Command(async() => await ConfirmEventAsync());
         #endregion
 
         public MainViewModel(
@@ -54,7 +50,7 @@ namespace Jointly.ViewModels
             Current = Stage.NewEvent;
         }
 
-        private void ConfirmEvent()
+        private async Task ConfirmEventAsync()
         {
             Current = Stage.Map;
         }
