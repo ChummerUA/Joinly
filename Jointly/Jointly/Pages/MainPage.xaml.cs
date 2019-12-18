@@ -1,4 +1,7 @@
-﻿using Jointly.ViewModels;
+﻿using BruTile.Predefined;
+using Jointly.ViewModels;
+using Mapsui.Layers;
+using Mapsui.Widgets;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -22,8 +25,10 @@ namespace Jointly.Pages
         public MainPage()
         {
             InitializeComponent();
-        }
 
+            mapView.Map.Layers.Add(new TileLayer(KnownTileSources.Create(KnownTileSource.OpenStreetMap)) { Name = "Open street map" });
+            mapView.MyLocationLayer.UpdateMyLocation(new Mapsui.UI.Forms.Position(0, 0));
+        }
         #region handlers
 
         private void container_SizeChanged(object sender, EventArgs e)

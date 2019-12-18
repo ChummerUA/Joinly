@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text;
-using Xamarin.Forms.Maps;
 using Jointly.Interfaces;
 using System.Windows.Input;
 using Xamarin.Forms;

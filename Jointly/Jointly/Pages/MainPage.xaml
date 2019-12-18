@@ -7,6 +7,7 @@
              xmlns:pages="clr-namespace:Jointly.Pages"
              xmlns:vm="clr-namespace:Jointly.ViewModels"
              xmlns:effects="clr-namespace:Jointly.Effects"
+             xmlns:forms="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
              mc:Ignorable="d"
              x:Class="Jointly.Pages.MainPage"
              Title="{Binding Title}"
@@ -97,7 +98,8 @@
             SizeChanged="container_SizeChanged">
             <!--#region map-->
             <Grid>
-                <Grid BackgroundColor="Accent"/>
+                <forms:MapView 
+                    x:Name="mapView"/>
                 <ImageButton
                     Command="{Binding NewEventCommand}"/>
             </Grid>
