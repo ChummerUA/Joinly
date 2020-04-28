@@ -1,5 +1,4 @@
 ﻿using Jointly.Interfaces;
-using Jointly.Pages.Popup;
 using Rg.Plugins.Popup.Contracts;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Jointly.Services
 {
@@ -38,26 +38,9 @@ namespace Jointly.Services
             }
         }
 
-        public async Task ShowAlert(string title, string message, string cancel = "Ok")
+        public void ShowAlert(string title, string message, string cancel = "Ok")
         {
-            await App.Current.MainPage.DisplayAlert(title, message, cancel);
-        }
-
-        public async Task ShowBusy()
-        {
-            if(!PopupNavigation.Instance.PopupStack.Any(x => x.GetType() == typeof(IsBusyContainer)))
-            {
-                await PushAsync(new IsBusyContainer());
-            }
-        }
-
-        public async Task HideBusy()
-        {
-            var busy = PopupNavigation.Instance.PopupStack.FirstOrDefault(x => x.GetType() == typeof(IsBusyContainer));
-            if(busy != null)
-            {
-                await RemovePageAsync(busy);
-            }
+            Device.BeginInvokeOnMainThread(async() => await App.Current.MainPage.DisplayAlert(title, message, cancel));
         }
     }
 }

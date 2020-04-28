@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace Jointly.ViewModels
 {
-    public class MainViewModel : BaseViewModel
+    public class MainViewModel : BaseVM
     {
         #region Variables
 

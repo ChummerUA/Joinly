@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jointly.Models
+namespace Jointly.Models.Responses
 {
-    public class TokenModel
+    public class TokenObject
     {
         public string Token { get; set; }
 

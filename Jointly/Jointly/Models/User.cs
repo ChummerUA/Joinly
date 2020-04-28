@@ -1,11 +1,12 @@
-﻿using Prism.Mvvm;
+﻿using Jointly.Models.Responses;
+using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Jointly.Models
 {
-    public class UserModel : BindableBase
+    public class User : BindableBase
     {
         private string _userName;
         public string UserName
@@ -28,8 +29,8 @@ namespace Jointly.Models
             set => SetProperty(ref _phone, value);
         }
 
-        private TokenModel _token;
-        public TokenModel Token
+        private TokenObject _token;
+        public TokenObject Token
         {
             get => _token;
             set => SetProperty(ref _token, value);

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Jointly.ViewModels
 {
-    public class BaseViewModel : BindableBase, INavigationAware
+    public class BaseVM : BindableBase, INavigationAware
     {
         protected IPopupService PopupService { get; }
         protected INavigationService NavigationService { get; }
@@ -27,7 +27,7 @@ namespace Jointly.ViewModels
             set => SetProperty(ref _isInitialized, value);
         }
 
-        public BaseViewModel(INavigationService navigationService, IPopupService popupService)
+        public BaseVM(INavigationService navigationService, IPopupService popupService)
         {
             NavigationService = navigationService;
             PopupService = popupService;

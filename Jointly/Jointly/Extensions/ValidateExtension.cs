@@ -2,21 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace Jointly.Extensions
 {
     public static class ValidateExtension
     {
-        public static async Task<bool> Validate(this string obj, string message, string regex = "")
+        public static bool Validate(this string obj, string regex = "")
         {
-            var popup = ServiceResolver.Get<IPopupService>();
             if (string.IsNullOrEmpty(obj))
             {
-                await popup.ShowAlert(Localization.Localization.Error, message);
                 return false;
             }
-            return true;
+            return Regex.IsMatch(obj, regex);
         }
     }
 }

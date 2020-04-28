@@ -20,10 +20,6 @@ namespace Jointly.Interfaces
         // Close an one PopupPage in the PopupStack even if the page is not the last
         Task RemovePageAsync(PopupPage page, bool animate = true);
 
-        Task ShowAlert(string title, string message, string cancel = "Ok");
-
-        Task ShowBusy();
-
-        Task HideBusy();
+        void ShowAlert(string title, string message, string cancel = "Ok");
     }
 }
