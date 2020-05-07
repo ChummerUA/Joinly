@@ -1,18 +1,19 @@
 ﻿using Jointly.Interfaces;
+using Jointly.Models.Responses;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace Jointly.ViewModels
 {
     public class BaseVM : BindableBase, INavigationAware
     {
-        protected IPopupService PopupService { get; }
-        protected INavigationService NavigationService { get; }
-
+        #region variables
         private bool _isBusy;
         public bool IsBusy
         {
@@ -26,6 +27,12 @@ namespace Jointly.ViewModels
             get => _isInitialized;
             set => SetProperty(ref _isInitialized, value);
         }
+        #endregion
+
+        #region services
+        protected readonly IPopupService PopupService;
+        protected readonly INavigationService NavigationService;
+        #endregion
 
         public BaseVM(INavigationService navigationService, IPopupService popupService)
         {
@@ -33,19 +40,28 @@ namespace Jointly.ViewModels
             PopupService = popupService;
         }
 
+        #region virtual methods
         public virtual async Task Init(INavigationParameters parameters)
         {
         }
 
         public virtual void OnNavigatedFrom(INavigationParameters parameters) { }
 
-        public virtual async void OnNavigatedTo(INavigationParameters parameters)
+        public virtual void OnNavigatedTo(INavigationParameters parameters)
         {
             IsBusy = true;
             if (!IsInitialized)
             {
-                await Init(parameters);
+                Task.Run(async() => await Init(parameters));
             }
         }
+
+        protected virtual void OnAPIRequestFailed(BaseResponse response)
+        {
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+            });
+        }
+        #endregion
     }
 }

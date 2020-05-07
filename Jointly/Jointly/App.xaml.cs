@@ -1,24 +1,19 @@
 ﻿using Jointly.Interfaces;
+using Jointly.Pages;
 using Jointly.Services;
 using Jointly.ViewModels;
-using Jointly.Pages;
+using Microsoft.Extensions.DependencyInjection;
 using Prism;
 using Prism.DryIoc;
 using Prism.Ioc;
 using System;
-using System.Threading.Tasks;
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
-using Jointly.Helpers;
-using Jointly.Extensions;
 using System.Net.Http;
-using Jointly.Utils;
 
 namespace Jointly
 {
     public partial class App : PrismApplication
     {
-        public App() : this(null){ }
+        public App() : this(null) { }
 
         public App(IPlatformInitializer platformInitializer) : base(platformInitializer)
         {
@@ -26,11 +21,22 @@ namespace Jointly
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            var services = new ServiceCollection();
+            services.AddHttpClient("DefaultClient", _client =>
+            {
+                _client.Timeout = TimeSpan.FromSeconds(30);
+                _client.DefaultRequestHeaders
+                    .Accept
+                    .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            });
+            var client = services.BuildServiceProvider()
+                .GetRequiredService<IHttpClientFactory>()
+                .CreateClient("DefaultClient");
+
             containerRegistry.RegisterSingleton<IAnalyticsService, AnalyticsService>();
+            containerRegistry.RegisterInstance(client);
             containerRegistry.RegisterSingleton<IPreferencesService, PreferencesService>();
-            containerRegistry.RegisterSingleton<APIClient>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
-            containerRegistry.RegisterSingleton<IBaseAPI, BaseAPI>();
             containerRegistry.RegisterSingleton<IPopupService, PopupService>();
 
             containerRegistry.RegisterForNavigation<SignInPage, SignInVM>();

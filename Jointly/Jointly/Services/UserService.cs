@@ -1,58 +1,34 @@
 ﻿using Jointly.Interfaces;
 using Jointly.Models;
 using Jointly.Models.Responses;
-using Jointly.Utils;
-using Newtonsoft.Json;
-using Prism.Navigation;
 using System;
-using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Xamarin.Essentials;
-using Xamarin.Forms;
 
 namespace Jointly.Services
 {
-    public class UserService : IUserService
+    public class UserService : BaseAPIService, IUserService
     {
         public User User { get; private set; }
 
         #region services
 
-        private readonly APIClient API;
-
         #endregion
 
-        public UserService(
-            APIClient api) 
+        public UserService(HttpClient client, IAnalyticsService analyticsService) : base(client, analyticsService)
         {
-            API = api;
         }
 
         public Task<APIResponse<TokenObject>> SignUpAsync(SignUpModel model, CancellationToken cToken = default)
         {
-            try
-            {
-                return API.PostAsync<TokenObject>("users", model);
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            return PostAsync<TokenObject>("users", model);
         }
 
         public Task<APIResponse<TokenObject>> SignInAsync(SignInModel model, CancellationToken cToken = default)
         {
-            try
-            {
-                return API.PostAsync<TokenObject>("session", model);
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
+            return PostAsync<TokenObject>("session", model);
         }
 
         public async Task LogOutAsync(CancellationToken cToken = default)
@@ -73,6 +49,20 @@ namespace Jointly.Services
         public Task<string> GetTokenAsync()
         {
             throw new NotImplementedException();
+        }
+
+        protected override async Task<APIResponse<T>> ProcessResponseAsync<T>(HttpResponseMessage responseMessage, Task<APIResponse<T>> retryIfTokenRefreshed)
+        {
+            var processDefaultTask = ProcessResponseAsync<T>(responseMessage);
+            switch (responseMessage.StatusCode)
+            {
+                case HttpStatusCode.Unauthorized:
+                case HttpStatusCode.Forbidden:
+                    var refreshResponse = await RefreshTokenAsync();
+                    return refreshResponse.IsSuccess ? await retryIfTokenRefreshed : await processDefaultTask;
+                default:
+                    return await processDefaultTask;
+            }
         }
     }
 }

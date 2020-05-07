@@ -10,7 +10,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
-using Jointly.Helpers;
+using Jointly.Utils;
 using Jointly.Interfaces;
 
 namespace Jointly.Droid.Services

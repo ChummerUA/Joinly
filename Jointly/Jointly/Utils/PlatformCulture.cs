@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jointly.Helpers
+namespace Jointly.Utils
 {
     public class PlatformCulture
     {

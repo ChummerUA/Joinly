@@ -12,12 +12,16 @@ namespace Jointly.Models.Responses
 
         public APIResponse(BaseResponse response) : base(response) { }
 
-        public APIResponse(HttpResponseMessage message, string content = "") : base(message, content) { }
+        public APIResponse(HttpResponseMessage message) : base(message) { }
 
         public APIResponse(T result)
         {
             Result = result;
-            IsSuccess = true;
+        }
+
+        public APIResponse()
+        {
+
         }
     }
 }

@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jointly.Helpers
+namespace Jointly.Utils
 {
     public static class ServiceResolver
     {

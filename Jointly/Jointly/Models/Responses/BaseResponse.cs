@@ -14,8 +14,6 @@ namespace Jointly.Models.Responses
 
         public HttpStatusCode? StatusCode { get; set; }
 
-        public string HttpContent { get; set; }
-
         public BaseResponse(BaseResponse response)
         {
             IsSuccess = response.IsSuccess;
@@ -23,7 +21,7 @@ namespace Jointly.Models.Responses
             StatusCode = response.StatusCode;
         }
 
-        public BaseResponse(HttpResponseMessage message, string content = "")
+        public BaseResponse(HttpResponseMessage message)
         {
             IsSuccess = message.IsSuccessStatusCode;
             StatusCode = message.StatusCode;
