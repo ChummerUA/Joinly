@@ -148,4 +148,34 @@
   <data name="Error_Password" xml:space="preserve">
     <value>Enter password</value>
   </data>
+  <data name="SignUp_Title" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="SignUp_FirstName" xml:space="preserve">
+    <value>FIRST NAME</value>
+  </data>
+  <data name="SignUp_LastName" xml:space="preserve">
+    <value>LAST NAME</value>
+  </data>
+  <data name="SignUp_Phone" xml:space="preserve">
+    <value>PHONE</value>
+  </data>
+  <data name="SignUp_Email" xml:space="preserve">
+    <value>EMAIL</value>
+  </data>
+  <data name="SignUp_Password" xml:space="preserve">
+    <value>CHANGE PASSWORD</value>
+  </data>
+  <data name="SignUp_Password_Confirm" xml:space="preserve">
+    <value>CONFIRM PASSWORD</value>
+  </data>
+  <data name="SignUp_Agreement" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Button_Ok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SignUp_Button" xml:space="preserve">
+    <value>SIGN UP</value>
+  </data>
 </root>

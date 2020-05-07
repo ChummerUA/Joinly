@@ -168,4 +168,28 @@
   <data name="Error_Password" xml:space="preserve">
     <value>Введіть пароль</value>
   </data>
+  <data name="SignUp_Title" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="SignUp_Email" xml:space="preserve">
+    <value>EMAIL</value>
+  </data>
+  <data name="SignUp_FirstName" xml:space="preserve">
+    <value>ІМ'Я</value>
+  </data>
+  <data name="SignUp_LastName" xml:space="preserve">
+    <value>ПРІЗВИЩЕ</value>
+  </data>
+  <data name="SignUp_Password" xml:space="preserve">
+    <value>ЗМІНИТИ ПАРОЛЬ</value>
+  </data>
+  <data name="SignUp_Password_Confirm" xml:space="preserve">
+    <value>ПІДТВЕРДИТИ ПАРОЛЬ</value>
+  </data>
+  <data name="SignUp_Phone" xml:space="preserve">
+    <value>НОМЕР ТЕЛЕФОНУ</value>
+  </data>
+  <data name="SignUp_Button" xml:space="preserve">
+    <value>ЗАРЕЄСТРУВАТИСЬ</value>
+  </data>
 </root>

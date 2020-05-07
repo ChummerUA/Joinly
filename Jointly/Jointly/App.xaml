@@ -6,6 +6,11 @@
     xmlns:converters="clr-namespace:Jointly.Converters"
     x:Class="Jointly.App">
     <Application.Resources>
+        <x:Double x:Key="Large">24</x:Double>
+        <x:Double x:Key="Medium">12</x:Double>
+
+        <Color x:Key="PrimaryColor">#F2C94C</Color>
+        
         <Style x:Key="EntryStyle" TargetType="Entry">
             <Setter Property="VerticalOptions" Value="CenterAndExpand"/>
             <Setter Property="Text" Value=""/>
@@ -16,6 +21,29 @@
 
         <Style x:Key="LabelStyle" TargetType="Label">
             
+        </Style>
+
+        <Style x:Key="PlaceholderLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource Medium}"/>
+            <Setter Property="CharacterSpacing" Value="2"/>
+            <Setter Property="TextColor" Value="Black"/>
+        </Style>
+        <Style x:Key="HeaderLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource Large}"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+        </Style>
+
+        <Style x:Key="EntryCommonStyle" TargetType="Entry">
+            <Setter Property="FontSize" Value="{StaticResource Medium}"/>
+            <Setter Property="Visual" Value="Material"/>
+        </Style>
+
+        <Style x:Key="ButtonCommonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource PrimaryColor}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="CharacterSpacing" Value="1"/>
+            <Setter Property="Padding" Value="32, 0"/>
         </Style>
 
         <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>

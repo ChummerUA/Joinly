@@ -28,6 +28,13 @@ namespace Jointly.ViewModels
             get => _isSuccess;
             set => SetProperty(ref _isSuccess, value);
         }
+
+        private string _confirmPassword;
+        public string ConfirmPassword
+        {
+            get => _confirmPassword;
+            set => SetProperty(ref _confirmPassword, value);
+        }
         #endregion
 
         #region services

@@ -4,13 +4,67 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:res="clr-namespace:Jointly.Resources"
+    xmlns:vm="clr-namespace:Jointly.ViewModels" 
+    xmlns:controls="clr-namespace:Jointly.Controls"
     mc:Ignorable="d"
     x:Class="Jointly.Pages.SignUpPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView
+            Padding="24">
+            <StackLayout
+                Spacing="12">
+                <Label
+                    Text="{x:Static res:Localization.SignUp_Title}"
+                    Style="{StaticResource HeaderLabelStyle}"/>
+                <Grid
+                    Margin="0, 12, 0, 0"
+                    ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <controls:CustomInputView
+                        Grid.Column="0"
+                        Text="{Binding SignUpModel.FirstName}"
+                        Placeholder="{x:Static res:Localization.SignUp_FirstName}"/>
+
+                    <controls:CustomInputView
+                        Grid.Column="1"
+                        Text="{Binding SignUpModel.LastName}"
+                        Placeholder="{x:Static res:Localization.SignUp_LastName}"/>
+                </Grid>
+
+                <controls:CustomInputView
+                    Text="{Binding SignUpModel.Phone}"
+                    Placeholder="{x:Static res:Localization.SignUp_Phone}"/>
+                <controls:CustomInputView
+                    Text="{Binding SignUpModel.Password}"
+                    Placeholder="{x:Static res:Localization.SignUp_Password}"/>
+                <controls:CustomInputView
+                    Text="{Binding ConfirmPassword}"
+                    Placeholder="{x:Static res:Localization.SignUp_Password_Confirm}"/>
+
+                <Grid
+                    ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox
+                        Grid.Column="0"/>
+                    <Label
+                        Grid.Column="1"
+                        Text="{x:Static res:Localization.SignUp_Agreement}"/>
+                </Grid>
+
+                <controls:RoundedButton
+                    Text="{x:Static res:Localization.SignUp_Button}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"
+                    Style="{StaticResource ButtonCommonStyle}"/>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

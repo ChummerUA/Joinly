@@ -151,6 +151,15 @@ namespace Jointly.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string Button_Ok {
+            get {
+                return ResourceManager.GetString("Button_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error.
         /// </summary>
         internal static string Error {
@@ -201,6 +210,87 @@ namespace Jointly.Resources {
         internal static string Error_Username {
             get {
                 return ResourceManager.GetString("Error_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string SignUp_Agreement {
+            get {
+                return ResourceManager.GetString("SignUp_Agreement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SIGN UP.
+        /// </summary>
+        internal static string SignUp_Button {
+            get {
+                return ResourceManager.GetString("SignUp_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EMAIL.
+        /// </summary>
+        internal static string SignUp_Email {
+            get {
+                return ResourceManager.GetString("SignUp_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FIRST NAME.
+        /// </summary>
+        internal static string SignUp_FirstName {
+            get {
+                return ResourceManager.GetString("SignUp_FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAST NAME.
+        /// </summary>
+        internal static string SignUp_LastName {
+            get {
+                return ResourceManager.GetString("SignUp_LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CHANGE PASSWORD.
+        /// </summary>
+        internal static string SignUp_Password {
+            get {
+                return ResourceManager.GetString("SignUp_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONFIRM PASSWORD.
+        /// </summary>
+        internal static string SignUp_Password_Confirm {
+            get {
+                return ResourceManager.GetString("SignUp_Password_Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHONE.
+        /// </summary>
+        internal static string SignUp_Phone {
+            get {
+                return ResourceManager.GetString("SignUp_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registration.
+        /// </summary>
+        internal static string SignUp_Title {
+            get {
+                return ResourceManager.GetString("SignUp_Title", resourceCulture);
             }
         }
         
