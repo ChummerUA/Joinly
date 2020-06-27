@@ -26,6 +26,13 @@ namespace Jointly.Controls
             typeof(CustomInputView),
             "",
             BindingMode.OneWay);
+
+        public static readonly BindableProperty IsPasswordEntryProperty = BindableProperty.Create(
+            nameof(IsPasswordEntry),
+            typeof(bool),
+            typeof(CustomInputView),
+            false,
+            BindingMode.OneWay);
         #endregion
 
         #region variables
@@ -39,6 +46,12 @@ namespace Jointly.Controls
         {
             get => (string)GetValue(PlaceholderProperty);
             set => SetValue(PlaceholderProperty, value);
+        }
+
+        public bool IsPasswordEntry
+        {
+            get => (bool)GetValue(IsPasswordEntryProperty);
+            set => SetValue(IsPasswordEntryProperty, value);
         }
         #endregion
 

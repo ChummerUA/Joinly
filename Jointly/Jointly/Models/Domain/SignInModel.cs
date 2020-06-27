@@ -1,33 +1,27 @@
 ﻿using Newtonsoft.Json;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
 
-namespace Jointly.Models
+namespace Jointly.Models.Domain
 {
     public class SignInModel : BindableBase
     {
-        #region variables
         string login;
-        string password;
-        #endregion
-
-        #region Properties
-        [JsonProperty(PropertyName = "phone")]
+        [JsonProperty(PropertyName = "login")]
         public string Login
         {
             get => login;
             set => SetProperty(ref login, value);
         }
 
+        string password;
         [JsonProperty(PropertyName = "code")]
         public string Password
         {
             get => password;
             set => SetProperty(ref password, value);
         }
-        #endregion
+
+        [JsonProperty(PropertyName = "uuid")]
+        public string UUID { get; set; }
     }
 }

@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="clr-namespace:Jointly.ViewModels" 
+    xmlns:controls="clr-namespace:Jointly.Controls"
+    xmlns:res="clr-namespace:Jointly.Resources"
+    mc:Ignorable="d"
+    x:Class="Jointly.Pages.CreateEventPage"
+    x:DataType="vm:CreateEventVM">
+    <ContentPage.Content>
+        <ScrollView
+            Padding="12">
+            <StackLayout>
+                <Label
+                    d:Text="Create"
+                    Text="{x:Static res:Localization.CreateEvent_Title}"
+                    Style="{StaticResource HeaderLabelStyle}"/>
+
+                <controls:CustomInputView
+                    Margin="0, 12, 0, 0"
+                    Placeholder="{x:Static res:Localization.CreateEvent_Name}"
+                    Text=""/>
+
+                <Label
+                    d:Text="Description"
+                    Text="{x:Static res:Localization.CreateEvent_Description}"
+                    Style="{StaticResource PlaceholderLabelStyle}"/>
+                <Editor
+                    Visual="Material"
+                    VerticalOptions="FillAndExpand"
+                    d:Text="Lorem ipsum blablabla"
+                    AutoSize="Disabled"/>
+
+                <controls:CustomInputView
+                    Placeholder="{x:Static res:Localization.CreateEvent_Address}"/>
+
+                <controls:RoundedButton
+                    Text="{x:Static res:Localization.CreateEvent_Create}"
+                    Style="{StaticResource ButtonCommonStyle}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

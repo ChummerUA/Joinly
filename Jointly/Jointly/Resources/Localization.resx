@@ -173,9 +173,69 @@
     <value></value>
   </data>
   <data name="Button_Ok" xml:space="preserve">
-    <value></value>
+    <value>Ok</value>
   </data>
   <data name="SignUp_Button" xml:space="preserve">
     <value>SIGN UP</value>
+  </data>
+  <data name="CreateEvent_Title" xml:space="preserve">
+    <value>Create event</value>
+  </data>
+  <data name="CreateEvent_Name" xml:space="preserve">
+    <value>NAME</value>
+  </data>
+  <data name="CreateEvent_Description" xml:space="preserve">
+    <value>DESCRIPTION</value>
+  </data>
+  <data name="CreateEvent_StartTime" xml:space="preserve">
+    <value>START</value>
+  </data>
+  <data name="CreateEvent_EndTime" xml:space="preserve">
+    <value>END</value>
+  </data>
+  <data name="CreateEvent_Date" xml:space="preserve">
+    <value>DATE</value>
+  </data>
+  <data name="CreateEvent_Address" xml:space="preserve">
+    <value>ADDRESS</value>
+  </data>
+  <data name="CreateEvent_Create" xml:space="preserve">
+    <value>CREATE</value>
+  </data>
+  <data name="SavedEvents_Title" xml:space="preserve">
+    <value>Your events</value>
+  </data>
+  <data name="Profile_FirstName" xml:space="preserve">
+    <value>FIRST NAME</value>
+  </data>
+  <data name="Profile_LastName" xml:space="preserve">
+    <value>LAST NAME</value>
+  </data>
+  <data name="Profile_Phone" xml:space="preserve">
+    <value>PHONE</value>
+  </data>
+  <data name="Profile_Email" xml:space="preserve">
+    <value>EMAIL</value>
+  </data>
+  <data name="Profile_Password" xml:space="preserve">
+    <value>CHANGE PASSWORD</value>
+  </data>
+  <data name="Profile_ConfirmPassword" xml:space="preserve">
+    <value>CONFIRM PASSWORD</value>
+  </data>
+  <data name="Profile_Notifications" xml:space="preserve">
+    <value>NOTIFICATIONS</value>
+  </data>
+  <data name="Profile_Notifications_NewEvents" xml:space="preserve">
+    <value>New events close to me</value>
+  </data>
+  <data name="Profile_Save" xml:space="preserve">
+    <value>SAVE</value>
+  </data>
+  <data name="Map_Title" xml:space="preserve">
+    <value>Map</value>
+  </data>
+  <data name="Profile_Title" xml:space="preserve">
+    <value>Profile</value>
   </data>
 </root>

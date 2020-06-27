@@ -18,7 +18,7 @@ namespace Jointly.Services
             UserService = userService;
         }
 
-        protected async override Task<APIResponse<T>> ProcessResponseAsync<T>(HttpResponseMessage responseMessage, Task<APIResponse<T>> retryIfTokenRefreshed)
+        protected async override Task<T> ProcessResponseAsync<T>(HttpResponseMessage responseMessage, Task<T> retryIfTokenRefreshed)
         {
             var processDefaultTask = ProcessResponseAsync<T>(responseMessage);
             switch (responseMessage.StatusCode)
@@ -26,7 +26,7 @@ namespace Jointly.Services
                 case HttpStatusCode.Unauthorized:
                 case HttpStatusCode.Forbidden:
                     var refreshResponse = await UserService.RefreshTokenAsync();
-                    return refreshResponse.IsSuccess ? await retryIfTokenRefreshed : await processDefaultTask;
+                    return refreshResponse ? await retryIfTokenRefreshed : await processDefaultTask;
                 default:
                     return await processDefaultTask;
             }

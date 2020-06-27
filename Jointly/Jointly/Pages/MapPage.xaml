@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:mapsui="clr-namespace:Mapsui.UI.Forms;assembly=Mapsui.UI.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Jointly.Pages.MapPage">
+    <mapsui:MapView
+        x:Name="mapView"
+        Info="MapView_Info"
+        RotationLock="True"
+        UseDoubleTap="True"
+        IsNorthingButtonVisible="False"
+        BackgroundColor="{StaticResource PrimaryColor}"/>
+</ContentPage>

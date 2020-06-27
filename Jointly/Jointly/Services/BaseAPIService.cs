@@ -25,24 +25,24 @@ namespace Jointly.Services
             AnalyticsService = analyticsService;
         }
 
-        protected abstract Task<APIResponse<T>> ProcessResponseAsync<T>(HttpResponseMessage responseMessage, Task<APIResponse<T>> retryIfTokenRefreshed);
+        protected abstract Task<T> ProcessResponseAsync<T>(HttpResponseMessage responseMessage, Task<T> retryIfTokenRefreshed);
 
-        protected virtual async Task<APIResponse<T>> ProcessResponseAsync<T>(HttpResponseMessage responseMessage)
+        protected virtual async Task<T> ProcessResponseAsync<T>(HttpResponseMessage responseMessage)
         {
-            var response = new APIResponse<T>
-            {
-                StatusCode = responseMessage.StatusCode,
-                IsSuccess = responseMessage.IsSuccessStatusCode,
-            };
+            var stream = await responseMessage.Content.ReadAsStreamAsync();
             if (responseMessage.IsSuccessStatusCode)
             {
-                var stream = await responseMessage.Content.ReadAsStreamAsync();
-                response.Result = DeserializeJsonFromStream<T>(stream);
+                var result = DeserializeJsonFromStream<T>(stream);
+                return result;
             }
-            return response;
+            else
+            {
+                var message = await responseMessage.Content.ReadAsStringAsync();
+                throw new Exception(message);
+            }
         }
 
-        private async Task<APIResponse<T>> SendAsync<T>(HttpRequestMessage message, bool retryOnUnauthorized, CancellationToken cToken = default)
+        private async Task<T> SendAsync<T>(HttpRequestMessage message, bool retryOnUnauthorized, CancellationToken cToken = default)
         {
             try
             {
@@ -69,45 +69,45 @@ namespace Jointly.Services
             return searchResult;
         }
 
-        public Task<APIResponse<T>> GetAsync<T>(string url, NameValueCollection nvc = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
+        public Task<T> GetAsync<T>(string url, NameValueCollection nvc = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
         {
             var query = nvc.ToQuery();
             var message = CreateRequestMessage($"{url}{query}", HttpMethod.Get, headers);
             return SendAsync<T>(message, retryOnUnauthorized, cToken);
         }
 
-        public Task<APIResponse<T>> PostAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
+        public Task<T> PostAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
         {
             var message = CreateRequestMessage(url, HttpMethod.Post, obj, headers);
             return SendAsync<T>(message, retryOnUnauthorized, cToken);
         }
 
-        public Task<APIResponse<T>> PutAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
+        public Task<T> PutAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
         {
             var message = CreateRequestMessage(url, HttpMethod.Put, obj, headers);
             return SendAsync<T>(message, retryOnUnauthorized, cToken);
         }
 
-        public Task<APIResponse<T>> DeleteAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
+        public Task<T> DeleteAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
         {
             var message = CreateRequestMessage(url, HttpMethod.Delete, obj, headers);
             return SendAsync<T>(message, retryOnUnauthorized, cToken);
         }
 
-        public Task<APIResponse<T>> PatchAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
+        public Task<T> PatchAsync<T>(string url, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
         {
             var message = CreateRequestMessage(url, HttpMethod.Patch, obj, headers);
             return SendAsync<T>(message, retryOnUnauthorized, cToken);
         }
 
-        public Task<APIResponse<T>> UploadAsync<T>(string url, string filepath, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
+        public Task<T> UploadAsync<T>(string url, string filepath, object obj = null, List<KeyValuePair<string, string>> headers = null, bool retryOnUnauthorized = true, CancellationToken cToken = default)
         {
             throw new NotImplementedException();
         }
 
         private HttpRequestMessage CreateRequestMessage(string url, HttpMethod method, List<KeyValuePair<string, string>> headers = null)
         {
-            var message = new HttpRequestMessage(method, url);
+            var message = new HttpRequestMessage(method, $"{Client.BaseAddress}{url}");
             headers?.ForEach(x =>
             {
                 message.Headers.Add(x.Key, x.Value);

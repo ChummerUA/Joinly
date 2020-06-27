@@ -28,12 +28,5 @@ namespace Jointly.Models
             get => _phone;
             set => SetProperty(ref _phone, value);
         }
-
-        private TokenObject _token;
-        public TokenObject Token
-        {
-            get => _token;
-            set => SetProperty(ref _token, value);
-        }
     }
 }

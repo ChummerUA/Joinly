@@ -1,14 +1,10 @@
-﻿using Jointly.Extensions;
-using Jointly.Interfaces;
-using Jointly.Models;
+﻿using Jointly.Interfaces;
+using Jointly.Models.Domain;
 using Jointly.Pages;
-using Jointly.Resources;
-using Prism.Commands;
 using Prism.Navigation;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace Jointly.ViewModels
@@ -19,10 +15,7 @@ namespace Jointly.ViewModels
 
         private SignInModel _signInModel;
         public SignInModel SignInModel
-        {
-            get => _signInModel;
-            set => SetProperty(ref _signInModel, value);
-        }
+            => _signInModel ??= new SignInModel();
 
         private string _message;
         public string Message
@@ -40,7 +33,7 @@ namespace Jointly.ViewModels
         #region Commands
         private ICommand _signUpCommand;
         public ICommand SignUpCommand =>
-          _signUpCommand ??= new Command(async() => await GoToSignUpAsync());
+          _signUpCommand ??= new Command(async () => await GoToSignUpAsync());
 
         private ICommand _signInCommand;
         public ICommand SignInCommand =>
@@ -50,11 +43,13 @@ namespace Jointly.ViewModels
         public SignInVM(
             IUserService userService,
             IPopupService popupService,
-            INavigationService navigationService) : base(navigationService, popupService)
+            INavigationService navigationService,
+            IAnalyticsService analyticsService) : base(
+                navigationService,
+                popupService,
+                analyticsService)
         {
             UserService = userService;
-
-            SignInModel = new SignInModel();
         }
 
         #region override
@@ -80,15 +75,7 @@ namespace Jointly.ViewModels
             {
                 try
                 {
-                    var result = await UserService.SignInAsync(SignInModel);
-                    if (result.IsSuccess)
-                    {
-                        //TODO: Navigate to MainPage
-                    }
-                    else
-                    {
-                        PopupService.ShowAlert(Localization.Error, result.Message);
-                    }
+                    await UserService.SignInAsync(SignInModel);
                 }
                 catch (Exception ex)
                 {
@@ -109,7 +96,7 @@ namespace Jointly.ViewModels
             {
                 await NavigationService.NavigateAsync(nameof(SignUpPage));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 //TODO: exception handling
             }

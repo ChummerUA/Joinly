@@ -16,20 +16,17 @@ namespace Jointly.Services
             AnalyticsService = analyticsService;
         }
 
-        public async Task<string> GetFromStorageAsync(string key)
+        public async Task<T> GetFromStorageAsync<T>(string key)
         {
             try
             {
-                return await Xamarin.Essentials.SecureStorage.GetAsync(key);
+                var json = await Xamarin.Essentials.SecureStorage.GetAsync(key);
+                return JsonConvert.DeserializeObject<T>(json);
             }
             catch (Exception ex)
             {
-                AnalyticsService.TrackError(ex, new Dictionary<string, string>
-                {
-                    { "Source", nameof(PreferencesService) },
-                    { "Method", nameof(GetFromStorageAsync) }
-                });
-                return "";
+                AnalyticsService.TrackError(ex);
+                throw ex;
             }
         }
 
@@ -71,11 +68,11 @@ namespace Jointly.Services
             }
         }
 
-        public async Task PutInStorageAsync(string key, string obj)
+        public async Task PutInStorageAsync(string key, object obj)
         {
             try
             {
-                await Xamarin.Essentials.SecureStorage.SetAsync(key, obj);
+                await Xamarin.Essentials.SecureStorage.SetAsync(key, JsonConvert.SerializeObject(obj));
             }
             catch (Exception ex)
             {

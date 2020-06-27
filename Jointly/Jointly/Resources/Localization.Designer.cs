@@ -151,11 +151,83 @@ namespace Jointly.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to Ok.
         /// </summary>
         internal static string Button_Ok {
             get {
                 return ResourceManager.GetString("Button_Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ADDRESS.
+        /// </summary>
+        internal static string CreateEvent_Address {
+            get {
+                return ResourceManager.GetString("CreateEvent_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CREATE.
+        /// </summary>
+        internal static string CreateEvent_Create {
+            get {
+                return ResourceManager.GetString("CreateEvent_Create", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DATE.
+        /// </summary>
+        internal static string CreateEvent_Date {
+            get {
+                return ResourceManager.GetString("CreateEvent_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DESCRIPTION.
+        /// </summary>
+        internal static string CreateEvent_Description {
+            get {
+                return ResourceManager.GetString("CreateEvent_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to END.
+        /// </summary>
+        internal static string CreateEvent_EndTime {
+            get {
+                return ResourceManager.GetString("CreateEvent_EndTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NAME.
+        /// </summary>
+        internal static string CreateEvent_Name {
+            get {
+                return ResourceManager.GetString("CreateEvent_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to START.
+        /// </summary>
+        internal static string CreateEvent_StartTime {
+            get {
+                return ResourceManager.GetString("CreateEvent_StartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create event.
+        /// </summary>
+        internal static string CreateEvent_Title {
+            get {
+                return ResourceManager.GetString("CreateEvent_Title", resourceCulture);
             }
         }
         
@@ -210,6 +282,114 @@ namespace Jointly.Resources {
         internal static string Error_Username {
             get {
                 return ResourceManager.GetString("Error_Username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Map.
+        /// </summary>
+        internal static string Map_Title {
+            get {
+                return ResourceManager.GetString("Map_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CONFIRM PASSWORD.
+        /// </summary>
+        internal static string Profile_ConfirmPassword {
+            get {
+                return ResourceManager.GetString("Profile_ConfirmPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to EMAIL.
+        /// </summary>
+        internal static string Profile_Email {
+            get {
+                return ResourceManager.GetString("Profile_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FIRST NAME.
+        /// </summary>
+        internal static string Profile_FirstName {
+            get {
+                return ResourceManager.GetString("Profile_FirstName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to LAST NAME.
+        /// </summary>
+        internal static string Profile_LastName {
+            get {
+                return ResourceManager.GetString("Profile_LastName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to NOTIFICATIONS.
+        /// </summary>
+        internal static string Profile_Notifications {
+            get {
+                return ResourceManager.GetString("Profile_Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New events close to me.
+        /// </summary>
+        internal static string Profile_Notifications_NewEvents {
+            get {
+                return ResourceManager.GetString("Profile_Notifications_NewEvents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CHANGE PASSWORD.
+        /// </summary>
+        internal static string Profile_Password {
+            get {
+                return ResourceManager.GetString("Profile_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PHONE.
+        /// </summary>
+        internal static string Profile_Phone {
+            get {
+                return ResourceManager.GetString("Profile_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SAVE.
+        /// </summary>
+        internal static string Profile_Save {
+            get {
+                return ResourceManager.GetString("Profile_Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        internal static string Profile_Title {
+            get {
+                return ResourceManager.GetString("Profile_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your events.
+        /// </summary>
+        internal static string SavedEvents_Title {
+            get {
+                return ResourceManager.GetString("SavedEvents_Title", resourceCulture);
             }
         }
         

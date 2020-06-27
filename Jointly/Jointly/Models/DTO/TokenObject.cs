@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Jointly.Models.Responses
+namespace Jointly.Models.DTO
 {
     public class TokenObject
     {

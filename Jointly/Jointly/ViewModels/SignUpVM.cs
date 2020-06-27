@@ -1,11 +1,9 @@
 ﻿using Jointly.Extensions;
 using Jointly.Interfaces;
-using Jointly.Models;
+using Jointly.Models.Domain;
 using Jointly.Resources;
 using Prism.Navigation;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -17,10 +15,7 @@ namespace Jointly.ViewModels
         #region variables
         private SignUpModel _signUpModel;
         public SignUpModel SignUpModel
-        {
-            get => _signUpModel;
-            set => SetProperty(ref _signUpModel, value);
-        }
+            => _signUpModel ??= new SignUpModel();
 
         private bool _isSuccess;
         public bool IsSuccess
@@ -50,9 +45,11 @@ namespace Jointly.ViewModels
         public SignUpVM(
             INavigationService navService,
             IPopupService popupService,
-            IUserService userService) : 
-            base(navService, 
-                popupService)
+            IUserService userService,
+            IAnalyticsService analyticsService) : base(
+                navService,
+                popupService,
+                analyticsService)
         {
             UserService = userService;
         }
@@ -65,13 +62,13 @@ namespace Jointly.ViewModels
                 return;
 
             //TODO: error titles and validation
-            if (!SignUpModel.Email.Validate(Constants.EmailRegex))
+            if (!SignUpModel.Email.Validate(Constants.Validation.EmailRegex))
             {
                 PopupService.ShowAlert("", Localization.Error_Email);
                 return;
             }
 
-            if (!SignUpModel.Phone.Validate(Constants.PhoneRegex))
+            if (!SignUpModel.Phone.Validate(Constants.Validation.PhoneRegex))
             {
                 PopupService.ShowAlert("", Localization.Error_Phone);
                 return;
@@ -83,15 +80,7 @@ namespace Jointly.ViewModels
             {
                 try
                 {
-                    var result = await UserService.SignUpAsync(SignUpModel);
-                    if (result.IsSuccess)
-                    {
-                        Device.BeginInvokeOnMainThread(() => IsSuccess = true);
-                    }
-                    else
-                    {
-                        PopupService.ShowAlert(Localization.Error, result.Message);
-                    }
+                    await UserService.SignUpAsync(SignUpModel);
                 }
                 catch (Exception ex)
                 {

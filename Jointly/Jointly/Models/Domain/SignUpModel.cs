@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
-using System.Text.RegularExpressions;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Prism.Mvvm;
 
-namespace Jointly.Models
+namespace Jointly.Models.Domain
 {
     public class SignUpModel : BindableBase
     {
@@ -25,7 +20,6 @@ namespace Jointly.Models
         }
 
         string _phone;
-        [JsonProperty(PropertyName = "phone")]
         public string Phone
         {
             get => _phone;
@@ -33,7 +27,6 @@ namespace Jointly.Models
         }
 
         string _email;
-        [JsonProperty(PropertyName = "email")]
         public string Email
         {
             get => _email;

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:vm="clr-namespace:Jointly.ViewModels" 
+    xmlns:controls="clr-namespace:Jointly.Controls"
+    xmlns:res="clr-namespace:Jointly.Resources"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Jointly.Pages.SavedEventsPage"
+    x:DataType="vm:SavedEventsVM">
+    <Grid>
+        <controls:CustomCollectionView
+            Padding="12"
+            ItemsSource="{Binding Events}">
+            <CollectionView.Header>
+                <Label
+                    Style="{StaticResource HeaderLabelStyle}"
+                    Text="{x:Static res:Localization.SavedEvents_Title}"/>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame
+                        Padding="12">
+                        <Grid>
+                            
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout
+                    Orientation="Vertical"
+                    ItemSpacing="8"/>
+            </CollectionView.ItemsLayout>
+            <CollectionView.EmptyView>
+                <Grid
+                    Padding="12">
+                    <Label
+                        VerticalOptions="Center"
+                        Style="{StaticResource HeaderLabelStyle}"/>
+                </Grid>
+            </CollectionView.EmptyView>
+        </controls:CustomCollectionView>
+        <ImageButton
+            BackgroundColor="{StaticResource PrimaryColor}"
+            Margin="20"
+            Command="{Binding CreateCommand}"
+            Style="{StaticResource FABStyle}"/>
+    </Grid>
+</ContentPage>

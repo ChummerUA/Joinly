@@ -4,18 +4,45 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:Jointly.Controls"
     mc:Ignorable="d"
     x:Class="Jointly.Controls.CustomInputView"
     x:Name="inputView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <ControlTemplate x:Key="DefaultTemplate">
+                <Entry
+                    d:Text="test"
+                    Text="{Binding Source={x:Reference inputView}, Path=Text}"
+                    Style="{StaticResource EntryCommonStyle}"/>    
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="PasswordTemplate">
+                <controls:PasswordEntry
+                    IsPassword="True"
+                    Text="{Binding Source={x:Reference inputView}, Path=Text}"
+                    Style="{StaticResource EntryCommonStyle}"/>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </ContentView.Resources>
     <ContentView.Content>
         <StackLayout
             Spacing="8">
             <Label
+                d:Text="test"
                 Text="{Binding Source={x:Reference inputView}, Path=Placeholder}"
                 Style="{StaticResource PlaceholderLabelStyle}"/>
-            <Entry
-                Text="{Binding Source={x:Reference inputView}, Path=Text}"
-                Style="{StaticResource EntryCommonStyle}"/>
+            <ContentView
+                ControlTemplate="{StaticResource DefaultTemplate}">
+                <ContentView.Triggers>
+                    <DataTrigger
+                        TargetType="ContentView"
+                        Binding="{Binding Source={x:Reference inputView}, Path=IsPasswordEntry}"
+                        Value="True">
+                        <Setter Property="ControlTemplate" Value="{StaticResource PasswordTemplate}"/>
+                    </DataTrigger>
+                </ContentView.Triggers>
+            </ContentView>
         </StackLayout>
     </ContentView.Content>
 </ContentView>

@@ -11,11 +11,11 @@ namespace Jointly.Interfaces
 
         T GetFromPreferences<T>(string key);
 
-        Task<string> GetFromStorageAsync(string key);
+        Task<T> GetFromStorageAsync<T>(string key);
 
         void PutInPreferences(string key, object obj);
 
-        Task PutInStorageAsync(string key, string obj);
+        Task PutInStorageAsync(string key, object obj);
 
         void RemoveFromPreferences(string key);
 

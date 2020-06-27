@@ -12,6 +12,7 @@ using Prism.Ioc;
 using Jointly.Services;
 using Jointly.Interfaces;
 using Jointly.Droid.Services;
+using Android.Content;
 
 namespace Jointly.Droid
 {
@@ -29,7 +30,7 @@ namespace Jointly.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Forms.FormsMaterial.Init(this, savedInstanceState);
-            LoadApplication(new App(new AndroidInitializer()));
+            LoadApplication(new App(new AndroidInitializer(ApplicationContext)));
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -54,9 +55,18 @@ namespace Jointly.Droid
 
     public class AndroidInitializer : IPlatformInitializer
     {
+        private readonly Context Context;
+
+        public AndroidInitializer(Context context)
+        {
+            Context = context;
+        }
+
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterInstance(Context);
             containerRegistry.RegisterSingleton<ILocalize, Localize_Droid>();
+            containerRegistry.RegisterSingleton<INative, Native_Droid>();
         }
     }
 }

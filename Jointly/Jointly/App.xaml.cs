@@ -1,5 +1,6 @@
 ﻿using Jointly.Interfaces;
 using Jointly.Pages;
+using Jointly.Resources;
 using Jointly.Services;
 using Jointly.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,6 +9,7 @@ using Prism.DryIoc;
 using Prism.Ioc;
 using System;
 using System.Net.Http;
+using Xamarin.Forms;
 
 namespace Jointly
 {
@@ -28,6 +30,7 @@ namespace Jointly
                 _client.DefaultRequestHeaders
                     .Accept
                     .Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                _client.BaseAddress = new Uri(Constants.APIURL);
             });
             var client = services.BuildServiceProvider()
                 .GetRequiredService<IHttpClientFactory>()
@@ -38,16 +41,22 @@ namespace Jointly
             containerRegistry.RegisterSingleton<IPreferencesService, PreferencesService>();
             containerRegistry.RegisterSingleton<IUserService, UserService>();
             containerRegistry.RegisterSingleton<IPopupService, PopupService>();
+            containerRegistry.RegisterSingleton<IEventsService, EventsService>();
 
+            containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<MainPage, MainVM>();
             containerRegistry.RegisterForNavigation<SignInPage, SignInVM>();
-            containerRegistry.RegisterForNavigation<MainPage, MainViewModel>();
             containerRegistry.RegisterForNavigation<SignUpPage, SignUpVM>();
+            containerRegistry.RegisterForNavigation<MapPage, MapVM>();
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfileVM>();
+            containerRegistry.RegisterForNavigation<SavedEventsPage, SavedEventsVM>();
+            containerRegistry.RegisterForNavigation<CreateEventPage, CreateEventVM>();
         }
 
         protected override async void OnInitialized()
         {
             InitializeComponent();
-            await NavigationService.NavigateAsync(nameof(SignInPage));
+            await NavigationService.NavigateAsync(nameof(MainPage));
         }
     }
 }

@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="http://prismlibrary.com"
+    xmlns:vm="clr-namespace:Jointly.ViewModels"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:controls="clr-namespace:Jointly.Controls"
+    xmlns:res="clr-namespace:Jointly.Resources"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    x:Class="Jointly.Pages.ProfilePage"
+    x:DataType="vm:ProfileVM">
+    <ScrollView
+        Padding="12">
+        <StackLayout
+            Spacing="8">
+            <Label
+                Text="{x:Static res:Localization.Profile_Title}"
+                Style="{StaticResource HeaderLabelStyle}"/>
+            <controls:CustomInputView
+                    Margin="0, 12, 0, 0"
+                    Placeholder="{x:Static res:Localization.Profile_FirstName}"/>
+            <controls:CustomInputView
+                    Placeholder="{x:Static res:Localization.Profile_LastName}"/>
+            <controls:CustomInputView
+                Placeholder="{x:Static res:Localization.Profile_Phone}"/>
+            <controls:CustomInputView
+                Placeholder="{x:Static res:Localization.Profile_Email}"/>
+            <controls:CustomInputView
+                Placeholder="{x:Static res:Localization.Profile_Password}"
+                IsPasswordEntry="True"/>
+            <controls:CustomInputView
+                Placeholder="{x:Static res:Localization.Profile_ConfirmPassword}"
+                IsPasswordEntry="True"/>
+
+            <StackLayout>
+                <Label
+                    d:Text="NOTIFICATIONS"
+                    Margin="8, 12, 0, 0"
+                    Text="{x:Static res:Localization.Profile_Notifications}"
+                    Style="{StaticResource PlaceholderLabelStyle}"/>
+                <StackLayout
+                    Orientation="Horizontal"
+                    Padding="0">
+                    <CheckBox
+                        VerticalOptions="Center"
+                        Style="{StaticResource CheckBoxCommonStyle}"/>
+                    <Label
+                        d:Text="New events"
+                        Text="{x:Static res:Localization.Profile_Notifications_NewEvents}"
+                        Style="{StaticResource CheckBoxLabelStyle}"/>
+                </StackLayout>
+            </StackLayout>
+            
+            <controls:RoundedButton
+                Text="{x:Static res:Localization.Profile_Save}"
+                VerticalOptions="EndAndExpand"
+                Style="{StaticResource ButtonCommonStyle}"/>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>
