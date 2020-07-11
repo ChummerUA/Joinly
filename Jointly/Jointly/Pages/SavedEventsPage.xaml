@@ -34,18 +34,13 @@
                     Orientation="Vertical"
                     ItemSpacing="8"/>
             </CollectionView.ItemsLayout>
-            <CollectionView.EmptyView>
-                <Grid
-                    Padding="12">
-                    <Label
-                        VerticalOptions="Center"
-                        Style="{StaticResource HeaderLabelStyle}"/>
-                </Grid>
-            </CollectionView.EmptyView>
         </controls:CustomCollectionView>
         <ImageButton
+            x:Name="addButton"
             BackgroundColor="{StaticResource PrimaryColor}"
             Margin="20"
+            Source="ic_add"
+            Padding="{Binding Source={x:Reference addButton}, Path=Height, Converter={StaticResource FABPaddingConverter}, ConverterParameter=0.7}"
             Command="{Binding CreateCommand}"
             Style="{StaticResource FABStyle}"/>
     </Grid>

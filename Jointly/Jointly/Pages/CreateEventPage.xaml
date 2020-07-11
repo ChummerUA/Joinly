@@ -9,7 +9,8 @@
     xmlns:res="clr-namespace:Jointly.Resources"
     mc:Ignorable="d"
     x:Class="Jointly.Pages.CreateEventPage"
-    x:DataType="vm:CreateEventVM">
+    x:DataType="vm:CreateEventVM"
+    BackgroundColor="White">
     <ContentPage.Content>
         <ScrollView
             Padding="12">

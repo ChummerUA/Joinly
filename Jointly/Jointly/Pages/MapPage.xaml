@@ -12,5 +12,7 @@
         RotationLock="True"
         UseDoubleTap="True"
         IsNorthingButtonVisible="False"
-        BackgroundColor="{StaticResource PrimaryColor}"/>
+        IsMyLocationButtonVisible="False"
+        MyLocationEnabled="False"
+        MyLocationFollow="False"/>
 </ContentPage>

@@ -8,11 +8,17 @@
     xmlns:res="clr-namespace:Jointly.Resources"
     prism:ViewModelLocator.AutowireViewModel="True"
     android:TabbedPage.IsSwipePagingEnabled="False"
-    x:Class="Jointly.Pages.MainPage">
+    android:TabbedPage.IsSmoothScrollEnabled="False"
+    x:Class="Jointly.Pages.MainPage"
+    BackgroundColor="White"
+    BarBackgroundColor="White">
     <pages:SavedEventsPage
+        IconImageSource="ic_event"
         Title="{x:Static res:Localization.SavedEvents_Title}"/>
     <pages:MapPage
+        IconImageSource="ic_map"
         Title="{x:Static res:Localization.Map_Title}"/>
     <pages:ProfilePage
+        IconImageSource="ic_identity"
         Title="{x:Static res:Localization.Profile_Title}"/>
 </TabbedPage>

@@ -5,6 +5,7 @@ using Mapsui.Layers;
 using Mapsui.Projection;
 using Mapsui.Rendering.Skia;
 using Mapsui.UI;
+using Mapsui.Utilities;
 using System.Linq;
 using Xamarin.Forms;
 
@@ -19,24 +20,19 @@ namespace Jointly.Pages
             {
                 CRS = "EPSG:3857",
                 Transformation = new MinimalTransformation(),
+                RotationLock = true,
             };
 
-            var tileSource = new HttpTileSource(
-                new GlobalSphericalMercator(),
-                "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                new[] { "a", "b", "c" }, name: "OpenStreetMap");
-            var tileLayer = new TileLayer(tileSource) { Name = "OpenStreetMap" };
+            var layer = OpenStreetMap.CreateTileLayer();
+            map.Layers.Add(layer);
+            var resolutions = map.Resolutions.OrderBy(x => x);
+            var min = resolutions.FirstOrDefault();
+            var max = resolutions.LastOrDefault() * 0.2f;
 
-            //map.Layers.Add(tileLayer);
-
-            //var resolutions = map.Resolutions.OrderBy(x => x);
-            //var min = resolutions.FirstOrDefault();
-            //var max = resolutions.LastOrDefault() * 0.2f;
-
-            //map.Limiter = new ViewportLimiterKeepWithin
-            //{
-            //    ZoomLimits = new MinMax(min, max)
-            //};
+            map.Limiter = new ViewportLimiterKeepWithin
+            {
+                ZoomLimits = new MinMax(min, max),
+            };
 
             mapView.Map = map;
         }

@@ -10,6 +10,9 @@
         <x:Double x:Key="Medium">14</x:Double>
         <x:Double x:Key="Small">11</x:Double>
 
+        <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
+        <converters:FABPaddingConverter x:Key="FABPaddingConverter"/>
+
         <Color x:Key="PrimaryColor">#F2C94C</Color>
         
         <Style x:Key="EntryStyle" TargetType="Entry">
@@ -66,6 +69,5 @@
             <Setter Property="VerticalTextAlignment" Value="Center"/>
         </Style>
         
-        <converters:StringNotEmptyConverter x:Key="StringNotEmptyConverter"/>
     </Application.Resources>
 </dryioc:PrismApplication>

@@ -58,9 +58,6 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Mapsui.Forms">
-      <Version>2.0.1</Version>
-    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.3</Version>
     </PackageReference>
@@ -92,6 +89,8 @@
   <ItemGroup>
     <Compile Include="Effects\RoundCorners_Droid.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Renderers\CollectionItemDecoration.cs" />
+    <Compile Include="Renderers\CollectionViewRenderer_Droid.cs" />
     <Compile Include="Renderers\DatePicker_Droid.cs" />
     <Compile Include="Renderers\EditorRenderer_Droid.cs" />
     <Compile Include="Renderers\EntryRenderer_Droid.cs" />
