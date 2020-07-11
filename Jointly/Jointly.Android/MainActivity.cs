@@ -16,7 +16,7 @@ using Android.Content;
 
 namespace Jointly.Droid
 {
-    [Activity(Label = "Jointly", Theme = "@style/MainTheme", ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "Jointly", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -65,7 +65,6 @@ namespace Jointly.Droid
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance(Context);
-            containerRegistry.RegisterSingleton<ILocalize, Localize_Droid>();
             containerRegistry.RegisterSingleton<INative, Native_Droid>();
         }
     }
